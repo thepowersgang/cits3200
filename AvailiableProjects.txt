@@ -1,0 +1,25 @@
+Dr Uta Bindl	Developing an Experience Sampling Application for Smartphones
+Dr Samantha Bickell	Calculating the daily methane production of sheep kept in respiration chambers
+Dr. Nat Benjanuvatra	Development of Apple iphone and ipad Apps for a Web-based Physical Activity and Wellness Recording Tool
+Prof Eric May	Automated tuning of thermodynamic models in LNG process simulators
+Mr Peter Thönell	C# iPhone tree
+
+Dr Gerald Veurink	Kwik Browsa Conversion to Multiplatform Web Browser
+	- Cross platform knowledge
+
+
+Mr Peter Thönell	Genetic Engine
+Mr Gary Cass	iDNAtity: A cutting-edge fusion of art and science - generating music as unique as your own DNA
+A/Prof. Atakelty Hailu	M2: A browser based multiple-bid multi-unit auction platform
+Assoc Prof Paul Bourke	Adding iDome Support to the VMD Software
+Dr Philippa Brown	Mother and Baby Unit Clinical/Research Database
+Prof Michael Burton	Automatic management of journal article PDFs
+
+Assoc Prof Paul Bourke	360 Degree Cylindrical Video
+Dr Wei Liu	Intelligent Chatting Toy Module
+
+Assoc Prof Mei-Ling Tay-Kearney	Digitising the RACE ophthalmic examinations
+Dr Brett D. Hirsch	Text Analysis and Visualization Tools
+Dr Maxine Croft	Obstetric Complications scoring system for measuring risks of schizophrenia
+
+Assoc Prof Paul Bourke	Gesture interface to the iDome using the Kinect
