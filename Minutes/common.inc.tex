@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+\usepackage{fullpage}
+
+\def\peopleexcused{-}
+\def\peopleabsent{-}
+
+\def\date#1{\gdef\thedate{#1}}
+\def\topic#1{\gdef\thetopic{#1}}
+\def\present#1{\gdef\peoplepresent{#1}}
+\def\apologies#1{\gdef\peopleexcused{#1}}
+\def\absent#1{\gdef\peopleabsent{#1}}
+
+\def\actioned#1{\hfill Actioned: #1}
+\def\nextmeeting#1{ \section{Next Meeting}\begin{itemize}\item{#1}\end{itemize} }
+\def\meetingclosed#1{ \section*{Meeting Closed: #1}}
+\def\meetingopened#1{ \section*{Meeting Opened: #1}}
+
+\renewcommand\maketitle{%
+ {\LARGE CITS3200 Group I}\\ %
+ {\Large Minutes of the meeting held on \thedate}
+ \\[1cm]
+ \begin{tabular}{l r} %
+ Topic & \thetopic \\ %
+ Present & \peoplepresent \\ %
+ Apologies & \peopleexcused \\ %
+ Absent & \peopleabsent %
+ \end{tabular} %
+ \\[1.5cm]
+}
+
+
