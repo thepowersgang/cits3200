@@ -1,0 +1,7 @@
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\bin\Release\EightQueens.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\bin\Release\EightQueens.pdb
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\bin\Release\GeneticEnginePlugin.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\bin\Release\GeneticEnginePlugin.pdb
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\obj\Release\EightQueens.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\EightQueens\obj\Release\EightQueens.pdb
