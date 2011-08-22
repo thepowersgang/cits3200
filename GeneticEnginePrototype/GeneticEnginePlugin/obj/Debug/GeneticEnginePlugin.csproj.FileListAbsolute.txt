@@ -1,0 +1,10 @@
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\bin\Debug\GeneticEnginePlugin.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\bin\Debug\GeneticEnginePlugin.pdb
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\GeneticEnginePlugin.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\GeneticEnginePlugin.pdb
+D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePlugin.dll
+D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePlugin.pdb
+D:\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\ResolveAssemblyReference.cache
+D:\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\GeneticEnginePlugin.dll
+D:\GeneticEnginePrototype\GeneticEnginePlugin\obj\Debug\GeneticEnginePlugin.pdb

@@ -1,0 +1,12 @@
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\bin\Debug\GenericPlugins.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\bin\Debug\GenericPlugins.pdb
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\bin\Debug\GeneticEnginePlugin.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\bin\Debug\GeneticEnginePlugin.pdb
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.dll
+C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.pdb
+D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GenericPlugins.dll
+D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GenericPlugins.pdb
+D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\ResolveAssemblyReference.cache
+D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.dll
+D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.pdb
