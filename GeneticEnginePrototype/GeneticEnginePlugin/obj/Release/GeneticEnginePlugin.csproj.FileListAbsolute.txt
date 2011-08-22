@@ -1,5 +1,0 @@
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\bin\Release\GeneticEnginePlugin.dll
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\bin\Release\GeneticEnginePlugin.pdb
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Release\ResolveAssemblyReference.cache
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Release\GeneticEnginePlugin.dll
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEnginePrototype\GeneticEnginePlugin\obj\Release\GeneticEnginePlugin.pdb

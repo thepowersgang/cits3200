@@ -1,5 +1,0 @@
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\bin\Debug\GeneticEngine.exe
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\bin\Debug\GeneticEngine.pdb
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.exe
-C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.pdb
