@@ -3,3 +3,5 @@ C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\Gene
 C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\bin\Debug\GeneticEngine.pdb
 C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.exe
 C:\Users\Brian Marshall\documents\visual studio 2010\Projects\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.exe
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEngine\GeneticEngine\obj\x86\Debug\GeneticEngine.pdb

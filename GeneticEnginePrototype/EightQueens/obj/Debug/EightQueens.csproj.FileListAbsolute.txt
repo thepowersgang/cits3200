@@ -10,3 +10,8 @@ D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\EightQueens.pdb
 D:\GeneticEnginePrototype\EightQueens\obj\Debug\ResolveAssemblyReference.cache
 D:\GeneticEnginePrototype\EightQueens\obj\Debug\EightQueens.dll
 D:\GeneticEnginePrototype\EightQueens\obj\Debug\EightQueens.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\EightQueens.dll
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\EightQueens.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\EightQueens\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\EightQueens\obj\Debug\EightQueens.dll
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\EightQueens\obj\Debug\EightQueens.pdb

@@ -10,3 +10,8 @@ D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GenericPlugins.pdb
 D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\ResolveAssemblyReference.cache
 D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.dll
 D:\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GenericPlugins.dll
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GenericPlugins.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GenericPlugins\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.dll
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GenericPlugins\obj\Debug\GenericPlugins.pdb

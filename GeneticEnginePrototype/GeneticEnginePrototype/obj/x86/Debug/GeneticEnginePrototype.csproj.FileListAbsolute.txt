@@ -14,3 +14,10 @@ D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePrototyp
 D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEngine.pdb
 D:\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePlugin.pdb
 D:\GeneticEnginePrototype\GeneticEnginePrototype\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\obj\x86\Debug\GeneticEnginePrototype.exe
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\obj\x86\Debug\GeneticEnginePrototype.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePrototype.exe
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePrototype.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEnginePlugin.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\bin\Debug\GeneticEngine.pdb
+C:\Users\Antriksh\Desktop\Uni2011Sem2\CITS3200\cits3200\GeneticEnginePrototype\GeneticEnginePrototype\obj\x86\Debug\ResolveAssemblyReference.cache

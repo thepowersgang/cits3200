@@ -1,0 +1,28 @@
+3.3.6
+The only I/O actually required is the parameters (through the use of plugin files) that are fed into the engine in the beginning. These parameters can be set through an API but may also implement a command line interface and a GUI. After those parameters are set, the program will run its course through a number of iterations.
+
+The output will be set by a visualization plugin if it is implemented in the future, otherwise the data will be saved to a text file.
+
+3.3.7
+The highest priority of the Genetic Engine is its flexbility so it should be able to handle any type of compatible plugin that is fed into it without errors. Error checking will be implemented to check that the plugins are in fact compatible with the engine and written correctly. 
+
+There are practically no real visual quality factors to consider and the success of the engine will largely be measured by what goes on 'under the hood', and that it runs through the iterations correctly and outputs the right data.
+
+3.3.8
+There is a set specification as to what the underlying engine should do, only minor modifications can be made and only at a higher level (client interface). This includes things such as how the engine accepts input, rather than how it processes it.
+
+3.3.9
+The Genetic Engine will run on a regular computer so no extreme physical conditions will be present.
+
+3.3.10
+There are no real security issues with the system however the engine will be encapsulated to ensure that the user does not modify the internal program data and risk a malfunction.
+
+3.3.11
+=======NOT SURE EXACTLY WHAT TO PUT HERE=========
+The engine deals with a set of plugins upon which it will iterate through generations, and then output this to a file. The user is responsible for this file once it has been created. 
+
+The engine will be self-sustaining and does not really require installation though the user will need to know how to specify plugins.
+
+
+3.4
+The engine must be programmed in C# as specified by the client. It will be developed in Microsoft Visual Studio. It will itself be a library (.dll) and should be compatible with modern systems.
