@@ -1,0 +1,23 @@
+\documentclass[a4paper]{article}
+\usepackage{fullpage}
+
+% Fix \paragraph to have a newline
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\setcounter{secnumdepth}{4}	% Number \paragraphs
+
+\renewcommand\maketitle{\input{../titlepage.inc.tex}}
+
+\def\getprojectname{}
+\def\projectname#1{\gdef\getprojectname{#1}}
+\def\getclient{}
+\def\client#1{\gdef\getclient{#1}}
+\makeatletter
+\newcommand\gettitle{\@title}
+\newcommand\getauthor{\@author}
+\makeatother

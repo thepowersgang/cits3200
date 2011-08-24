@@ -1,19 +1,8 @@
-\documentclass[a4paper]{article}
-\usepackage{fullpage}
-%\input{../titlepage.tex}
+\input{../common.inc.tex}
+\projectname{Genetic Engine Project}
 \title{Requirements Analysis Document}
-%\subtitle{Genetic Engine Project}
-\author{Rohit Gopalan (Project Leader), John Hodge, Alwyn Kyi, Brian Marshall, Antriksh Srivastava}
-%\client{Mr Peter Th\"ornell}
-\setcounter{secnumdepth}{4}	% Number \paragraphs
-
-% Fix \paragraph to have a newline
-\makeatletter
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-  {-3.25ex\@plus -1ex \@minus -.2ex}%
-  {1.5ex \@plus .2ex}%
-  {\normalfont\normalsize\bfseries}}
-\makeatother
+\author{Rohit Gopalan, John Hodge, Alwyn Kyi, Brian Marshall, Antriksh Srivastava}
+\client{Mr Peter Th\"ornell}
 
 \begin{document}
 
@@ -29,7 +18,7 @@
 \item Version R0.2 24/Aug/2011 J Hodge. Converted to tex
 \end{itemize}
 
-\paragraph*{Preface}
+\subsection*{Preface}
 This document addresses the requirements of the Genetic Engine system. The intended audience for this document are the designers and the client of the project.
 
 \paragraph*{Target Audience}
@@ -50,16 +39,28 @@ Client, Developers
 
 \paragraph*{Client Sign-off}
 
+\clearpage
 
+
+%
+% General Goals
+%
 \section{General Goals}
 TODO
 % For this section, enter the goals of your subsystem, i.e. what are the objectives of the functions of your subsystem?
 
 
+%
+% Current System
+%
 \section{Current System}
 TODO
 %For this section, describe the current situation that is relevant to your subsystem.
 
+
+%
+% Proposed System
+%
 
 \section{Proposed System}
 \subsection{Overview}
@@ -144,9 +145,8 @@ Sample Plug-ins and Visualisation Tool:
  \item Clear and complete source code documentation.
 \end{itemize}
 
-\subsection{Hardware Consideration}
+\subsubsection{Hardware Consideration}
 The libraries and applications should work on any machine capable of running .Net. Although faster hardware will obviously result in faster solutions.
-
 
 \subsubsection{Performance Characteristics}
 Performance has a lower priority than flexibility and good object oriented code structure however where possible, without sacrificing these, optimisations for speed should be made.
@@ -157,34 +157,33 @@ The classes in the genetic engine libraries should throw clear and descriptive e
 The command-line application should identify problems with the configuration as early as possible and report it in a clear format, identifying the items which caused the problem and explaining why they are invalid. It should also capture the exceptions thrown by the genetic engine library classes and report them in an easy to read format, indicating the plug-in which caused the problem.
 
 \subsubsection{System Interfacing}
-The genetic visualiser tool must be able to read the format produced by the genetic engine when used with the sample plug-ins
+The only I/O actually required is the parameters (through the use of plugin files) that are fed into the engine in the beginning. These parameters can be set through an API but may also implement a command line interface and a GUI. After those parameters are set, the program will run its course through a number of iterations.
 
-User-defined plug-in libraries must conform to the interfaces defined in the support library.
-
-This software will not interface with any other systems (other than the operating system for file access, DLL loading and console I/O) 
+The output will be set by a visualization plugin if it is implemented in the future, otherwise the data will be saved to a text file.
 
 \subsubsection{Quality Issues}
-TODO
+The highest priority of the Genetic Engine is its flexbility so it should be able to handle any type of compatible plugin that is fed into it without errors. Error checking will be implemented to check that the plugins are in fact compatible with the engine and written correctly. 
 % For this section, focus on the possible quality enhancement or compromises. Consider the following: 
 % What are the requirements for reliability? Must the system trap faults? Is there a maximum acceptable time for restarting the system after a failure? What is the acceptable system downtime per 24-hour period? Is it important that the system be portable (able to move to different hardware or operating system environments)? 
 
 \subsubsection{System Modifications}
-TODO
+There is a set specification as to what the underlying engine should do, only minor modifications can be made and only at a higher level (client interface). This includes things such as how the engine accepts input, rather than how it processes it.
 % For this section, think about the current infrastructure of your system which will be extended for future features, incorporated or made obsolete. Consider the following: 
 % What parts of the system are likely candidates for later modification? What sorts of modifications are expected? 
 
 \subsubsection{Physical Environment}
-TODO
+The Genetic Engine will run on a regular computer so no extreme physical conditions will be present.
 % For this section, consider the physical environment in which your subsystem will exist. Consider the following: 
 % Where will the target equipment operate? Will the target equipment be in one or several locations? Will the environmental conditions in any way be out of the ordinary (for example, unusual temperatures, vibrations, magnetic fields ...)?
 
 \subsubsection{Security Issues}
-Allowing arbitrary libraries to be loaded and the compiled code within them to be executed is a large security risk. It is not an issue if the user is also the one who wrote the libraries. However, if becomes a problem if people are writing and sharing plug-in libraries with people they don't know well. Malicious code could easily be hidden in these libraries and executed without the user's knowledge.
-
-To mitigate this risks the possibility of running the plug-in code with reduced permissions (sandboxing) should be explored.
+There are no real security issues with the system however the engine will be encapsulated to ensure that the user does not modify the internal program data and risk a malfunction.
 
 \subsubsection{Resource Issues}
-TODO
+% Antkrish - Not sure what to put here
+The engine deals with a set of plugins upon which it will iterate through generations, and then output this to a file. The user is responsible for this file once it has been created. 
+
+The engine will be self-sustaining and does not really require installation though the user will need to know how to specify plugins.
 % For this section, think about data management for your subsystem. Consider the following: 
 % How often will the system be backed up? Who will be responsible for the back up? Who is responsible for system installation? Who will be responsible for system maintenance? 
 
@@ -194,7 +193,7 @@ The project is to be developed in C\# using Visual Studio or MonoDevelop.
 % You will have to use the UML (Unified Modelling Language) to create the models. If the CASE tools is not installed yet (Together-J), you can use Visio or PowerPoint to produce the models. For more information on the notations of UML, check out the following Rational websites - Notation and Documentation. To make your models more readable, you have to include some texts to guide the reader along the flow of your model. These text are called Navigational Text because they help to move the reader along the models.
 
 \subsubsection{Scenarios}
-TODO
+The engine must be programmed in C\# as specified by the client. It will be developed in Microsoft Visual Studio. It will itself be a library (.dll) and should be compatible with modern systems.
 % For this section, think about all the possible ways which the users will interact with your subsystem. Present them in a "story" format.
 
 \subsubsection{Use Case Models}
