@@ -11,6 +11,18 @@
   {\normalfont\normalsize\bfseries}}
 \makeatother
 
+% Put in a background picture
+\newcommand\BackgroundPic{
+\put(0,0){
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,keepaspectratio]{background_top.pdf}%
+%\vfill
+%\includegraphics[width=\paperwidth,keepaspectratio]{background_bottom.pdf}%
+\vfill
+}}}
+
 \setcounter{secnumdepth}{4}	% Number \paragraphs
 
 \renewcommand\maketitle{\input{../titlepage.inc.tex}}
