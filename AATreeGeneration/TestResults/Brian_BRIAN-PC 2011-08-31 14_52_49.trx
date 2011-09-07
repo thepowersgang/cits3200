@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="2a99ca8c-9da7-490c-861b-aefd566d3c2c" name="Brian@BRIAN-PC 2011-08-31 14:52:49" runUser="Brian-PC\Brian" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="2e51cda6-c578-44b9-9b97-c9699d283039">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Brian_BRIAN-PC 2011-08-31 14_52_49">
+      <DeploymentItem filename="C:\Users\Brian\Documents\Visual Studio 2010\Projects\AATreeGeneration\AATreeGeneration\bin\Debug\AATreeGeneration.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-08-31T14:52:49.4555141+08:00" queuing="2011-08-31T14:52:51.3916249+08:00" start="2011-08-31T14:52:51.5676349+08:00" finish="2011-08-31T14:52:58.9250558+08:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TestMethod1" storage="c:\users\brian\documents\visual studio 2010\projects\aatreegeneration\gentest\bin\debug\gentest.dll" id="a510f9b6-bce1-9488-6618-651c26cd1f7f">
+      <Execution id="67d68df2-e00e-43ad-b822-442800df99c2" />
+      <TestMethod codeBase="C:/Users/Brian/Documents/Visual Studio 2010/Projects/AATreeGeneration/GenTest/bin/Debug/GenTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="GenTest.UnitTest1, GenTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TestMethod1" />
+    </UnitTest>
+    <UnitTest name="TestAdd" storage="c:\users\brian\documents\visual studio 2010\projects\aatreegeneration\gentest\bin\debug\gentest.dll" id="bc4748df-5257-7a40-c964-e63326eb17c1">
+      <Execution id="bcda4c87-60fe-4a63-b31f-9abd525a221a" />
+      <TestMethod codeBase="C:/Users/Brian/Documents/Visual Studio 2010/Projects/AATreeGeneration/GenTest/bin/Debug/GenTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="GenTest.UnitTest1, GenTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TestAdd" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="bc4748df-5257-7a40-c964-e63326eb17c1" executionId="bcda4c87-60fe-4a63-b31f-9abd525a221a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a510f9b6-bce1-9488-6618-651c26cd1f7f" executionId="67d68df2-e00e-43ad-b822-442800df99c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="bcda4c87-60fe-4a63-b31f-9abd525a221a" testId="bc4748df-5257-7a40-c964-e63326eb17c1" testName="TestAdd" computerName="BRIAN-PC" duration="00:00:00.0653458" startTime="2011-08-31T14:52:51.6756411+08:00" endTime="2011-08-31T14:52:53.4727439+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bcda4c87-60fe-4a63-b31f-9abd525a221a">
+    </UnitTestResult>
+    <UnitTestResult executionId="67d68df2-e00e-43ad-b822-442800df99c2" testId="a510f9b6-bce1-9488-6618-651c26cd1f7f" testName="TestMethod1" computerName="BRIAN-PC" duration="00:00:05.2699032" startTime="2011-08-31T14:52:53.4937451+08:00" endTime="2011-08-31T14:52:58.7960484+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="67d68df2-e00e-43ad-b822-442800df99c2">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method GenTest.UnitTest1.TestMethod1 threw exception: 
+System.Exception: Kablammo!</Message>
+          <StackTrace>    at GenTest.UnitTest1.TestMethod1() in C:\Users\Brian\Documents\Visual Studio 2010\Projects\AATreeGeneration\GenTest\UnitTest1.cs:line 28
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

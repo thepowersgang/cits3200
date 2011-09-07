@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="8408d552-ffff-47a7-9a83-63ce172c2123" name="Brian@BRIAN-PC 2011-08-31 14:52:04" runUser="Brian-PC\Brian" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="2e51cda6-c578-44b9-9b97-c9699d283039">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Brian_BRIAN-PC 2011-08-31 14_52_04">
+      <DeploymentItem filename="C:\Users\Brian\Documents\Visual Studio 2010\Projects\AATreeGeneration\AATreeGeneration\bin\Debug\AATreeGeneration.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-08-31T14:52:04.4109377+08:00" queuing="2011-08-31T14:52:09.3072178+08:00" start="2011-08-31T14:52:09.5702328+08:00" finish="2011-08-31T14:52:12.4123954+08:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="2" executed="2" passed="2" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TestMethod1" storage="c:\users\brian\documents\visual studio 2010\projects\aatreegeneration\gentest\bin\debug\gentest.dll" id="a510f9b6-bce1-9488-6618-651c26cd1f7f">
+      <Execution id="c0a55a21-3e32-4296-80e6-096af12cac46" />
+      <TestMethod codeBase="C:/Users/Brian/Documents/Visual Studio 2010/Projects/AATreeGeneration/GenTest/bin/Debug/GenTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="GenTest.UnitTest1, GenTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TestMethod1" />
+    </UnitTest>
+    <UnitTest name="TestAdd" storage="c:\users\brian\documents\visual studio 2010\projects\aatreegeneration\gentest\bin\debug\gentest.dll" id="bc4748df-5257-7a40-c964-e63326eb17c1">
+      <Execution id="b57315ca-0cfa-4da5-88a2-adacaa9a5e31" />
+      <TestMethod codeBase="C:/Users/Brian/Documents/Visual Studio 2010/Projects/AATreeGeneration/GenTest/bin/Debug/GenTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="GenTest.UnitTest1, GenTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TestAdd" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="bc4748df-5257-7a40-c964-e63326eb17c1" executionId="b57315ca-0cfa-4da5-88a2-adacaa9a5e31" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a510f9b6-bce1-9488-6618-651c26cd1f7f" executionId="c0a55a21-3e32-4296-80e6-096af12cac46" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="b57315ca-0cfa-4da5-88a2-adacaa9a5e31" testId="bc4748df-5257-7a40-c964-e63326eb17c1" testName="TestAdd" computerName="BRIAN-PC" duration="00:00:00.0632127" startTime="2011-08-31T14:52:09.7182413+08:00" endTime="2011-08-31T14:52:12.0893769+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b57315ca-0cfa-4da5-88a2-adacaa9a5e31">
+    </UnitTestResult>
+    <UnitTestResult executionId="c0a55a21-3e32-4296-80e6-096af12cac46" testId="a510f9b6-bce1-9488-6618-651c26cd1f7f" testName="TestMethod1" computerName="BRIAN-PC" duration="00:00:00.0004402" startTime="2011-08-31T14:52:12.1863825+08:00" endTime="2011-08-31T14:52:12.2213845+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0a55a21-3e32-4296-80e6-096af12cac46">
+    </UnitTestResult>
+  </Results>
+</TestRun>
