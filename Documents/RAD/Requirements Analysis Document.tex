@@ -238,16 +238,15 @@ These are then plugged into the API, and the simulation is started.
 \subsubsection{Use Case Models}
 % TODO:
 % Is there much more for use cases except the basics?
-% Diagram/Flow Chart
+% Diagram/Flow Chart - Or just an enumerate list :)
 % 
 \begin{enumerate}
  \item (optional) Load ``helper'' objects (implementing \texttt{IPopulator}, \texttt{IEvaluator}, \texttt{IGeneticOperator} and \texttt{ITerminator}) from a DLL using plugin loader
  \item Create instances of each interface
  \item Pass created objects to \texttt{GeneticEngine}'s constructor
  \item Call either \texttt{GeneticEngine.Step} (do one generation), \texttt{GeneticEngine.Repeat} (do \texttt{n} calls to \texttt{Step}) or \texttt{GeneticEngine.Run} (call \texttt{Step} until the terminate says to stop) 
+ \item Get the final generation state using the \texttt{GeneticEngine.Generation} accessor, and getting the first (\#0) element from that array (which is defined to be the individual with the highest fitness).
 \end{enumerate}
-\paragraph{Actors}
-\paragraph{Use Cases}
 
 % 3.5.3 - Brian
 \subsubsection{Object Models}
