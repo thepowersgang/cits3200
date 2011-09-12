@@ -177,7 +177,7 @@ Note: The estimated time for each requirement is yet to be decided by the team i
 The GUI should provide a way to quickly select plug-in classes. Once a DLL has been loaded the user should be able to select the plug-in classes easily from a list.
 
 \subsubsection{Documentation}
-The users of the genetic engine, sample plug-ins and visualiser tool will be programmers with some experience with C#. Therefore, clear API and source code documentation are the most important source of information. Brief manuals for the GUI and visualiser will also be required
+The users of the genetic engine, sample plug-ins and visualiser tool will be programmers with some experience with \csharp. Therefore, clear API and source code documentation are the most important source of information. Brief manuals for the GUI and visualiser will also be required
 
 \subsubsection{Hardware Consideration}
 The libraries and applications should work on any machine capable of running .Net. Although faster hardware will obviously result in faster solutions.
@@ -238,9 +238,14 @@ These are then plugged into the API, and the simulation is started.
 \subsubsection{Use Case Models}
 % TODO:
 % Is there much more for use cases except the basics?
+% Diagram/Flow Chart
 % 
-Since the core deliverable for this project is an API with very little helper code, there are no use cases aside from the core requirements of the API.
-The core requirement is for the API to the core parts of a genetic algorithm to be connected via an API. This API should be agn
+\begin{enumerate}
+ \item (optional) Load ``helper'' objects (implementing \texttt{IPopulator}, \texttt{IEvaluator}, \texttt{IGeneticOperator} and \texttt{ITerminator}) from a DLL using plugin loader
+ \item Create instances of each interface
+ \item Pass created objects to \texttt{GeneticEngine}'s constructor
+ \item Call either \texttt{GeneticEngine.Step} (do one generation), \texttt{GeneticEngine.Repeat} (do \texttt{n} calls to \texttt{Step}) or \texttt{GeneticEngine.Run} (call \texttt{Step} until the terminate says to stop) 
+\end{enumerate}
 \paragraph{Actors}
 \paragraph{Use Cases}
 
