@@ -42,43 +42,6 @@ namespace GeneticEngineCore
                         
             ConstructorInfo constructor = type.GetConstructor(parameterTypes);
             return constructor.Invoke(parameters);
-        }
-
-        public IPopulator GetChromosomeGenerator(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-
-            return (IPopulator)GetInstance(type, parameters);
-        }
-
-        public IEvaluator GetEvaluator(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-            return (IEvaluator)GetInstance(type, parameters);
-        }
-
-        public IGeneticOperator GetGeneticOperator(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-            return (IGeneticOperator)GetInstance(type, parameters);
-        }
-
-        public IOutputter GetOutputter(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-            return (IOutputter)GetInstance(type, parameters);
-        }
-
-        public ITerminator GetTerminator(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-            return (ITerminator)GetInstance(type, parameters);
-        }
-
-        public IGenerationFactory GetGenerationFactory(string typeName, params object[] parameters)
-        {
-            Type type = assembly.GetType(typeName);
-            return (IGenerationFactory)GetInstance(type, parameters);
-        }
+        }        
     }
 }
