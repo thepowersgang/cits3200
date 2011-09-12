@@ -1,9 +1,10 @@
+
 %\ifpdf
-%\pdfinfo{
-%   /Author (\getauthor)
-%   /Title  (\getprojectname - \gettitle)
-%   /Producer (John Hodge)
-%}
+\pdfinfo{
+   /Author (\getauthor)
+   /Title  (\getprojectname{} - \gettitle)
+   /Producer (John Hodge)
+}
 %\fi
 
 
@@ -17,9 +18,15 @@
 \textsc{\huge \gettitle}\\[0.5cm]
 \rule{0.9\textwidth}{0.7pt} \\[0.75cm]
 % Authors
-\getauthor \\[0.5cm]
-% Authors
-\emph{Client} \getclient \\[0.5cm]
+\emph{\getauthor} \\[0.5cm]
+% Client
+Client: \emph{\getclient} \\[0.5cm]
+
+CITS3200 Professional Computing 2011 \\
+University of Western Australia Crawley, WA, 6009
+
+\vspace{2cm}
+\includegraphics{../534-genetic_algorithms.png}
 
 \end{center}
 
