@@ -38,6 +38,7 @@
  r9 & R Gopalan & 08/09/2011 & Modified Meeting Dates \\ \hline
  r10 & J Hodge & 12/09/2011 & LaTeX-ify \\ \hline
  r11 & R Gopalan & 13/09/2011 & Modified Section 3.2 \\ \hline
+ r12 & B Marshall & 14/09/2011 & Added Sections 3.5.3 and 3.5.4 \\ \hline
 \end{tabularx}
 
 \subsection*{Client Sign-off}
@@ -365,11 +366,14 @@ These are then plugged into the API, and the simulation is started.
 
 % 3.5.4 - John
 \subsubsection{Dynamic Models}
+
 \begin{figure}[ht!]
- \caption{Sequence Diagram: Initialising and running the GeneticEngine from a client program.}
+ \caption{Sequence Diagram: Initialising and running the GeneticEngine from a client program.}\label{fig:Dynamic}
  \centering
  \includegraphics[width=\textwidth]{../Dynamic.png}
 \end{figure}
+
+In figure \ref{fig:Dynamic} the client program loads two dlls and gets instances of the plug-in classes from them. These classes are then used to instatntiate the GeneticEngine class and run the algorithm. When it is complete the final generation is obtained and used to find the best individual.
 
 \clearpage
 
