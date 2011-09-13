@@ -1,0 +1,298 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.9.13)  13 SEP 2011 14:42
+entering extended mode
+**D:/GitCITS3200/Documents/RAD/Requirements*Analysis*Document.tex
+("D:/GitCITS3200/Documents/RAD/Requirements Analysis Document.tex"
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+(D:\GitCITS3200\Documents\common.inc.tex
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(C:\Users\Brian\AppData\Roaming\MiKTeX\2.9\tex\latex\preprint\fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip43
+)
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\helvet.sty"
+Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+))
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("d:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\tabularx.sty"
+Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
+
+("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\array.sty"
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen105
+\extrarowheight=\dimen106
+\NC@list=\toks15
+\extratabsurround=\skip44
+\backup@length=\skip45
+)
+\TX@col@width=\dimen107
+\TX@old@table=\dimen108
+\TX@old@col=\dimen109
+\TX@target=\dimen110
+\TX@delta=\dimen111
+\TX@cols=\count88
+\TX@ftn=\toks16
+)
+(C:\Users\Brian\AppData\Roaming\MiKTeX\2.9\tex\latex\lastpage\lastpage.sty
+
+LaTeX Warning: You have requested release `2011/06/27' of LaTeX,
+               but only release `2009/09/24' is available.
+
+Package: lastpage 2011/09/01 v1.2k Refers to last page's name (HMM; JPG)
+) (C:\Users\Brian\AppData\Roaming\MiKTeX\2.9\tex\latex\fancyhdr\fancyhdr.sty
+\fancy@headwidth=\skip46
+\f@ncyO@elh=\skip47
+\f@ncyO@erh=\skip48
+\f@ncyO@olh=\skip49
+\f@ncyO@orh=\skip50
+\f@ncyO@elf=\skip51
+\f@ncyO@erf=\skip52
+\f@ncyO@olf=\skip53
+\f@ncyO@orf=\skip54
+))
+("D:\GitCITS3200\Documents\RAD\Requirements Analysis Document.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+
+(C:\Users\Brian\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count89
+\scratchdimen=\dimen112
+\scratchbox=\box26
+\nofMPsegments=\count90
+\nofMParguments=\count91
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count92
+\MPscratchDim=\dimen113
+\MPnumerator=\count93
+\makeMPintoPDFobject=\count94
+\everyMPtoPDFconversion=\toks18
+)
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             http://www.ctan.org/tex-archive/ 
+(lastpage)             macros/latex/contrib/pageslts/ 
+(lastpage)             or
+(lastpage)             http://www.ctan.org/tex-archive/ 
+(lastpage)             install/macros/latex/contrib/pageslts.tds.zip
+(lastpage)             ! on input line 21.
+ (D:\GitCITS3200\Documents\titlepage.inc.tex
+<../534-genetic_algorithms.png, id=1, 370.38374pt x 155.83218pt>
+File: ../534-genetic_algorithms.png Graphic file (type png)
+
+<use ../534-genetic_algorithms.png>
+Package pdftex.def Info: ../534-genetic_algorithms.png used on input line 29.
+(pdftex.def)             Requested size: 370.38283pt x 155.8318pt.
+ [1
+
+{C:/Users/Brian/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <D:/GitCITS3
+200/Documents/534-genetic_algorithms.png>])
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 71.
+ ("d:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
+ [1] [2]
+("D:\GitCITS3200\Documents\RAD\Requirements Analysis Document.toc")
+\tf@toc=\write3
+ [3
+
+]
+Overfull \hbox (25.00003pt too wide) in paragraph at lines 129--137
+[] 
+ []
+
+
+Overfull \hbox (25.00003pt too wide) in paragraph at lines 138--146
+[] 
+ []
+
+
+Overfull \hbox (25.00003pt too wide) in paragraph at lines 147--156
+[] 
+ []
+
+
+Overfull \hbox (25.00003pt too wide) in paragraph at lines 157--170
+[] 
+ []
+
+[4
+
+] [5] [6] <../GeneticEngineCoreDetail.png, id=33, 505.89pt x 216.81pt>
+File: ../GeneticEngineCoreDetail.png Graphic file (type png)
+
+<use ../GeneticEngineCoreDetail.png>
+Package pdftex.def Info: ../GeneticEngineCoreDetail.png used on input line 272.
+
+(pdftex.def)             Requested size: 452.9679pt x 194.13141pt.
+
+<../GeneticEnginePluginDetail.png, id=35, 596.9502pt x 293.4162pt>
+File: ../GeneticEnginePluginDetail.png Graphic file (type png)
+
+<use ../GeneticEnginePluginDetail.png>
+Package pdftex.def Info: ../GeneticEnginePluginDetail.png used on input line 27
+8.
+(pdftex.def)             Requested size: 452.9679pt x 222.6494pt.
+
+<../GeneticEngineSupportDetail.png, id=36, 294.8616pt x 172.7253pt>
+File: ../GeneticEngineSupportDetail.png Graphic file (type png)
+
+<use ../GeneticEngineSupportDetail.png>
+Package pdftex.def Info: ../GeneticEngineSupportDetail.png used on input line 2
+84.
+(pdftex.def)             Requested size: 226.48395pt x 132.66943pt.
+
+<../RoadNetworkFinderDetail.png, id=37, 522.5121pt x 480.5955pt>
+File: ../RoadNetworkFinderDetail.png Graphic file (type png)
+
+<use ../RoadNetworkFinderDetail.png>
+Package pdftex.def Info: ../RoadNetworkFinderDetail.png used on input line 290.
+
+(pdftex.def)             Requested size: 452.9679pt x 416.63339pt.
+
+<../GeneticEngineCorePluginSupport.png, id=38, 1689.13412pt x 600.83295pt>
+File: ../GeneticEngineCorePluginSupport.png Graphic file (type png)
+
+<use ../GeneticEngineCorePluginSupport.png>
+Package pdftex.def Info: ../GeneticEngineCorePluginSupport.png used on input li
+ne 296.
+(pdftex.def)             Requested size: 452.9679pt x 161.11774pt.
+
+<../RoadNetworkFinder.png, id=39, 1368.87883pt x 741.12177pt>
+File: ../RoadNetworkFinder.png Graphic file (type png)
+
+<use ../RoadNetworkFinder.png>
+Package pdftex.def Info: ../RoadNetworkFinder.png used on input line 302.
+(pdftex.def)             Requested size: 317.07614pt x 171.66444pt.
+
+<../RoadNetworkFinderGUI.png, id=40, 1252.68pt x 582.41118pt>
+File: ../RoadNetworkFinderGUI.png Graphic file (type png)
+
+<use ../RoadNetworkFinderGUI.png>
+Package pdftex.def Info: ../RoadNetworkFinderGUI.png used on input line 308.
+(pdftex.def)             Requested size: 317.07614pt x 147.41536pt.
+
+<../RoadNetworkVisualiser.png, id=41, 1191.74648pt x 633.4253pt>
+File: ../RoadNetworkVisualiser.png Graphic file (type png)
+
+<use ../RoadNetworkVisualiser.png>
+Package pdftex.def Info: ../RoadNetworkVisualiser.png used on input line 314.
+(pdftex.def)             Requested size: 317.07614pt x 168.5238pt.
+ [7 <D:/GitCITS3200/Documents/GeneticEngineCoreDetail.png>] [8 <D:/GitCITS3200/
+Documents/GeneticEnginePluginDetail.png> <D:/GitCITS3200/Documents/GeneticEngin
+eSupportDetail.png>] [9 <D:/GitCITS3200/Documents/RoadNetworkFinderDetail.png> 
+<D:/GitCITS3200/Documents/GeneticEngineCorePluginSupport.png>] [10 <D:/GitCITS3
+200/Documents/RoadNetworkFinder.png> <D:/GitCITS3200/Documents/RoadNetworkFinde
+rGUI.png> <D:/GitCITS3200/Documents/RoadNetworkVisualiser.png>] <../Finder.png,
+ id=59, 537.50812pt x 205.5178pt>
+File: ../Finder.png Graphic file (type png)
+
+<use ../Finder.png>
+Package pdftex.def Info: ../Finder.png used on input line 328.
+(pdftex.def)             Requested size: 339.72592pt x 129.89398pt.
+ <../Visualiser.png, id=60, 395.22656pt x 275.52937pt>
+File: ../Visualiser.png Graphic file (type png)
+
+<use ../Visualiser.png>
+Package pdftex.def Info: ../Visualiser.png used on input line 334.
+(pdftex.def)             Requested size: 339.72592pt x 236.84132pt.
+ [11
+
+ <D:/GitCITS3200/Documents/Finder.png> <D:/GitCITS3200/Documents/Visualiser.png
+>] 
+AED: lastpage setting LastPage
+[12
+
+] ("D:\GitCITS3200\Documents\RAD\Requirements Analysis Document.aux") ) 
+Here is how much of TeX's memory you used:
+ 1500 strings out of 494049
+ 21463 string characters out of 3146065
+ 80584 words of memory out of 3000000
+ 4787 multiletter control sequences out of 15000+200000
+ 6874 words of font info for 25 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 29i,10n,43p,694b,295s stack positions out of 5000i,500n,10000p,200000b,50000s
+<d:/Prog
+ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><d:/Program F
+iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/Program Files (x86
+)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on "Requirements Analysis Document.pdf" (13 pages, 553086 bytes)
+.
+PDF statistics:
+ 97 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+

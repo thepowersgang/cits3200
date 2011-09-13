@@ -252,34 +252,46 @@ These are then plugged into the API, and the simulation is started.
 \subsubsection{Object Models}
 % TODO:
 \paragraph{Data Dictionary}
+
+Namespace: GeneticEngineCore (See figures \ref{fig:GeneticEngineCore} and \ref{fig:GeneticEngineDependencies})
+\begin{itemize}
+\item GeneticEngine
+\end{itemize}
+
+Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \ref{fig:GeneticEngineDependencies})
+
+Namespace: GeneticEngineSupport (See figures \ref{fig:GeneticEngineSupport} and \ref{fig:GeneticEngineDependencies})
+
+Namespace: RoadNetworkFinder (See figures \ref{fig:RoadNetworkFinder} and \ref{fig:RoadNetworkFinderDependencies})
+
 \paragraph{Class Diagrams}
 
 \begin{figure}[ht!]
- \caption{Namespace: GeneticEngineCore}
+ \caption{Namespace: GeneticEngineCore}\label{fig:GeneticEngineCore}
  \centering
  \includegraphics[width=\textwidth]{../GeneticEngineCoreDetail.png}
 \end{figure}
 
 \begin{figure}[ht!]
- \caption{Namespace: GeneticEnginePlugin}
+ \caption{Namespace: GeneticEnginePlugin}\label{fig:GeneticEnginePlugin}
  \centering
  \includegraphics[width=\textwidth]{../GeneticEnginePluginDetail.png}
 \end{figure}
 
 \begin{figure}[ht!]
- \caption{Namespace: GeneticEngineSupport}
+ \caption{Namespace: GeneticEngineSupport}\label{fig:GeneticEngineSupport}
  \centering
  \includegraphics[width=0.5\textwidth]{../GeneticEngineSupportDetail.png}
 \end{figure}
 
 \begin{figure}[ht!]
- \caption{Namespace: RoadNetworkFinder}
+ \caption{Namespace: RoadNetworkFinder}\label{fig:RoadNetworkFinder}
  \centering
  \includegraphics[width=\textwidth]{../RoadNetworkFinderDetail.png}
 \end{figure}
 
 \begin{figure}[ht!]
- \caption{GeneticEngineCore/Plugin/Support Dependencies}
+ \caption{GeneticEngineCore/Plugin/Support Dependencies}\label{fig:GeneticEngineDependencies}
  \centering
  \includegraphics[width=\textwidth]{../GeneticEngineCorePluginSupport.png}
 \end{figure}
@@ -287,20 +299,22 @@ These are then plugged into the API, and the simulation is started.
 \begin{figure}[ht!]
  \caption{RoadNetworkFinder Dependencies}
  \centering
- \includegraphics[width=0.7\textwidth]{../RoadNetworkFinder.png}
+ \includegraphics[width=0.7\textwidth]{../RoadNetworkFinder.png}\label{fig:RoadNetworkFinderDependencies}
 \end{figure}
 
 \begin{figure}[ht!]
  \caption{RoadNetworkFinderGUI Dependencies}
  \centering
- \includegraphics[width=0.7\textwidth]{../RoadNetworkFinderGUI.png}
+ \includegraphics[width=0.7\textwidth]{../RoadNetworkFinderGUI.png}\label{fig:RoadNetworkFinderGUIDependencies}
 \end{figure}
 
 \begin{figure}[ht!]
- \caption{RoadNetworkVisualiser Dependencies}
+ \caption{RoadNetworkVisualiser Dependencies}\label{fig:RoadNetworkVisualiserDependencies}
  \centering
  \includegraphics[width=0.7\textwidth]{../RoadNetworkVisualiser.png}
 \end{figure}
+
+\clearpage
 
 % 3.5.4 - John
 \subsubsection{Dynamic Models}
