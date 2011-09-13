@@ -128,44 +128,44 @@ The generations produced when the engine is used with these sample plug-ins will
 \subsection{Functional Requirements, their priorities and client values}
 \begin{enumerate}
  \item Core Genetic Engine Library \\
- \begin{tabularx}{\textwidth}{|r|X|l|c|}
+ \begin{tabularx}{\textwidth}{|r|X|c|c|c|}
   \hline
-  No. & Requirements & Priority & Client Value & Estimated Time to implement in Person Hours(\$) \\
+  No. & Requirements & Priority & Client Value(\$) & Hours (est.)\\
   \hline \hline
   \theenumi.1 & The system shall provide an engine for running genetic algorithms. & 1 & 10 & 12 \\ \hline
   \theenumi.2 & The system shall have the ability to load up modules & 3 & 6 & 12 \\ \hline
  \end{tabularx}
  
  \item Module Types \\
- \begin{tabularx}{\textwidth}{|r|X|l|c|}
+ \begin{tabularx}{\textwidth}{|r|X|c|c|c|}
   \hline
-  No. & Requirements & Priority & Client Value & Estimated Time to implement in Person Hours(\$) \\
+   No. & Requirements & Priority & Client Value(\$) & Hours (est.)\\
   \hline \hline
   \theenumi.1 & The system shall provide a seeding function & 2 & 8 & 6 \\ \hline
   \theenumi.2 & The system shall provide a genetic operator function which randomly mutates the best road networks in one generation to produce the next. & 1 & 10 & 18\\ \hline
  \end{tabularx}
  
  \item Genetic Engine GUI \\
- \begin{tabularx}{\textwidth}{|r|X|l|c|}
+ \begin{tabularx}{\textwidth}{|r|X|c|c|c|}
   \hline
-  No. & Requirements & Priority & Client Value & Estimated Time to implement(person hours) & Client Value over Estimated Value (\$) \\
+   No. & Requirements & Priority & Client Value(\$) & Hours (est.)\\
   \hline \hline
-  \theenumi.1 & The system shall give the user the ability to choose any of the module types described above & 4 & 4 & 10 & 0.40\\ \hline
-  \theenumi.2 & The system should be able to start the GUI & 3 & 6 & 10 & 0.60 \\ \hline
-  \theenumi.3 & The system should be able to stop and continue the generation on the GUI & 5 & 2 & 10 & 0.20 \\ \hline
+  \theenumi.1 & The system shall give the user the ability to choose any of the module types described above & 4 & 4 & 10\\ \hline
+  \theenumi.2 & The system should be able to start the GUI & 3 & 6 & 10\\ \hline
+  \theenumi.3 & The system should be able to stop and continue the generation on the GUI & 5 & 2 & 10\\ \hline
  \end{tabularx}
  
  \item Demo User Interface \\
- \begin{tabularx}{\textwidth}{|r|X|c|c|}
+ \begin{tabularx}{\textwidth}{|r|X|c|c|c|}
   \hline
-  No. & Requirements & Priority & Client Value & Estimated Time to implement in Person Hours(\$) \\
+  No. & Requirements & Priority & Client Value(\$) & Hours (est.)\\
   \hline \hline
   \theenumi.1 & The system shall provide a sample implementation of the seeding function & 4 & 4 & 4 \\ \hline
   \theenumi.2 & The system shall provide a sample implementation of the genetic operator function. & 2 & 8 & 4  \\ \hline
   \theenumi.3 & The system shall provide a sample implementation of the fitness function. & 2 & 8 & 4\\ \hline
   \theenumi.4 & The system shall provide a sample implementation of the termination function & 5 & 2 & 4 \\ \hline
   \theenumi.5 & The system shall be able to save the individual to a specific format which can be viewed by another program. & 3 & 6 & 16 \\ \hline
-  \theenumi.6 & The system shall be able to load the saved individual from a specific directory. & 5 & 2 & 16 & 0.125\\ \hline
+  \theenumi.6 & The system shall be able to load the saved individual from a specific directory. & 5 & 2 & 16\\ \hline
   \theenumi.7 & The system shall be able to view the individual in a graphical form on the demo application & 2 & 8 & 20\\ \hline
  \end{tabularx}
 \end{enumerate}
@@ -187,7 +187,7 @@ Performance has a lower priority than flexibility and good object oriented code 
 \subsubsection{Error Handling and Extreme Conditions}
 The classes in the genetic engine libraries should throw clear and descriptive exceptions when its methods are called incorrectly. These should assist the programmer using these libraries to quickly identify and fix their errors.
 
-The Genetic Engine GUI application should capture the exceptions thrown by the genetic engine library classes and report them in an easy to read format. Where possible, indicating the plug-in this caused the problem.
+The Genetic Engine GUI application should capture the exceptions thrown by the genetic engine library classes and report them in an easy to read format. Where possible, indicating the plug-in which caused the problem.
 
 \subsubsection{System Interfacing}
 The classes in the genetic engine libraries should throw clear and descriptive exceptions when its methods are called incorrectly. These should assist the programmer using these libraries to quickly identify and fix their errors.
