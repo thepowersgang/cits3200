@@ -255,10 +255,22 @@ These are then plugged into the API, and the simulation is started.
 
 Namespace: GeneticEngineCore (See figures \ref{fig:GeneticEngineCore} and \ref{fig:GeneticEngineDependencies})
 \begin{itemize}
-\item GeneticEngine
+\item GeneticEngine: Accepts one of each plug-in type and uses them to run the genetic algorithm.
+\item PluginLoader: Loads a .Net DLL file and creates instances of the classes it contains. This is used to load plug-in classes.
+\item DefaultGenerationFactory: The implementation of IGenerationFactory used by the engine if another is not supplied. This supplies instances of GeneticEngineSupport.AATreeGeneration.
+\item MaxFitnessTerminator: An implementation of ITerminator which terminates the algorithm when an individual if found with fitness greater than or equal to the specified threshold.
 \end{itemize}
 
 Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \ref{fig:GeneticEngineDependencies})
+\begin{itemize}
+\item IPopulator: An implementation of this interface will populate an ArrayList representing the initial population of individuals.
+\item IEvaluator: An implementation of this interface will evaluate an individual, giving its fitness as an unsigned integer.
+\item IGeneticOperator: Am implementation of this interface will process the current generation to produce the next population of individuals.
+\item ITerminator: An implementation of this interface will  process the current generation to determine whether the algorithm is complete.
+\item IGeneration: An implementation of this interface will hold a set of individuals with their fitness values.
+\item IGenerationFactory: An implementation of this interface will create empty instances of some implementation of IGeneration.
+\item IndividualWithFitness: Holds an individual with its fitness value. This is used as a return type for lookups in an IGeneration so that the individual and it's fitness can be returned by a single fuction call.
+\end{itemize}
 
 Namespace: GeneticEngineSupport (See figures \ref{fig:GeneticEngineSupport} and \ref{fig:GeneticEngineDependencies})
 

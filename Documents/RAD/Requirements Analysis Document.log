@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.9.13)  13 SEP 2011 14:42
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.9.13)  13 SEP 2011 15:24
 entering extended mode
 **D:/GitCITS3200/Documents/RAD/Requirements*Analysis*Document.tex
 ("D:/GitCITS3200/Documents/RAD/Requirements Analysis Document.tex"
@@ -189,92 +189,92 @@ Overfull \hbox (25.00003pt too wide) in paragraph at lines 157--170
 File: ../GeneticEngineCoreDetail.png Graphic file (type png)
 
 <use ../GeneticEngineCoreDetail.png>
-Package pdftex.def Info: ../GeneticEngineCoreDetail.png used on input line 272.
+Package pdftex.def Info: ../GeneticEngineCoreDetail.png used on input line 284.
 
 (pdftex.def)             Requested size: 452.9679pt x 194.13141pt.
-
-<../GeneticEnginePluginDetail.png, id=35, 596.9502pt x 293.4162pt>
+ [7]
+<../GeneticEnginePluginDetail.png, id=39, 596.9502pt x 293.4162pt>
 File: ../GeneticEnginePluginDetail.png Graphic file (type png)
 
 <use ../GeneticEnginePluginDetail.png>
-Package pdftex.def Info: ../GeneticEnginePluginDetail.png used on input line 27
-8.
+Package pdftex.def Info: ../GeneticEnginePluginDetail.png used on input line 29
+0.
 (pdftex.def)             Requested size: 452.9679pt x 222.6494pt.
 
-<../GeneticEngineSupportDetail.png, id=36, 294.8616pt x 172.7253pt>
+<../GeneticEngineSupportDetail.png, id=40, 294.8616pt x 172.7253pt>
 File: ../GeneticEngineSupportDetail.png Graphic file (type png)
 
 <use ../GeneticEngineSupportDetail.png>
 Package pdftex.def Info: ../GeneticEngineSupportDetail.png used on input line 2
-84.
+96.
 (pdftex.def)             Requested size: 226.48395pt x 132.66943pt.
 
-<../RoadNetworkFinderDetail.png, id=37, 522.5121pt x 480.5955pt>
+<../RoadNetworkFinderDetail.png, id=41, 522.5121pt x 480.5955pt>
 File: ../RoadNetworkFinderDetail.png Graphic file (type png)
 
 <use ../RoadNetworkFinderDetail.png>
-Package pdftex.def Info: ../RoadNetworkFinderDetail.png used on input line 290.
+Package pdftex.def Info: ../RoadNetworkFinderDetail.png used on input line 302.
 
 (pdftex.def)             Requested size: 452.9679pt x 416.63339pt.
 
-<../GeneticEngineCorePluginSupport.png, id=38, 1689.13412pt x 600.83295pt>
+<../GeneticEngineCorePluginSupport.png, id=42, 1689.13412pt x 600.83295pt>
 File: ../GeneticEngineCorePluginSupport.png Graphic file (type png)
 
 <use ../GeneticEngineCorePluginSupport.png>
 Package pdftex.def Info: ../GeneticEngineCorePluginSupport.png used on input li
-ne 296.
+ne 308.
 (pdftex.def)             Requested size: 452.9679pt x 161.11774pt.
 
-<../RoadNetworkFinder.png, id=39, 1368.87883pt x 741.12177pt>
+<../RoadNetworkFinder.png, id=43, 1368.87883pt x 741.12177pt>
 File: ../RoadNetworkFinder.png Graphic file (type png)
 
 <use ../RoadNetworkFinder.png>
-Package pdftex.def Info: ../RoadNetworkFinder.png used on input line 302.
+Package pdftex.def Info: ../RoadNetworkFinder.png used on input line 314.
 (pdftex.def)             Requested size: 317.07614pt x 171.66444pt.
 
-<../RoadNetworkFinderGUI.png, id=40, 1252.68pt x 582.41118pt>
+<../RoadNetworkFinderGUI.png, id=44, 1252.68pt x 582.41118pt>
 File: ../RoadNetworkFinderGUI.png Graphic file (type png)
 
 <use ../RoadNetworkFinderGUI.png>
-Package pdftex.def Info: ../RoadNetworkFinderGUI.png used on input line 308.
+Package pdftex.def Info: ../RoadNetworkFinderGUI.png used on input line 320.
 (pdftex.def)             Requested size: 317.07614pt x 147.41536pt.
 
-<../RoadNetworkVisualiser.png, id=41, 1191.74648pt x 633.4253pt>
+<../RoadNetworkVisualiser.png, id=45, 1191.74648pt x 633.4253pt>
 File: ../RoadNetworkVisualiser.png Graphic file (type png)
 
 <use ../RoadNetworkVisualiser.png>
-Package pdftex.def Info: ../RoadNetworkVisualiser.png used on input line 314.
+Package pdftex.def Info: ../RoadNetworkVisualiser.png used on input line 326.
 (pdftex.def)             Requested size: 317.07614pt x 168.5238pt.
- [7 <D:/GitCITS3200/Documents/GeneticEngineCoreDetail.png>] [8 <D:/GitCITS3200/
-Documents/GeneticEnginePluginDetail.png> <D:/GitCITS3200/Documents/GeneticEngin
-eSupportDetail.png>] [9 <D:/GitCITS3200/Documents/RoadNetworkFinderDetail.png> 
-<D:/GitCITS3200/Documents/GeneticEngineCorePluginSupport.png>] [10 <D:/GitCITS3
-200/Documents/RoadNetworkFinder.png> <D:/GitCITS3200/Documents/RoadNetworkFinde
-rGUI.png> <D:/GitCITS3200/Documents/RoadNetworkVisualiser.png>] <../Finder.png,
- id=59, 537.50812pt x 205.5178pt>
+ [8 <D:/GitCITS3200/Documents/GeneticEngineCoreDetail.png> <D:/GitCITS3200/Docu
+ments/GeneticEnginePluginDetail.png>]
+[9 <D:/GitCITS3200/Documents/GeneticEngineSupportDetail.png> <D:/GitCITS3200/Do
+cuments/RoadNetworkFinderDetail.png>] [10 <D:/GitCITS3200/Documents/GeneticEngi
+neCorePluginSupport.png> <D:/GitCITS3200/Documents/RoadNetworkFinder.png> <D:/G
+itCITS3200/Documents/RoadNetworkFinderGUI.png>] [11 <D:/GitCITS3200/Documents/R
+oadNetworkVisualiser.png>] <../Finder.png, id=62, 537.50812pt x 205.5178pt>
 File: ../Finder.png Graphic file (type png)
 
 <use ../Finder.png>
-Package pdftex.def Info: ../Finder.png used on input line 328.
+Package pdftex.def Info: ../Finder.png used on input line 340.
 (pdftex.def)             Requested size: 339.72592pt x 129.89398pt.
- <../Visualiser.png, id=60, 395.22656pt x 275.52937pt>
+ <../Visualiser.png, id=63, 395.22656pt x 275.52937pt>
 File: ../Visualiser.png Graphic file (type png)
 
 <use ../Visualiser.png>
-Package pdftex.def Info: ../Visualiser.png used on input line 334.
+Package pdftex.def Info: ../Visualiser.png used on input line 346.
 (pdftex.def)             Requested size: 339.72592pt x 236.84132pt.
- [11
+ [12
 
  <D:/GitCITS3200/Documents/Finder.png> <D:/GitCITS3200/Documents/Visualiser.png
 >] 
 AED: lastpage setting LastPage
-[12
+[13
 
 ] ("D:\GitCITS3200\Documents\RAD\Requirements Analysis Document.aux") ) 
 Here is how much of TeX's memory you used:
  1500 strings out of 494049
  21463 string characters out of 3146065
- 80584 words of memory out of 3000000
+ 80585 words of memory out of 3000000
  4787 multiletter control sequences out of 15000+200000
  6874 words of font info for 25 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
@@ -289,10 +289,10 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/Program Files (x86)/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "Requirements Analysis Document.pdf" (13 pages, 553086 bytes)
+Output written on "Requirements Analysis Document.pdf" (14 pages, 554710 bytes)
 .
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
+ 100 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
