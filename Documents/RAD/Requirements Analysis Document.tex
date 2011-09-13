@@ -258,7 +258,7 @@ These are then plugged into the API, and the simulation is started.
 	\item GeneticEngine: Accepts one of each plug-in type and uses them to run the genetic algorithm.
 	\item PluginLoader: Loads a .Net DLL file and creates instances of the classes it contains. This is used to load plug-in classes.
 	\item DefaultGenerationFactory: The implementation of the IGenerationFactory interface used by the engine if another is not supplied. This supplies instances of AATreeGeneration.
-	\item MaxFitnessTerminator: An implementation of ITerminator which terminates the algorithm when an individual if found with fitness greater than or equal to the specified threshold.
+	\item MaxFitnessTerminator: An implementation of ITerminator which terminates the algorithm when an individual is found with fitness greater than or equal to the specified threshold.
 	\end{itemize}
 	
 \item Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \ref{fig:GeneticEngineDependencies})
@@ -270,7 +270,7 @@ These are then plugged into the API, and the simulation is started.
 	\item IOutputter: An implementation of this interface will  output all or part of the current generation. For example it may display the best individual on the screen or write the entire generation to a file.
 	\item IGeneration: An implementation of this interface will hold a set of individuals with their fitness values.
 	\item IGenerationFactory: An implementation of this interface will create empty instances of some implementation of IGeneration.
-	\item IndividualWithFitness: Holds an individual with its fitness value. This is used as a return type for lookups in an IGeneration so that the individual and it's fitness can be returned by a single fuction call.
+	\item IndividualWithFitness: Holds an individual with its fitness value. This is used as a return type for lookups in an IGeneration so that the individual and its fitness can be returned by a single fuction call.
 	\end{itemize}
 	
 \item Namespace: GeneticEngineSupport (See figures \ref{fig:GeneticEngineSupport} and \ref{fig:GeneticEngineDependencies})
@@ -289,7 +289,7 @@ These are then plugged into the API, and the simulation is started.
 \item Namespace: RoadNetworkFinder (See figures \ref{fig:RoadNetworkFinder} and \ref{fig:RoadNetworkFinderDependencies})
 	\begin{itemize}
 	\item RoadNetworkPopulator: An implementation of the IPopulator interface. This will randomly generate an initial population of RoadNetwork instances.
-	\item RoadNetworkEvaluator: An implementation of the IEvaluator interface. This will calculate a fitness value for a RoadNetowrk based on the total length of road and the distances from each town.
+	\item RoadNetworkEvaluator: An implementation of the IEvaluator interface. This will calculate a fitness value for a RoadNetwork based on the total length of road and the distances from each town.
 	\item RoadNetworkMutationOperator: An implementation of the IGeneticOperator interface. This will generate new individuals by randomly changing the best RoadNetworks in the current generation.
 	\item RoadNetworkConjugationOperator: An implementation of the IGeneticOperator interface. This will choose pairs from the best individuals and randomly combine their parts to form new individuals.
 	\item RoadNetworkOutputter: An implementation of the IOutputter interface. This will write the entire generation to a file.
@@ -373,7 +373,7 @@ These are then plugged into the API, and the simulation is started.
  \includegraphics[width=\textwidth]{../Dynamic.png}
 \end{figure}
 
-In figure \ref{fig:Dynamic} the client program loads two dlls and gets instances of the plug-in classes from them. These classes are then used to instatntiate the GeneticEngine class and run the algorithm. When it is complete the final generation is obtained and used to find the best individual.
+In figure \ref{fig:Dynamic} the client program loads two dlls and gets instances of the plug-in classes from them. These classes are then used to instantiate the GeneticEngine class and run the algorithm. When it is complete the final generation is obtained and used to find the best individual.
 
 \clearpage
 
