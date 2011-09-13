@@ -273,6 +273,17 @@ Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \r
 \end{itemize}
 
 Namespace: GeneticEngineSupport (See figures \ref{fig:GeneticEngineSupport} and \ref{fig:GeneticEngineDependencies})
+\begin{itemize}
+\item AATreeGeneration: An implemetaton of GeneticEnginePlugin.IGeneration using a self balancing binary search tree. This allows insertion, lookup and deletion of individuals in O(lg(n)) time. Individuals are stored sorted from highest fitness to lowest and can me looked up by index or by the sum of all fitnesses before the individual. 
+\end{itemize}
+
+This second method is intended for use in Fitness Proportionate Selection or Stochastic Universal Sampling. In these, the individuals are selected randomly with probability porportional to fitness. Figure \ref{fig:FitnessProportionateSelection} shows 3 individuals: A with fitness 5, B with fitness 3, C with fitness 2. The total fitness is 10. A random number between 0 (inclusive) and 10 (exclusive) will identify an individual: (0-4 gives A, 5-7 gives B and 8-9 gives C).
+
+\begin{figure}[ht!]
+ \caption{Fitness Proportionate Selection}\label{fig:FitnessProportionateSelection}
+ \centering
+ \includegraphics[scale=0.5]{../Stochastic.png}
+\end{figure}
 
 Namespace: RoadNetworkFinder (See figures \ref{fig:RoadNetworkFinder} and \ref{fig:RoadNetworkFinderDependencies})
 
