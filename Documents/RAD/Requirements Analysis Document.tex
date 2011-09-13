@@ -257,7 +257,7 @@ Namespace: GeneticEngineCore (See figures \ref{fig:GeneticEngineCore} and \ref{f
 \begin{itemize}
 \item GeneticEngine: Accepts one of each plug-in type and uses them to run the genetic algorithm.
 \item PluginLoader: Loads a .Net DLL file and creates instances of the classes it contains. This is used to load plug-in classes.
-\item DefaultGenerationFactory: The implementation of IGenerationFactory used by the engine if another is not supplied. This supplies instances of GeneticEngineSupport.AATreeGeneration.
+\item DefaultGenerationFactory: The implementation of the IGenerationFactory interface used by the engine if another is not supplied. This supplies instances of AATreeGeneration.
 \item MaxFitnessTerminator: An implementation of ITerminator which terminates the algorithm when an individual if found with fitness greater than or equal to the specified threshold.
 \end{itemize}
 
@@ -265,8 +265,9 @@ Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \r
 \begin{itemize}
 \item IPopulator: An implementation of this interface will populate an ArrayList representing the initial population of individuals.
 \item IEvaluator: An implementation of this interface will evaluate an individual, giving its fitness as an unsigned integer.
-\item IGeneticOperator: Am implementation of this interface will process the current generation to produce the next population of individuals.
+\item IGeneticOperator: An implementation of this interface will process the current generation to produce the next population of individuals.
 \item ITerminator: An implementation of this interface will  process the current generation to determine whether the algorithm is complete.
+\item IOutputter: An implementation of this interface will  output all or part of the current generation. For example it may display the best individual on the screen or write the entire generation to a file.
 \item IGeneration: An implementation of this interface will hold a set of individuals with their fitness values.
 \item IGenerationFactory: An implementation of this interface will create empty instances of some implementation of IGeneration.
 \item IndividualWithFitness: Holds an individual with its fitness value. This is used as a return type for lookups in an IGeneration so that the individual and it's fitness can be returned by a single fuction call.
@@ -274,7 +275,7 @@ Namespace: GeneticEnginePlugin (See figures \ref{fig:GeneticEnginePlugin} and \r
 
 Namespace: GeneticEngineSupport (See figures \ref{fig:GeneticEngineSupport} and \ref{fig:GeneticEngineDependencies})
 \begin{itemize}
-\item AATreeGeneration: An implemetaton of GeneticEnginePlugin.IGeneration using a self balancing binary search tree. This allows insertion, lookup and deletion of individuals in O(lg(n)) time. Individuals are stored sorted from highest fitness to lowest and can me looked up by index or by the sum of all fitnesses before the individual. 
+\item AATreeGeneration: An implemetaton of the IGeneration interface using a self balancing binary search tree. This allows insertion, lookup and deletion of individuals in O(lg(n)) time. Individuals are stored sorted from highest fitness to lowest and can be accessed by index or by the sum of all fitnesses before the individual. 
 \end{itemize}
 
 This second method is intended for use in Fitness Proportionate Selection or Stochastic Universal Sampling. In these, the individuals are selected randomly with probability porportional to fitness. Figure \ref{fig:FitnessProportionateSelection} shows 3 individuals: A with fitness 5, B with fitness 3, C with fitness 2. The total fitness is 10. A random number between 0 (inclusive) and 10 (exclusive) will identify an individual: (0-4 gives A, 5-7 gives B and 8-9 gives C).
@@ -286,6 +287,28 @@ This second method is intended for use in Fitness Proportionate Selection or Sto
 \end{figure}
 
 Namespace: RoadNetworkFinder (See figures \ref{fig:RoadNetworkFinder} and \ref{fig:RoadNetworkFinderDependencies})
+\begin{itemize}
+\item RoadNetworkPopulator: An implementation of the IPopulator interface. This will randomly generate an initial population of RoadNetwork instances.
+\item RoadNetworkEvaluator: An implementation of the IEvaluator interface. This will calculate a fitness value for a RoadNetowrk based on the total length of road and the distances from each town.
+\item RoadNetworkMutationOperator: An implementation of the IGeneticOperator interface. This will generate new individuals by randomly changing the best RoadNetworks in the current generation.
+\item RoadNetworkConjugationOperator: An implementation of the IGeneticOperator interface. This will choose pairs from the best individuals and randomly combine their parts to form new individuals.
+\item RoadNetworkOutputter: An implementation of the IOutputter interface. This will write the entire generation to a file.
+\item RoadNetwork: Represents a network of roads on a given map. This is used as the chromosome type for the RoadNetworkFinder plugins.
+\item Map: Represents the map supplied to the algorithm. Defines the extents of the map, start/end points of the road and locations of the towns.
+\item Vertex: Representes a vertex in a RoadNetwork.
+\item Edge: Represents an edge connecting two vertices in a RoadNetwork.
+\item Coordinates: A pair of integers giving an x-y location within a Map.
+\end{itemize}
+
+Namespace: RoadNetworkFinderGUI (See figure \ref{fig:RoadNetworkFinderGUIDependencies})
+\begin{itemize}
+\item RoadNetworkFinderGUIMainWindow: Provides a graphical front-end to the GeneticEngine and PluginLoader classes fo using the RoadNetwork plug-ins.
+\end{itemize}
+
+Namespace: RoadNetworkVisualiser (See figure \ref{fig:RoadNetworkVisualiserDependencies})
+\begin{itemize}
+\item RoadNetworkVisualiserMainWindow: A GUI tool to load and view individuals from the files written by RoadNetworkOutputter.
+\end{itemize}
 
 \paragraph{Class Diagrams}
 
