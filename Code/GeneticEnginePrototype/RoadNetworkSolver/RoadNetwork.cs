@@ -48,6 +48,8 @@ namespace RoadNetworkSolver
         {
             this.start = start;
             this.end = end;
+            vertices = new List<Vertex>();
+            edges = new List<Edge>();
         }
 
         public Vertex GetVertex(int index)
@@ -94,6 +96,125 @@ namespace RoadNetworkSolver
             }
 
             return duplicate;
+        }
+
+        private class Path
+        {
+            public Edge lastEdge;
+            public Path previous;
+
+            public Path(Edge lastEdge, Path previous)
+            {
+                this.lastEdge = lastEdge;
+                this.previous = previous;
+            }
+        }
+
+        private void VisitVertex(Vertex vertex, Path path, LinkedList<Path> pathQueue)
+        {
+            vertex.Visited = true;
+
+            for (int i = 0; i < vertex.EdgeCount; i++)
+            {
+                Edge edge = vertex.GetEdge(i);
+                if (!edge.IsBroken)
+                {
+                    pathQueue.AddLast(new Path(edge, path));
+                }
+            }
+        }
+                
+        public List<Edge> FindPath()
+        {
+            ClearVisisted();
+            LinkedList<Path> pathQueue = new LinkedList<Path>();
+
+            VisitVertex(end, null, pathQueue);
+
+            while (pathQueue.Count > 0)
+            {
+                Path path = pathQueue.First();
+                pathQueue.RemoveFirst();
+
+                Vertex vertex = path.lastEdge.End;
+
+                if (vertex == start)
+                {
+                    List<Edge> edges = new List<Edge>();
+
+                    while (path != null)
+                    {
+                        edges.Add(path.lastEdge);
+                        path = path.previous;
+                    }
+
+                    return edges;
+                }
+
+                if (!vertex.Visited)
+                {
+                    VisitVertex(vertex, path, pathQueue);
+                }
+            }
+
+            return null;
+        }
+
+        public void CopyVertices(List<Vertex> source)
+        {
+            foreach (Vertex vertex in source)
+            {
+                AddVertex(vertex.CreateCopy());
+            }
+        }
+
+        public void CopyEdges(List<Edge> source)
+        {
+            foreach (Edge edge in source)
+            {
+                AddEdge(edge.Start.Copy, edge.End.Copy);
+            }
+        }
+        
+        public void PartitionVertices(List<Vertex> visited, List<Vertex> unvisited)
+        {
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Vertex vertex = vertices[i];
+
+                if (vertex.Visited)
+                {
+                    visited.Add(vertex);
+                }
+                else
+                {
+                    unvisited.Add(vertex);
+                }
+            }
+        }
+
+        public void PartitionEdges(List<Edge> visited, List<Edge> unvisited, List<Edge> broken)
+        {
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Edge edge = edges[i];
+
+                if (edge.IsBroken)
+                {
+                    broken.Add(edge);
+                }
+                else
+                {
+                    if (edge.End.Visited)
+                    {
+                        visited.Add(edge);
+                    }
+                    else
+                    {
+                        unvisited.Add(edge);
+                    }
+                }
+            }
         }
     }
 }
