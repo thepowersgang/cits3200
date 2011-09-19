@@ -9,6 +9,7 @@ namespace RoadNetworkSolver
     {
         private Edge otherSide;
         private Vertex end;
+        private bool broken;
 
         public Vertex Start
         {
@@ -42,6 +43,20 @@ namespace RoadNetworkSolver
             }
         }
 
+        public bool IsBroken
+        {
+            get
+            {
+                return broken;
+            }
+
+            set
+            {
+                broken = value;
+                otherSide.broken = value;
+            }
+        }
+
         private Edge(Vertex end, Edge otherSide)
         {
             this.end = end;
@@ -54,11 +69,6 @@ namespace RoadNetworkSolver
             this.end = end;
             this.otherSide = new Edge(start, this);
             end.AddEdge(otherSide);
-        }
-
-        public Edge CreateCopy()
-        {
-            return new Edge(otherSide.end.Copy, end.Copy);
-        }
+        }      
     }
 }

@@ -7,9 +7,26 @@ namespace RoadNetworkSolver
 {
     class RoadNetwork
     {
+        private Vertex start;
+        private Vertex end;
         private List<Vertex> vertices;
         private List<Edge> edges;
-        private List<Edge> brokenEdges;
+
+        public Vertex Start
+        {
+            get
+            {
+                return start;
+            }
+        }
+
+        public Vertex End
+        {
+            get
+            {
+                return end;
+            }
+        }
 
         public int VertexCount
         {
@@ -25,6 +42,12 @@ namespace RoadNetworkSolver
             {
                 return edges.Count;
             }
+        }
+
+        public RoadNetwork(Vertex start, Vertex end)
+        {
+            this.start = start;
+            this.end = end;
         }
 
         public Vertex GetVertex(int index)
@@ -58,7 +81,7 @@ namespace RoadNetworkSolver
 
         public RoadNetwork Duplicate()
         {
-            RoadNetwork duplicate = new RoadNetwork();
+            RoadNetwork duplicate = new RoadNetwork(start.CreateCopy(), end.CreateCopy());
 
             foreach (Vertex vertex in vertices)
             {
@@ -67,7 +90,7 @@ namespace RoadNetworkSolver
 
             foreach (Edge edge in edges)
             {
-                duplicate.edges.Add(edge.CreateCopy());
+                duplicate.AddEdge(edge.Start.Copy, edge.End.Copy);
             }
 
             return duplicate;
