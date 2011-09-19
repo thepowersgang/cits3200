@@ -9,6 +9,8 @@ namespace RoadNetworkSolver
     {
         private Coordinates coordinates;
         private List<Edge> edges;
+        private Vertex copy;
+        private bool visited;
 
         public int EdgeCount
         {
@@ -28,12 +30,36 @@ namespace RoadNetworkSolver
             edges.Add(edge);
         }
 
+        public Vertex Copy
+        {
+            get
+            {
+                return copy;
+            }
+        }
+
+        public bool Visited
+        {
+            get
+            {
+                return visited;
+            }
+
+            set
+            {
+                visited = value;
+            }
+        }
+
         public Vertex(Coordinates coordinates)
         {
             this.coordinates = coordinates;
             this.edges = new List<Edge>();
         }
-    }
 
-    
+        public Vertex CreateCopy() {
+            copy = new Vertex(coordinates);
+            return copy;
+        }
+    }    
 }

@@ -9,32 +9,52 @@ namespace RoadNetworkSolver
     {
         Random random = new Random();
 
-        private class BackwardPath
+        private class Path
         {
             public Edge lastEdge;
-            public BackwardPath previous;
+            public Path previous;
 
-            public BackwardPath(Edge lastEdge, BackwardPath previous)
+            public Path(Edge lastEdge, Path previous)
             {
                 this.lastEdge = lastEdge;
                 this.previous = previous;
             }
         }
 
+        private void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
+        {
+            parent1 = parent1.Duplicate();
+            parent2 = parent2.Duplicate();
+
+            Cut(parent1);
+            Cut(parent2);
+
+            child1 = new RoadNetwork();
+            child2 = new RoadNetwork();
+
+            for (int i = 0; i < parent1.VertexCount; i++)
+            {
+                Vertex vertex = parent1.GetVertex(i).CreateCopy();
+
+                if (vertex.Visited)
+                {
+                    child1.AddVertex(vertex);
+                }
+                else
+                {
+                    child2.AddVertex(vertex);
+                }
+            }
+        }
+
         private void Cut(RoadNetwork network)
         {
-            int nVertices = network.VertexCount;            
-            
             Edge edge = network.GetEdge(random.Next(network.EdgeCount));
-            int start = edge.Start;
-            int end = edge.End;
-
-            edge.Start = -1;
-            edge.End = -1;
-
-            bool[] connected;
-            BackwardPath path;
-            while ((path = FindPath(network, start, end, out connected)) != null)
+            Vertex start = edge.Start;
+            Vertex end = edge.End;
+                        
+            Path path;
+            while ((path = FindPath(network, start, end)) != null)
             {
                 List<Edge> edges = new List<Edge>();
 
@@ -46,55 +66,44 @@ namespace RoadNetworkSolver
 
                 Edge edgeToBreak = edges[random.Next(edges.Count)];
 
-                edgeToBreak.Start = -1;
-                edgeToBreak.End = -1;
+                edgeToBreak.Start = null;
+                edgeToBreak.End = null;
             }
 
         }
 
-        private BackwardPath FindPath(RoadNetwork network, int start, int end, out bool[] connected)
+        private Path FindPath(RoadNetwork network, Vertex start, Vertex end)
         {
-            connected = new bool[network.VertexCount];
-            connected[start] = true;
-
-            LinkedList<BackwardPath> pathQueue = new LinkedList<BackwardPath>();
-
-            Vertex startVertex = network.GetVertex(start);
-
-            int nEdges = startVertex.EdgeCount;
-
-            for(int i=0;i<nEdges;i++)
+            network.ClearVisisted();
+            LinkedList<Path> pathQueue = new LinkedList<Path>();
+                        
+            for (int i = 0; i < start.EdgeCount; i++)
             {
-                Edge edge = startVertex.GetEdge(i);
-                pathQueue.AddLast(new BackwardPath(edge, null));
+                Edge edge = start.GetEdge(i);
+                pathQueue.AddLast(new Path(edge, null));
             }
 
             while (pathQueue.Count > 0)
             {
-                BackwardPath path = pathQueue.First();
+                Path path = pathQueue.First();
                 pathQueue.RemoveFirst();
 
-                int index = path.lastEdge.End;
+                Vertex next = path.lastEdge.End;
 
-                if (index == end)
+                if (next == end)
                 {
                     return path;
                 }
 
-                if (index >= 0 && !connected[index])
+                if (next != null && !next.Visited)
                 {
-                    connected[index] = true;
+                    next.Visited = true;
 
-                    Vertex vertex = network.GetVertex(path.lastEdge.End);
-
-                    nEdges = vertex.EdgeCount;
-
-                    for (int i = 0; i < nEdges; i++)
+                    for (int i = 0; i < next.EdgeCount; i++)
                     {
-                        Edge edge = startVertex.GetEdge(i);
-                        pathQueue.AddLast(new BackwardPath(edge, path));
+                        Edge edge = next.GetEdge(i);
+                        pathQueue.AddLast(new Path(edge, path));
                     }
-
                 }
             }
 

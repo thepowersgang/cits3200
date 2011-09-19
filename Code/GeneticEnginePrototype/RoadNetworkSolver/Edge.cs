@@ -8,9 +8,9 @@ namespace RoadNetworkSolver
     class Edge
     {
         private Edge otherSide;
-        private int end;
+        private Vertex end;
 
-        public int Start
+        public Vertex Start
         {
             get
             {
@@ -22,7 +22,7 @@ namespace RoadNetworkSolver
             }
         }
 
-        public int End
+        public Vertex End
         {
             get
             {
@@ -42,15 +42,23 @@ namespace RoadNetworkSolver
             }
         }
 
-        private Edge(int end)
+        private Edge(Vertex end, Edge otherSide)
         {
             this.end = end;
+            this.otherSide = otherSide;
+            end.AddEdge(otherSide);
         }
 
-        public Edge(int start, int end)
+        public Edge(Vertex start, Vertex end)
         {
-            this.otherSide = new Edge(start);
             this.end = end;
+            this.otherSide = new Edge(start, this);
+            end.AddEdge(otherSide);
+        }
+
+        public Edge CreateCopy()
+        {
+            return new Edge(otherSide.end.Copy, end.Copy);
         }
     }
 }

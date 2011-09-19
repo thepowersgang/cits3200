@@ -9,6 +9,7 @@ namespace RoadNetworkSolver
     {
         private List<Vertex> vertices;
         private List<Edge> edges;
+        private List<Edge> brokenEdges;
 
         public int VertexCount
         {
@@ -22,7 +23,7 @@ namespace RoadNetworkSolver
         {
             get
             {
-                return 2*edges.Count;
+                return edges.Count;
             }
         }
 
@@ -31,9 +32,9 @@ namespace RoadNetworkSolver
             return vertices[index];
         }
 
-        public void AddVertex(Coordinates coordinates)
+        public void AddVertex(Vertex vertex)
         {
-            vertices.Add(new Vertex(coordinates));
+            vertices.Add(vertex);
         }
 
         public Edge GetEdge(int index)
@@ -41,12 +42,35 @@ namespace RoadNetworkSolver
             return edges[index];            
         }
 
-        public void AddEdge(int start, int end)
+        public void AddEdge(Vertex start, Vertex end)
         {
             Edge edge = new Edge(start, end);
             edges.Add(edge);
-            vertices[start].AddEdge(edge);
-            vertices[end].AddEdge(edge.Reversed);
+        }
+
+        public void ClearVisisted()
+        {
+            foreach (Vertex vertex in vertices)
+            {
+                vertex.Visited = false;
+            }
+        }
+
+        public RoadNetwork Duplicate()
+        {
+            RoadNetwork duplicate = new RoadNetwork();
+
+            foreach (Vertex vertex in vertices)
+            {
+                duplicate.vertices.Add(vertex.CreateCopy());
+            }
+
+            foreach (Edge edge in edges)
+            {
+                duplicate.edges.Add(edge.CreateCopy());
+            }
+
+            return duplicate;
         }
     }
 }
