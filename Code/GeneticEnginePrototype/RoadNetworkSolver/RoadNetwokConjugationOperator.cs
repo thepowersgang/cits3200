@@ -29,17 +29,30 @@ namespace RoadNetworkSolver
             Cut(parent1);
             Cut(parent2);
 
-            child1 = new RoadNetwork(parent1.Start.CreateCopy(), parent2.End.CreateCopy());            
-            child2 = new RoadNetwork(parent2.Start.CreateCopy(), parent1.End.CreateCopy());
-            
-            CopyVertices(parent1, child1, child2);
-            CopyVertices(parent2, child2, child1);
-            
+            List<Vertex> visitedVertices1 = new List<Vertex>();
+            List<Vertex> unvisitedVertices1 = new List<Vertex>();
+            List<Vertex> visitedVertices2 = new List<Vertex>();
+            List<Vertex> unvisitedVertices2 = new List<Vertex>();
+
+            List<Edge> visitedEdges1 = new List<Edge>();
+            List<Edge> unvisitedEdges1 = new List<Edge>();
+            List<Edge> visitedEdges2 = new List<Edge>();
+            List<Edge> unvisitedEdges2 = new List<Edge>();
             List<Edge> brokenEdges1 = new List<Edge>();
             List<Edge> brokenEdges2 = new List<Edge>();
 
-            CopyEdges(parent1, child1, child2, brokenEdges1);
-            CopyEdges(parent2, child2, child1, brokenEdges2);
+            PartitionVertices(parent1, visitedVertices1, unvisitedVertices1);
+            PartitionVertices(parent2, visitedVertices2, unvisitedVertices2);
+            PartitionEdges(parent1, visitedEdges1, unvisitedEdges1, brokenEdges1);
+            PartitionEdges(parent2, visitedEdges2, unvisitedEdges2, brokenEdges2);
+            
+            child1 = new RoadNetwork(parent1.Start.CreateCopy(), parent2.End.CreateCopy());            
+            child2 = new RoadNetwork(parent2.Start.CreateCopy(), parent1.End.CreateCopy());
+
+            CopyVertices(visitedVertices1, child1);
+            CopyVertices(unvisitedVertices2, child1);
+            CopyVertices(visitedVertices2, child2);
+            CopyVertices(unvisitedVertices1, child1);
 
             ShuffleEdges(brokenEdges1);
             ShuffleEdges(brokenEdges2);
@@ -64,6 +77,22 @@ namespace RoadNetworkSolver
 
                 child1.AddEdge(edge1.Start.Copy, edge2.End.Copy);
                 child2.AddEdge(edge2.Start.Copy, edge1.End.Copy);
+            }
+        }
+
+        private void CopyVertices(List<Vertex> source, RoadNetwork destination)
+        {
+            foreach (Vertex vertex in source)
+            {
+                destination.AddVertex(vertex.CreateCopy());
+            }
+        }
+
+        private void CopyEdges(List<Edge> source, RoadNetwork destination)
+        {
+            foreach (Edge edge in source)
+            {
+                destination.AddEdge(edge.Start.Copy, edge.End.Copy);
             }
         }
 
@@ -106,7 +135,7 @@ namespace RoadNetworkSolver
             }
         }
         
-        private void CopyVertices(RoadNetwork parent, RoadNetwork visitedChild, RoadNetwork unvisitedChild)
+        private void PartitionVertices(RoadNetwork parent, List<Vertex> visited, List<Vertex> unvisited)
         {
             for (int i = 0; i < parent.VertexCount; i++)
             {
@@ -114,16 +143,16 @@ namespace RoadNetworkSolver
 
                 if (vertex.Visited)
                 {
-                    visitedChild.AddVertex(vertex.CreateCopy());
+                    visited.Add(vertex);
                 }
                 else
                 {
-                    unvisitedChild.AddVertex(vertex.CreateCopy());
+                    unvisited.Add(vertex);
                 }
             }
         }
 
-        private void CopyEdges(RoadNetwork parent, RoadNetwork visitedChild, RoadNetwork unvisitedChild, List<Edge> brokenEdges)
+        private void PartitionEdges(RoadNetwork parent, List<Edge> visited, List<Edge> unvisited, List<Edge> broken)
         {
             for (int i = 0; i < parent.EdgeCount; i++)
             {
@@ -131,17 +160,17 @@ namespace RoadNetworkSolver
 
                 if (edge.IsBroken)
                 {
-                    brokenEdges.Add(edge);
+                    broken.Add(edge);
                 }
                 else
                 {
                     if (edge.End.Visited)
                     {
-                        visitedChild.AddEdge(edge.Start.Copy, edge.End.Copy);
+                        visited.Add(edge);
                     }
                     else
                     {
-                        unvisitedChild.AddEdge(edge.Start.Copy, edge.End.Copy);
+                        unvisited.Add(edge);
                     }
                 }
             }

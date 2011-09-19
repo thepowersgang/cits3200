@@ -59,7 +59,7 @@ namespace RoadNetworkSolver
         {
             vertices.Add(vertex);
         }
-
+        
         public Edge GetEdge(int index)
         {
             return edges[index];            
@@ -70,7 +70,7 @@ namespace RoadNetworkSolver
             Edge edge = new Edge(start, end);
             edges.Add(edge);
         }
-
+        
         public void ClearVisisted()
         {
             foreach (Vertex vertex in vertices)
