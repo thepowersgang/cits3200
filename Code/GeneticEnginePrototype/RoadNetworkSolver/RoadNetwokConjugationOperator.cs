@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class RoadNetwokConjugationOperator
+    public class RoadNetwokConjugationOperator
     {
         Random random = new Random();
                 
@@ -17,6 +17,11 @@ namespace RoadNetworkSolver
             Cut(parent1);
             Cut(parent2);
 
+            Recombine(parent1, parent2, out child1, out child2);
+        }
+
+        public void Recombine(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
+        {
             List<Vertex> visitedVertices1 = new List<Vertex>();
             List<Vertex> unvisitedVertices1 = new List<Vertex>();
             List<Vertex> visitedVertices2 = new List<Vertex>();
@@ -31,43 +36,51 @@ namespace RoadNetworkSolver
 
             parent1.PartitionVertices(visitedVertices1, unvisitedVertices1);
             parent2.PartitionVertices(visitedVertices2, unvisitedVertices2);
+            
             parent1.PartitionEdges(visitedEdges1, unvisitedEdges1, brokenEdges1);
             parent2.PartitionEdges(visitedEdges2, unvisitedEdges2, brokenEdges2);
-                        
-            child1 = new RoadNetwork(parent1.Start.CreateCopy(), parent2.End.CreateCopy());            
+
+            child1 = new RoadNetwork(parent1.Start.CreateCopy(), parent2.End.CreateCopy());
             child2 = new RoadNetwork(parent2.Start.CreateCopy(), parent1.End.CreateCopy());
 
             child1.CopyVertices(unvisitedVertices1);
-            child2.CopyVertices(visitedVertices2);
+            child1.CopyEdges(unvisitedEdges1);
+            
+            child1.CopyVertices(visitedVertices2);
+            child1.CopyEdges(visitedEdges2);
+                        
             child2.CopyVertices(unvisitedVertices2);
-            child1.CopyVertices(visitedVertices1);
-
+            child2.CopyEdges(unvisitedEdges2);
+            
+            child2.CopyVertices(visitedVertices1);
+            child2.CopyEdges(visitedEdges1);
+                        
             unvisitedVertices1.Add(parent1.Start);
             visitedVertices1.Add(parent1.End);
             unvisitedVertices2.Add(parent2.Start);
             visitedVertices2.Add(parent2.End);
 
-            ShuffleEdges(brokenEdges1);
-            ShuffleEdges(brokenEdges2);
+            //ShuffleEdges(brokenEdges1);
+            //ShuffleEdges(brokenEdges2);
 
-            int nEdges = Math.Max(brokenEdges1.Count, brokenEdges2.Count);
+            //int nEdges = Math.Max(brokenEdges1.Count, brokenEdges2.Count);
 
-            for (int i = 0; i < nEdges; i++)
-            {
-                Vertex start1;
-                Vertex end1;
-                Vertex start2;
-                Vertex end2;
+            //for (int i = 0; i < nEdges; i++)
+            //{
+            //    Vertex start1;
+            //    Vertex end1;
+            //    Vertex start2;
+            //    Vertex end2;
 
-                GetStartAndEnd(brokenEdges1, i, visitedVertices1, unvisitedVertices1, out start1, out end1);
-                GetStartAndEnd(brokenEdges2, i, visitedVertices2, unvisitedVertices2, out start2, out end2);
+            //    GetStartAndEnd(brokenEdges1, i, visitedVertices1, unvisitedVertices1, out start1, out end1);
+            //    GetStartAndEnd(brokenEdges2, i, visitedVertices2, unvisitedVertices2, out start2, out end2);
 
-                if (start1 != null && start2 != null)
-                {
-                    child1.AddEdge(start1.Copy, end2.Copy);
-                    child2.AddEdge(start2.Copy, end1.Copy);
-                }
-            }
+            //    if (start1 != null && start2 != null)
+            //    {
+            //        child1.AddEdge(start1.Copy, end2.Copy);
+            //        child2.AddEdge(start2.Copy, end1.Copy);
+            //    }
+            //}
         }
 
         private void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
@@ -101,7 +114,7 @@ namespace RoadNetworkSolver
 
         private void ShuffleEdges(List<Edge> edges)
         {
-            for (int i = edges.Count-1; i > 0 ; i++)
+            for (int i = edges.Count-1; i > 0 ; i--)
             {
                 int j = random.Next(i + 1);
                 Edge temp = edges[i];
@@ -110,7 +123,7 @@ namespace RoadNetworkSolver
             }
         }
                 
-        private void Cut(RoadNetwork network)
+        public void Cut(RoadNetwork network)
         {
             List<Edge> edges;
             while ((edges = network.FindPath()) != null)

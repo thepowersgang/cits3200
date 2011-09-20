@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class RoadNetwork
+    public class RoadNetwork
     {
         private Vertex start;
         private Vertex end;
@@ -57,20 +57,28 @@ namespace RoadNetworkSolver
             return vertices[index];
         }
 
-        public void AddVertex(Vertex vertex)
+        public Vertex AddVertex(Coordinates coordinates)
         {
+            Vertex vertex = new Vertex(coordinates);
             vertices.Add(vertex);
+            return vertex;
         }
-        
+
+        public Vertex AddVertex(int x, int y)
+        {
+            return AddVertex(new Coordinates(x, y));
+        }
+
         public Edge GetEdge(int index)
         {
             return edges[index];            
         }
 
-        public void AddEdge(Vertex start, Vertex end)
+        public Edge AddEdge(Vertex start, Vertex end)
         {
             Edge edge = new Edge(start, end);
             edges.Add(edge);
+            return edge;
         }
         
         public void ClearVisisted()
@@ -164,7 +172,7 @@ namespace RoadNetworkSolver
         {
             foreach (Vertex vertex in source)
             {
-                AddVertex(vertex.CreateCopy());
+                vertices.Add(vertex.CreateCopy());
             }
         }
 
@@ -199,7 +207,7 @@ namespace RoadNetworkSolver
             {
                 Edge edge = edges[i];
 
-                if (edge.IsBroken)
+                if (edge.Start.Visited != edge.End.Visited)
                 {
                     broken.Add(edge);
                 }

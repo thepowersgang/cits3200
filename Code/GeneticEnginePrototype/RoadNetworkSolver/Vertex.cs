@@ -5,12 +5,20 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class Vertex
+    public class Vertex
     {
         private Coordinates coordinates;
         private List<Edge> edges;
         private Vertex copy;
         private bool visited;
+
+        public Coordinates Coordinates
+        {
+            get
+            {
+                return coordinates;
+            }
+        }
 
         public int EdgeCount
         {

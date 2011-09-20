@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class Edge
+    public class Edge
     {
         private Edge otherSide;
         private Vertex end;
