@@ -60,27 +60,27 @@ namespace RoadNetworkSolver
             unvisitedVertices2.Add(parent2.Start);
             visitedVertices2.Add(parent2.End);
 
-            //ShuffleEdges(brokenEdges1);
-            //ShuffleEdges(brokenEdges2);
+            ShuffleEdges(brokenEdges1);
+            ShuffleEdges(brokenEdges2);
 
-            //int nEdges = Math.Max(brokenEdges1.Count, brokenEdges2.Count);
+            int nEdges = Math.Max(brokenEdges1.Count, brokenEdges2.Count);
 
-            //for (int i = 0; i < nEdges; i++)
-            //{
-            //    Vertex start1;
-            //    Vertex end1;
-            //    Vertex start2;
-            //    Vertex end2;
+            for (int i = 0; i < nEdges; i++)
+            {
+                Vertex start1;
+                Vertex end1;
+                Vertex start2;
+                Vertex end2;
 
-            //    GetStartAndEnd(brokenEdges1, i, visitedVertices1, unvisitedVertices1, out start1, out end1);
-            //    GetStartAndEnd(brokenEdges2, i, visitedVertices2, unvisitedVertices2, out start2, out end2);
+                GetStartAndEnd(brokenEdges1, i, visitedVertices1, unvisitedVertices1, out start1, out end1);
+                GetStartAndEnd(brokenEdges2, i, visitedVertices2, unvisitedVertices2, out start2, out end2);
 
-            //    if (start1 != null && start2 != null)
-            //    {
-            //        child1.AddEdge(start1.Copy, end2.Copy);
-            //        child2.AddEdge(start2.Copy, end1.Copy);
-            //    }
-            //}
+                if (start1 != null && start2 != null)
+                {
+                    child2.AddEdge(start1.Copy, end2.Copy);
+                    child1.AddEdge(start2.Copy, end1.Copy);
+                }
+            }
         }
 
         private void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
