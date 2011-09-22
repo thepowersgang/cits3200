@@ -5,12 +5,13 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class Edge
+    public class Edge
     {
         private Edge otherSide;
-        private int end;
+        private Vertex end;
+        private bool broken;
 
-        public int Start
+        public Vertex Start
         {
             get
             {
@@ -22,7 +23,7 @@ namespace RoadNetworkSolver
             }
         }
 
-        public int End
+        public Vertex End
         {
             get
             {
@@ -42,15 +43,32 @@ namespace RoadNetworkSolver
             }
         }
 
-        private Edge(int end)
+        public bool IsBroken
         {
-            this.end = end;
+            get
+            {
+                return broken;
+            }
+
+            set
+            {
+                broken = value;
+                otherSide.broken = value;
+            }
         }
 
-        public Edge(int start, int end)
+        private Edge(Vertex end, Edge otherSide)
         {
-            this.otherSide = new Edge(start);
             this.end = end;
+            this.otherSide = otherSide;
+            end.AddEdge(otherSide);
         }
+
+        public Edge(Vertex start, Vertex end)
+        {
+            this.end = end;
+            this.otherSide = new Edge(start, this);
+            end.AddEdge(otherSide);
+        }      
     }
 }
