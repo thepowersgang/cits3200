@@ -9,16 +9,14 @@ namespace RoadNetworkSolver
 {
     public class RoadNetwork
     {
-        private Vertex start;
-        private Vertex end;
-        private List<Vertex> vertices;
-        private List<Edge> edges;
+        private List<Vertex> vertices = new List<Vertex>();
+        private List<Edge> edges = new List<Edge>();
 
         public Vertex Start
         {
             get
             {
-                return start;
+                return vertices[0];
             }
         }
 
@@ -26,7 +24,7 @@ namespace RoadNetworkSolver
         {
             get
             {
-                return end;
+                return vertices[vertices.Count-1];
             }
         }
 
@@ -46,12 +44,21 @@ namespace RoadNetworkSolver
             }
         }
 
-        public RoadNetwork(Vertex start, Vertex end)
+        public RoadNetwork()
         {
-            this.start = start;
-            this.end = end;
-            vertices = new List<Vertex>();
-            edges = new List<Edge>();
+        }
+
+        public RoadNetwork(RoadNetwork roadNetwork)
+        {
+            foreach (Vertex vertex in roadNetwork.vertices)
+            {
+                vertices.Add(vertex.CreateCopy());
+            }
+
+            foreach (Edge edge in roadNetwork.edges)
+            {
+                AddEdge(edge.Start.Copy, edge.End.Copy);
+            }
         }
 
         public Vertex GetVertex(int index)
@@ -91,23 +98,14 @@ namespace RoadNetworkSolver
             }
         }
 
-        public RoadNetwork Duplicate()
+        public void ClearBroken()
         {
-            RoadNetwork duplicate = new RoadNetwork(start.CreateCopy(), end.CreateCopy());
-
-            foreach (Vertex vertex in vertices)
-            {
-                duplicate.vertices.Add(vertex.CreateCopy());
-            }
-
             foreach (Edge edge in edges)
             {
-                duplicate.AddEdge(edge.Start.Copy, edge.End.Copy);
+                edge.IsBroken = false;
             }
-
-            return duplicate;
         }
-
+        
         private class Path
         {
             public Edge lastEdge;
@@ -139,7 +137,7 @@ namespace RoadNetworkSolver
             ClearVisisted();
             LinkedList<Path> pathQueue = new LinkedList<Path>();
 
-            VisitVertex(end, null, pathQueue);
+            VisitVertex(End, null, pathQueue);
 
             while (pathQueue.Count > 0)
             {
@@ -148,7 +146,7 @@ namespace RoadNetworkSolver
 
                 Vertex vertex = path.lastEdge.End;
 
-                if (vertex == start)
+                if (vertex == Start)
                 {
                     List<Edge> edges = new List<Edge>();
 
@@ -170,58 +168,54 @@ namespace RoadNetworkSolver
             return null;
         }
 
-        public void CopyVertices(List<Vertex> source)
+        public void CopyVertices(List<Vertex> sourceVertices)
         {
-            foreach (Vertex vertex in source)
+            foreach (Vertex vertex in sourceVertices)
             {
                 vertices.Add(vertex.CreateCopy());
             }
         }
 
-        public void CopyEdges(List<Edge> source)
+        public void CopyEdges(List<Edge> sourceEdges)
         {
-            foreach (Edge edge in source)
+            foreach (Edge edge in sourceEdges)
             {
                 AddEdge(edge.Start.Copy, edge.End.Copy);
             }
         }
         
-        public void PartitionVertices(List<Vertex> visited, List<Vertex> unvisited)
+        public void PartitionVertices(List<Vertex> startPartition, List<Vertex> endPartition)
         {
-            for (int i = 0; i < vertices.Count; i++)
+            foreach (Vertex vertex in vertices)
             {
-                Vertex vertex = vertices[i];
-
                 if (vertex.Visited)
                 {
-                    visited.Add(vertex);
+                    endPartition.Add(vertex);
                 }
                 else
                 {
-                    unvisited.Add(vertex);
+                    startPartition.Add(vertex);
                 }
             }
         }
 
-        public void PartitionEdges(List<Edge> visited, List<Edge> unvisited, List<Edge> broken)
+        public void PartitionEdges(List<Edge> startPartition, List<Edge> endPartition, List<Edge> brokenPartition)
         {
-            for (int i = 0; i < edges.Count; i++)
+            foreach (Edge edge in edges)
             {
-                Edge edge = edges[i];
-
                 if (edge.Start.Visited != edge.End.Visited)
                 {
-                    broken.Add(edge);
+                    brokenPartition.Add(edge);
                 }
                 else
                 {
                     if (edge.End.Visited)
                     {
-                        visited.Add(edge);
+                        endPartition.Add(edge);
                     }
                     else
                     {
-                        unvisited.Add(edge);
+                        startPartition.Add(edge);
                     }
                 }
             }
@@ -235,9 +229,7 @@ namespace RoadNetworkSolver
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("network");
-            start.WriteXml("start", writer);
-            end.WriteXml("end", writer);
-
+            
             for (int i = 0; i < vertices.Count; i++)
             {
                 vertices[i].WriteXml(i.ToString(), writer);

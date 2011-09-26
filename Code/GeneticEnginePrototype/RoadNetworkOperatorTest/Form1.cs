@@ -19,22 +19,24 @@ namespace RoadNetworkOperatorTest
 
         private void Populate1()
         {
-            Vertex start = new Vertex(new Coordinates(100, 10));
-            Vertex end = new Vertex(new Coordinates(100, 210));
-            RoadNetwork network = new RoadNetwork(start, end);
+            RoadNetwork network = new RoadNetwork();
 
+            Vertex start = network.AddVertex(100, 10);            
+            
             Vertex a = network.AddVertex(50, 10);
             Vertex b = network.AddVertex(150, 10);
             Vertex c = network.AddVertex(50, 75);
             Vertex d = network.AddVertex(100, 75);
             Vertex e = network.AddVertex(150, 75);
-
+            
             Vertex f = network.AddVertex(50, 150);
             Vertex g = network.AddVertex(100, 150);
             Vertex h = network.AddVertex(150, 150);
 
             Vertex i = network.AddVertex(50, 210);
             Vertex j = network.AddVertex(150, 210);
+
+            Vertex end = network.AddVertex(100, 210);
             
             network.AddEdge(start, a);
             network.AddEdge(start, b);
@@ -62,7 +64,7 @@ namespace RoadNetworkOperatorTest
 
             RoadNetwokConjugationOperator op = new RoadNetwokConjugationOperator();
 
-            RoadNetwork cut = network.Duplicate();
+            RoadNetwork cut = new RoadNetwork(network);
 
             op.Cut(cut);
 
@@ -71,10 +73,10 @@ namespace RoadNetworkOperatorTest
 
         private void Populate2()
         {
-            Vertex start = new Vertex(new Coordinates(100, 10));
-            Vertex end = new Vertex(new Coordinates(100, 210));
-            RoadNetwork network = new RoadNetwork(start, end);
+            RoadNetwork network = new RoadNetwork();
 
+            Vertex start = network.AddVertex(100, 10);            
+            
             Vertex a = network.AddVertex(50, 50);
             Vertex b = network.AddVertex(150, 50);
 
@@ -86,6 +88,8 @@ namespace RoadNetworkOperatorTest
 
             Vertex g = network.AddVertex(50, 190);
             Vertex h = network.AddVertex(150, 190);
+
+            Vertex end = network.AddVertex(100, 210);
             
             network.AddEdge(start, a);
             network.AddEdge(start, b);
@@ -107,7 +111,7 @@ namespace RoadNetworkOperatorTest
             
             RoadNetwokConjugationOperator op = new RoadNetwokConjugationOperator();
 
-            RoadNetwork cut = network.Duplicate();
+            RoadNetwork cut = new RoadNetwork(network);
 
             op.Cut(cut);
 
