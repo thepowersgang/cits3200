@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace RoadNetworkSolver
 {
@@ -69,6 +70,14 @@ namespace RoadNetworkSolver
             this.end = end;
             this.otherSide = new Edge(start, this);
             end.AddEdge(otherSide);
-        }      
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteStartElement("edge");
+            writer.WriteAttributeString("start", otherSide.end.Id.ToString());
+            writer.WriteAttributeString("end", end.Id.ToString());
+            writer.WriteEndElement();
+        }
     }
 }

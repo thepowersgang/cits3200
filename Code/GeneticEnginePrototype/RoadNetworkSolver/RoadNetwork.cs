@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace RoadNetworkSolver
 {
@@ -224,5 +226,30 @@ namespace RoadNetworkSolver
                 }
             }
         }
+
+        public void ReadXml(XmlReader reader)
+        {
+
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteStartElement("network");
+            start.WriteXml("start", writer);
+            end.WriteXml("end", writer);
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                vertices[i].WriteXml(i.ToString(), writer);
+            }
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                edges[i].WriteXml(writer);
+            }
+
+            writer.WriteEndElement();
+        }
+
     }
 }

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineCore", "Geneti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineSupport", "GeneticEnginePlugin\GeneticEngineSupport.csproj", "{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EightQueens", "EightQueens\EightQueens.csproj", "{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericPlugins", "GenericPlugins\GenericPlugins.csproj", "{756BA368-C28A-4278-94D6-F8809F7F5C42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkSolver", "RoadNetworkSolver\RoadNetworkSolver.csproj", "{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}"
@@ -57,16 +55,6 @@ Global
 		{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}.Release|x86.ActiveCfg = Release|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{521FC102-C1DB-4BBF-9FBD-31DC8ECAD8EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{756BA368-C28A-4278-94D6-F8809F7F5C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{756BA368-C28A-4278-94D6-F8809F7F5C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756BA368-C28A-4278-94D6-F8809F7F5C42}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

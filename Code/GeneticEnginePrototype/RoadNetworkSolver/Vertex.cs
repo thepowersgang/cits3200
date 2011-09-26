@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace RoadNetworkSolver
 {
@@ -10,6 +11,7 @@ namespace RoadNetworkSolver
         private Coordinates coordinates;
         private List<Edge> edges;
         private Vertex copy;
+        private string id;
         private bool visited;
 
         public Coordinates Coordinates
@@ -46,6 +48,14 @@ namespace RoadNetworkSolver
             }
         }
 
+        public string Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
         public bool Visited
         {
             get
@@ -68,6 +78,16 @@ namespace RoadNetworkSolver
         public Vertex CreateCopy() {
             copy = new Vertex(coordinates);
             return copy;
+        }
+
+        public void WriteXml(string id, XmlWriter writer)
+        {
+            this.id = id;
+            writer.WriteStartElement("vertex");
+            writer.WriteAttributeString("id", id.ToString());
+            writer.WriteAttributeString("x", coordinates.X.ToString());
+            writer.WriteAttributeString("y", coordinates.Y.ToString());
+            writer.WriteEndElement();
         }
     }    
 }
