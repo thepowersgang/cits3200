@@ -1,31 +1,36 @@
 using System;
 using RoadNetworkSolver;
+using GeneticEngineSupport;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RoadNetworkSolver
 {
-	public class MutationOperator: IGeneticOperator<MutationOperator>
+	public class MutationOperator: IGeneticOperator
 	{
+		private Random random = new Random();
+		
 		public MutationOperator()
 		{
 		}
 		
-		public void Operate(IGeneration Population, ArrayList List)
+		public void Operate(IGeneration source, ArrayList destination)
 		{
-			for(RoadNetwork ent in Population)
+			for(int ii = 0; ii < source.Count; ii ++)
 			{
-				Mutate(ent);
-				List.add(ent);
+				destination.add( Mutate(source.Get(ii)) );
 			}
 		}
 		
-		private void Mutate(RoadNetwork ent)
+		private RoadNetwork Mutate(RoadNetwork ent)
 		{
+			RoadNetwork	ret = new RoadNetwork(ent);
 			for( int ii = 1; ii < ent.VertexCount; ii ++ )
 			{
-				Vertex v = net.GetVertex(ii);
-				v.Coordinates.x += Random(-5, 5);
+				Vertex v = ret.GetVertex(ii);
 				// TODO: Clip values
-				v.Coordinates.y += Random(-5, 5);
+				v.Coordinates.X *= random.NextDouble() * 1.5;
+				v.Coordinates.Y *= random.NextDouble() * 1.5;
 			}
 		}
 	}
