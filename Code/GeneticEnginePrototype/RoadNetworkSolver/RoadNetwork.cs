@@ -89,7 +89,7 @@ namespace RoadNetworkSolver
             return edge;
         }
         
-        public void ClearVisisted()
+        public void ClearVisited()
         {
             foreach (Vertex vertex in vertices)
             {
@@ -133,7 +133,7 @@ namespace RoadNetworkSolver
                 
         public List<Edge> FindPath()
         {
-            ClearVisisted();
+            ClearVisited();
             LinkedList<Path> pathQueue = new LinkedList<Path>();
 
             VisitVertex(End, null, pathQueue);
