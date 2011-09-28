@@ -99,26 +99,45 @@ namespace GeneticEngineCore
             this.generationFactory = generationFactory == null ? new DefaultGenerationFactory() : generationFactory;
             generationCount = 0;
         }
-         
+
+        /// <summary>
+        /// Populate the initial generation of individuals.
+        /// </summary>
+        public void Initialise()
+        {
+            ArrayList individuals = new ArrayList();
+            populator.Populate(individuals);
+            processIndividuals(individuals);
+        }
+
         /// <summary>
         /// Process the current generation to produce the next.
         /// </summary>
         public void Step()
         {
-            //The individuals which will make up the next generation
-            ArrayList individuals = new ArrayList();
-
-            //If there is no current generation then get the individuals from the populator.
+            //If there is no current generation then throw an exception.
             //Otherwise pass the current generation to the genetic operator.
             if (generation == null)
             {
-                populator.Populate(individuals);
+                throw new InvalidOperationException("Initialise() must be called before running the algorithm.");
             }
             else
             {
+                ArrayList individuals = new ArrayList();
                 geneticOperator.Operate(generation, individuals);
+                processIndividuals(individuals);
             }
+        }
 
+        /// <summary>
+        /// Process a list of individuals.
+        /// 1) Replace the current generation with a new empty IGeneration
+        /// 2) Evaluate each individual and add it to the generation
+        /// 3) Send the generation to the outputter
+        /// </summary>
+        /// <param name="individuals">The list of individuals</param>
+        private void processIndividuals(ArrayList individuals)
+        {
             //Get a new instance of the generation container.
             generation = generationFactory.CreateGeneration(individuals);
 
