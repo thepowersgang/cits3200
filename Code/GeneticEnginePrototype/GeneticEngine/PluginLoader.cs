@@ -41,8 +41,10 @@ namespace GeneticEngineCore
 			{
                 if (pluginType == null || pluginType.IsAssignableFrom(t))
                 {
-                    t.GetConstructor(new Type[] { typeof(object) });
-                    plugins.Add(t.Name);
+                    if (t.GetConstructor(new Type[] { typeof(object) }) != null)
+                    {
+                        plugins.Add(t.Name);
+                    }
                 }
             }
 

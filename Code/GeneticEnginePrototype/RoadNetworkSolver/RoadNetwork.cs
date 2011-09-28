@@ -156,15 +156,11 @@ namespace RoadNetworkSolver
             edges.Add(edge);
             return edge;
         }
-        
-<<<<<<< HEAD
-        public void ClearVisited()
-=======
+
 		/// <summary>
 		/// Clear the visited flag on all verticies
 		/// </summary>
-        public void ClearVisisted()
->>>>>>> a77673cfc0f262c5df4fb2f8eaf985cb3ed56d0c
+        public void ClearVisited()
         {
             foreach (Vertex vertex in vertices)
             {
