@@ -31,7 +31,7 @@ namespace GeneticEngineCore
         /// </summary>
         /// <param name="pluginType"></param>
         /// <returns></returns>
-        public List<string> GetPlugins(Type pluginType = null)
+        public List<string> GetPlugins(Type pluginType)
         {            
             Type[] classes = assembly.GetTypes();
 
