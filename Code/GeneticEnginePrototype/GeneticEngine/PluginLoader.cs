@@ -37,7 +37,8 @@ namespace GeneticEngineCore
 
             List<string> plugins = new List<string>();
             
-            foreach(Type t in classes) {
+            foreach(Type t in classes)
+			{
                 if (pluginType == null || pluginType.IsAssignableFrom(t))
                 {
                     t.GetConstructor(new Type[] { typeof(object) });
