@@ -7,7 +7,7 @@ using GeneticEngineSupport;
 
 public class IntegerIndividual
 {
-    int value;
+    public int value;
 
 	public IntegerIndividual()
 	{

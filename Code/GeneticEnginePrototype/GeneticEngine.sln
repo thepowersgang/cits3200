@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEnginePrototype", "GeneticEnginePrototype\GeneticEnginePrototype.csproj", "{87EEE188-C48A-4925-A3D8-0F5780F85E8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineCore", "GeneticEngine\GeneticEngineCore.csproj", "{F42AB250-665B-41C3-B772-518D01659D32}"
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkOperatorTest", "RoadNetworkOperatorTest\RoadNetworkOperatorTest.csproj", "{1B62E571-AD6B-4713-B774-357C9FA45743}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkGUI", "..\..\..\GeneticEnginePrototype\RoadNetworkGUI\RoadNetworkGUI.csproj", "{E3817792-2F45-4367-9276-C92BE60B07E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineTesting", "GeneticEngineTesting\GeneticEngineTesting.csproj", "{660ECC4B-AE4F-4777-860A-069316A7D973}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,16 @@ Global
 		{E3817792-2F45-4367-9276-C92BE60B07E2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{E3817792-2F45-4367-9276-C92BE60B07E2}.Release|x86.ActiveCfg = Release|x86
 		{E3817792-2F45-4367-9276-C92BE60B07E2}.Release|x86.Build.0 = Release|x86
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{660ECC4B-AE4F-4777-860A-069316A7D973}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

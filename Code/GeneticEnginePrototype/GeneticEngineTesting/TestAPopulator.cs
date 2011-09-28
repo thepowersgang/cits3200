@@ -18,7 +18,7 @@ public class TestAPopulator : IPopulator
         {
             IntegerIndividual theIndividual = new IntegerIndividual();
             theIndividual.value = i;
-            individuals.Add(thisIndividual);
+            individuals.Add(theIndividual);
         }
     }
 }
