@@ -54,6 +54,11 @@ namespace RoadNetworkSolver
             {
                 return id;
             }
+
+            set
+            {
+                id = value;
+            }
         }
 
         public bool Visited
@@ -78,16 +83,6 @@ namespace RoadNetworkSolver
         public Vertex CreateCopy() {
             copy = new Vertex(coordinates);
             return copy;
-        }
-
-        public void WriteXml(string id, XmlWriter writer)
-        {
-            this.id = id;
-            writer.WriteStartElement("vertex");
-            writer.WriteAttributeString("id", id.ToString());
-            writer.WriteAttributeString("x", coordinates.X.ToString());
-            writer.WriteAttributeString("y", coordinates.Y.ToString());
-            writer.WriteEndElement();
         }
     }    
 }

@@ -71,13 +71,5 @@ namespace RoadNetworkSolver
             this.otherSide = new Edge(start, this);
             end.AddEdge(otherSide);
         }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteStartElement("edge");
-            writer.WriteAttributeString("start", otherSide.end.Id.ToString());
-            writer.WriteAttributeString("end", end.Id.ToString());
-            writer.WriteEndElement();
-        }
     }
 }

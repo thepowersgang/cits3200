@@ -16,32 +16,27 @@ namespace GeneticEngineCore
             assembly = Assembly.LoadFrom(path); 
         }
 
-        public string[] GetPlugins()
+        public List<string> GetPlugins(Type pluginType = null)
         {            
             Type[] classes = assembly.GetTypes();
 
-            string[] plugins = new string[classes.Length];
-
-            int i=0;
-
+            List<string> plugins = new List<string>();
+            
             foreach(Type t in classes) {
-                plugins[i++] = t.Name;
+                if (pluginType == null || pluginType.IsAssignableFrom(t))
+                {
+                    t.GetConstructor(new Type[] { typeof(object) });
+                    plugins.Add(t.Name);
+                }
             }
 
             return plugins;
         }
-
-        private object GetInstance(Type type, object[] parameters)
-        {
-            Type[] parameterTypes = new Type[parameters.Length];
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                parameterTypes[i] = parameters[i].GetType();
-            }
-                        
-            ConstructorInfo constructor = type.GetConstructor(parameterTypes);
-            return constructor.Invoke(parameters);
+        
+        private object GetInstance(Type type, object config)
+        {               
+            ConstructorInfo constructor = type.GetConstructor(new Type[]{typeof(Object)});
+            return constructor.Invoke(new Object[]{config});
         }        
     }
 }

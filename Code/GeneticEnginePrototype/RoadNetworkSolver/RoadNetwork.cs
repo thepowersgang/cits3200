@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Xml.Schema;
 
 namespace RoadNetworkSolver
 {
@@ -223,7 +222,63 @@ namespace RoadNetworkSolver
 
         public void ReadXml(XmlReader reader)
         {
+            Dictionary<string, Vertex> verticesById = new Dictionary<string, Vertex>();
 
+            int depth = 1;
+
+            while (depth>0 && reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        switch (reader.Name)
+                        {
+                            case ("vertex"): 
+
+                                string id = reader.GetAttribute("id");
+                                string xString = reader.GetAttribute("x");
+                                string yString = reader.GetAttribute("y");
+
+                                int x;
+                                int y;
+
+                                int.TryParse(xString, out x);
+                                int.TryParse(yString, out y);
+
+                                verticesById.Add(id, AddVertex(x, y));
+
+                                if (!reader.IsEmptyElement)
+                                {
+                                    depth++;
+                                }
+
+                                break;
+
+                            case ("edge"):
+
+                                string startId = reader.GetAttribute("start");
+                                string endId = reader.GetAttribute("end");
+
+                                Vertex start = verticesById[startId];
+                                Vertex end = verticesById[endId];
+
+                                AddEdge(start, end);
+
+                                if (!reader.IsEmptyElement)
+                                {
+                                    depth++;
+                                }
+
+                                break;
+                        }
+                        break;
+
+                    case XmlNodeType.EndElement:
+                        depth--;
+                        break;
+                }
+                
+            }
         }
 
         public void WriteXml(XmlWriter writer)
@@ -232,12 +287,22 @@ namespace RoadNetworkSolver
             
             for (int i = 0; i < vertices.Count; i++)
             {
-                vertices[i].WriteXml(i.ToString(), writer);
+                Vertex vertex = vertices[i];
+                vertex.Id = i.ToString();
+
+                writer.WriteStartElement("vertex");
+                writer.WriteAttributeString("id", vertex.Id);
+                writer.WriteAttributeString("x", vertex.Coordinates.X.ToString());
+                writer.WriteAttributeString("y", vertex.Coordinates.Y.ToString());
+                writer.WriteEndElement();
             }
 
-            for (int i = 0; i < edges.Count; i++)
+            foreach (Edge edge in edges)
             {
-                edges[i].WriteXml(writer);
+                writer.WriteStartElement("edge");
+                writer.WriteAttributeString("start", edge.Start.Id.ToString());
+                writer.WriteAttributeString("end", edge.End.Id.ToString());
+                writer.WriteEndElement();
             }
 
             writer.WriteEndElement();

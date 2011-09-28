@@ -50,7 +50,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoadNetwokConjugationOperator.cs" />
     <Compile Include="RoadNetwork.cs" />
+    <Compile Include="RoadNetworkXMLOutputter.cs" />
     <Compile Include="Vertex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEngineSupport.csproj">
+      <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
+      <Name>GeneticEngineSupport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
