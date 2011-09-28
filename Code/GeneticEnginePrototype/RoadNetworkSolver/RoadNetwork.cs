@@ -156,11 +156,11 @@ namespace RoadNetworkSolver
             edges.Add(edge);
             return edge;
         }
-        
+
 		/// <summary>
 		/// Clear the visited flag on all verticies
 		/// </summary>
-        public void ClearVisisted()
+        public void ClearVisited()
         {
             foreach (Vertex vertex in vertices)
             {
@@ -244,7 +244,7 @@ namespace RoadNetworkSolver
 		/// </returns>
         public List<Edge> FindPath()
         {
-            ClearVisisted();
+            ClearVisited();
             LinkedList<Path> pathQueue = new LinkedList<Path>();
 			
 			// Initialise from the end of the path
