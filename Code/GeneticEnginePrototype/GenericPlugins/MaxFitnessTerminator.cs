@@ -6,7 +6,7 @@ using GeneticEngineSupport;
 
 namespace GenericPlugins
 {
-    class MaxFitnessTerminator : ITerminator
+    public class MaxFitnessTerminator : ITerminator
     {
         uint maxFitness;
 
