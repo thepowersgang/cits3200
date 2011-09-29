@@ -21,7 +21,7 @@ public class TestAOutputter : IOutputter
             IndividualWithFitness thisIndividual = generation[i];
             Console.WriteLine("Current Generation: " + i);
             Console.WriteLine("Best Fitness: " + thisIndividual.Fitness);
-            Console.WriteLine("Value: " + (thisIndividual.Individual.value).ToString());
+            Console.WriteLine("Value: " + (((IntegerIndividual)(thisIndividual.Individual)).value).ToString());
             Console.WriteLine();
         }
     }

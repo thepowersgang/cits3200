@@ -24,7 +24,7 @@ public class TestAGeneticOperator : IGeneticOperator
             operatedIndividual1.value = theIndividual.value + 1;
             operatedIndividual2.value = theIndividual.value + 2;
             destination.Add(operatedIndividual1);
-            destination.Add(operatedInvididual2);
+            destination.Add(operatedIndividual2);
         }
     }
 }
