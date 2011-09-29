@@ -18,7 +18,7 @@ namespace RoadNetworkSolver
 		{
 			for(int ii = 0; ii < source.Count; ii ++)
 			{
-				destination.add( Mutate(source.Get(ii)) );
+				//destination.add( Mutate(source.Get(ii)) );
 			}
 		}
 		
@@ -29,9 +29,10 @@ namespace RoadNetworkSolver
 			{
 				Vertex v = ret.GetVertex(ii);
 				// TODO: Clip values
-				v.Coordinates.X *= random.NextDouble() * 1.5;
-				v.Coordinates.Y *= random.NextDouble() * 1.5;
+				v.Coordinates.X *= (int) (random.NextDouble() * 1.5);
+				v.Coordinates.Y *= (int) (random.NextDouble() * 1.5);
 			}
+            return ret;
 		}
 	}
 }
