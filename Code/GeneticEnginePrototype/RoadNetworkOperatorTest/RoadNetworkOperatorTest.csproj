@@ -13,6 +13,21 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -77,6 +92,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GeneticEnginePrototype\RoadNetworkGUI\RoadNetworkGUI.csproj">
+      <Project>{E3817792-2F45-4367-9276-C92BE60B07E2}</Project>
+      <Name>RoadNetworkGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericPlugins\GenericPlugins.csproj">
+      <Project>{756BA368-C28A-4278-94D6-F8809F7F5C42}</Project>
+      <Name>GenericPlugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEngineSupport.csproj">
+      <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
+      <Name>GeneticEngineSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneticEnginePrototype\GeneticEnginePrototype.csproj">
+      <Project>{87EEE188-C48A-4925-A3D8-0F5780F85E8D}</Project>
+      <Name>GeneticEnginePrototype</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneticEngine\GeneticEngineCore.csproj">
+      <Project>{F42AB250-665B-41C3-B772-518D01659D32}</Project>
+      <Name>GeneticEngineCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoadNetworkDisplay\RoadNetworkDisplay.csproj">
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>
       <Name>RoadNetworkDisplay</Name>
@@ -85,6 +120,28 @@
       <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>
       <Name>RoadNetworkSolver</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
