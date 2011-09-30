@@ -12,22 +12,48 @@ namespace GeneticEngineCore
     /// </summary>
     public class GeneticEngine
     {
-        //Plug-ins
-        IPopulator populator;        
+        /// <summary>
+        /// The populator plugin
+        /// </summary>
+        IPopulator populator;
+        
+        /// <summary>
+        /// The evaluator plugin
+        /// </summary>
         IEvaluator evaluator;
+
+        /// <summary>
+        /// The gentic operator plugin
+        /// </summary>
         IGeneticOperator geneticOperator;
+
+        /// <summary>
+        /// The termination condition plugin
+        /// </summary>
         ITerminator terminator;
+
+        /// <summary>
+        /// The output plugin
+        /// </summary>
         IOutputter outputter;
+
+        /// <summary>
+        /// The generation factory plugin
+        /// </summary>
         IGenerationFactory generationFactory;
 
-        //The number of generations which have been processed
+        /// <summary>
+        /// The number of generations which have been processed
+        /// </summary>
         int generationCount;
 
-        //Current generation 
+        /// <summary>
+        /// The most recent generation
+        /// </summary>
         IGeneration generation = null;
 
         /// <summary>
-        /// Gets the number of generations processed.
+        /// Gets the number of generations processed or -1 if the engine has not been initialised.
         /// </summary>
         public int GenerationCount
         {
@@ -97,17 +123,19 @@ namespace GeneticEngineCore
             this.terminator = terminator;
             this.outputter = outputter;
             this.generationFactory = generationFactory == null ? new DefaultGenerationFactory() : generationFactory;
-            generationCount = 0;
+            generationCount = -1;
         }
 
         /// <summary>
         /// Populate the initial generation of individuals.
+        /// This may be called at any time to reset the algorithm.
         /// </summary>
         public void Initialise()
         {
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);
             processIndividuals(individuals);
+            generationCount = 0;
         }
 
         /// <summary>
@@ -176,7 +204,7 @@ namespace GeneticEngineCore
         }
         
         /// <summary>
-        /// Execute the genetic algorithm until the termination condidtion is satisfied.
+        /// Execute the genetic algorithm until the termination condition is satisfied.
         /// </summary>
         public void Run()
         {

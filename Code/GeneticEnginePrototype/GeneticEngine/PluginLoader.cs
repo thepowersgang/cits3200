@@ -27,9 +27,10 @@ namespace GeneticEngineCore
         }
 
         /// <summary>
-        /// Get
+        /// Get a list of plugin classed available in the DLL.
+        /// To be considered a plugin the class must have a constructor which accepts one object as its only parameter.
         /// </summary>
-        /// <param name="pluginType"></param>
+        /// <param name="pluginType">The type of plugins to list. If supplied only classes which can be cast as this type will be listed.</param>
         /// <returns></returns>
         public List<string> GetPlugins(Type pluginType)
         {            
@@ -51,6 +52,12 @@ namespace GeneticEngineCore
             return plugins;
         }
         
+        /// <summary>
+        /// Get an instance of a class from this DLL
+        /// </summary>
+        /// <param name="typeName">The name of the class</param>
+        /// <param name="config">The configuration object to pass to the class's constructor</param>
+        /// <returns>A new instance of the class.</returns>
         private object GetInstance(string typeName, object config)
         {
             Type type = assembly.GetType(typeName);

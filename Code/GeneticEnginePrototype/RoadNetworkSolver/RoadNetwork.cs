@@ -57,7 +57,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Number of edges (links) in the road network
+		/// Number of edges in the road network
 		/// </summary>
         public int EdgeCount
         {
@@ -68,7 +68,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Create a blank RoadNetwork
+		/// Create an empty RoadNetwork
 		/// </summary>
         public RoadNetwork()
         {
@@ -114,7 +114,7 @@ namespace RoadNetworkSolver
 		/// A <see cref="Coordinates"/> object denoting the position
 		/// </param>
 		/// <returns>
-		/// Added <see cref="Vertex"/>
+		/// The added <see cref="Vertex"/>
 		/// </returns>
         public Vertex AddVertex(Coordinates coordinates)
         {
@@ -124,12 +124,12 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Add a vertex by an (x,y) pair
+		/// Add a vertex to the network
 		/// </summary>
-		/// <param name="x">X Coordinate</param>
-		/// <param name="y">Y Coordinate</param>
+		/// <param name="x">The x-coordinate of the vertex</param>
+        /// <param name="y">The y-coordinate of the vertex</param>
 		/// <returns>
-		/// Added <see cref="Vertex"/>
+		/// The added <see cref="Vertex"/>
 		/// </returns>
         public Vertex AddVertex(int x, int y)
         {
@@ -140,10 +140,10 @@ namespace RoadNetworkSolver
 		/// Get an edge by index
 		/// </summary>
 		/// <param name="index">
-		/// <see cref="System.Int32"/> index to the edge
+        /// A integer denoting the index of the edge
 		/// </param>
 		/// <returns>
-		/// Corresponding <see cref="Edge"/>
+		/// The corresponding <see cref="Edge"/>
 		/// </returns>
         public Edge GetEdge(int index)
         {
@@ -151,7 +151,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Create an edge between two <see cref="Vertex"/> objects
+		/// Add an edge joining two <see cref="Vertex"/> objects
 		/// </summary>
 		/// <param name="start">
 		/// Start <see cref="Vertex"/>
@@ -160,7 +160,7 @@ namespace RoadNetworkSolver
 		/// End <see cref="Vertex"/>
 		/// </param>
 		/// <returns>
-		/// Created <see cref="Edge"/>
+		/// The added <see cref="Edge"/>
 		/// </returns>
         public Edge AddEdge(Vertex start, Vertex end)
         {
@@ -170,7 +170,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Clear the visited flag on all verticies
+		/// Clear the "visited" flag on all verticies
 		/// </summary>
         public void ClearVisited()
         {
@@ -200,6 +200,7 @@ namespace RoadNetworkSolver
 			/// Edge most recently traveled
 			/// </summary>
             public Edge lastEdge;
+
 			/// <summary>
 			/// Previous path segment
 			/// </summary>
@@ -210,10 +211,10 @@ namespace RoadNetworkSolver
 			/// <see cref="lastEdge" />
 			/// </summary>
 			/// <param name="lastEdge">
-			/// <see cref="Edge"/> traveled
+			/// The <see cref="Edge"/> traveled along last.
 			/// </param>
 			/// <param name="previous">
-			/// Previous <see cref="Path"/> segment
+			/// The previous <see cref="Path"/> segment
 			/// </param>
             public Path(Edge lastEdge, Path previous)
             {
@@ -223,16 +224,16 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Populate pathQueue with all possible paths from vertex
+		/// Explore the edges leading from a vertex
 		/// </summary>
 		/// <param name="vertex">
-		/// <see cref="Vertex"/> to work from
+		/// The <see cref="Vertex"/> to work from
 		/// </param>
 		/// <param name="path">
-		/// Previous <see cref="Path"/> segment
+        /// The <see cref="Path"/> segment which led to this <see cref="Vertex"/>
 		/// </param>
 		/// <param name="pathQueue">
-		/// Destination list of <see cref="Path"/> objects
+		/// Queue to add the new <see cref="Path"/> objects to, to be explored later.
 		/// </param>
         private void VisitVertex(Vertex vertex, Path path, LinkedList<Path> pathQueue)
         {
@@ -249,10 +250,11 @@ namespace RoadNetworkSolver
         }
 		
 		/// <summary>
-		/// 
+		/// Find (one of) the shortest path(s) from Start to End, ignoring edges marked as "broken".
+        /// If no path exists then all vertices reachable from End are marked "visited".
 		/// </summary>
 		/// <returns>
-		/// A <see cref="List<Edge>"/>
+		/// A <see cref="List<Edge>"/> containing the edges (in order) linking Start to End or null if no path exists.
 		/// </returns>
         public List<Edge> FindPath()
         {
@@ -293,15 +295,15 @@ namespace RoadNetworkSolver
                 }
             }
 
-			// No possible path?!
+			// No possible path
             return null;
         }
 
 		/// <summary>
-		/// Get a copy of all verticies in the network
+		/// Add a copy of each vertex in a list to the network.
 		/// </summary>
 		/// <param name="sourceVertices">
-		/// Destination list for the verticies
+		/// Source list of verticies
 		/// </param>
         public void CopyVertices(List<Vertex> sourceVertices)
         {
@@ -312,10 +314,10 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Get a copy of all of the edges in the network
+		/// Add a copy of each edge in a list to the network.
 		/// </summary>
 		/// <param name="sourceEdges">
-		/// Destination list for the edges
+		/// Source list of edges
 		/// </param>
         public void CopyEdges(List<Edge> sourceEdges)
         {
@@ -327,7 +329,12 @@ namespace RoadNetworkSolver
         
 		/// <summary>
 		/// Sorts all verticies into two lists, depending on if they have been visited or not
-		/// </summary>
+        /// 
+        /// If called after FindPath() returns null then:
+        ///     endPartition will be populated with all vertices connected to the End.
+        ///     startPartition will pe populated with all other vertices.
+        ///         (For the purposes of the Conjucation Operator these are all connected to the Start)
+        /// </summary>
 		/// <param name="startPartition">
 		/// Verticies that have not been visited
 		/// </param>
@@ -350,16 +357,21 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Sorts edges into three lists, depending on if they have been taken
+		/// Sorts edges into three lists, depending on the "visited" state of their Start and End vertices.
+        /// 
+        /// When used alongside PartitionVertices:
+        ///     startPartition will contain all edges which connect 2 vertices in the start partition.
+        ///     endPartition will contain all edges which connect 2 vertices in the end partition.
+        ///     brokenPartition will contain all edges which connect vertices from different partitions.
 		/// </summary>
 		/// <param name="startPartition">
-		/// Edges that have not been fully visited (start and end haven't)
+		/// Will be populated with Edges that have neither vertices visited
 		/// </param>
 		/// <param name="endPartition">
-		/// Edges that have been visited (both start and end have been visited)
+        /// Will be populated with Edges that have both vertices visited
 		/// </param>
 		/// <param name="brokenPartition">
-		/// Edges that either the start or end have been visited, but not both
+        /// Will be populated with Edges that have one vertex unvisited and one visited
 		/// </param>
         public void PartitionEdges(List<Edge> startPartition, List<Edge> endPartition, List<Edge> brokenPartition)
         {
@@ -384,7 +396,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Populate the class from an <see cref="XmlReader"/> object
+		/// Deserealize the vertices and edges from an <see cref="XmlReader"/>
 		/// </summary>
 		/// <param name="reader">
 		/// <see cref="XmlReader"/> containing data
@@ -451,7 +463,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Save the RoadNetwork to an XmlWriter object
+		/// Serealise the RoadNetwork to an XmlWriter
 		/// </summary>
 		/// <param name="writer">
 		/// Destination <see cref="XmlWriter"/>
