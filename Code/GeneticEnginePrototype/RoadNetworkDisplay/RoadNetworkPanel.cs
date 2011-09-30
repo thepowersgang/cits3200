@@ -12,7 +12,7 @@ namespace RoadNetworkDisplay
 {
     public partial class RoadNetworkPanel : UserControl
     {
-        RoadNetwork network = null;        
+        RoadNetwork network = null;
 
         public RoadNetworkPanel()
         {
@@ -35,10 +35,42 @@ namespace RoadNetworkDisplay
 
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
+            drawGrid(e);
+            drawTowns(e);
+            drawVerticesEdges(e);
+        }
+        private void drawGrid(PaintEventArgs e)
+        {
+            Pen pen = Pens.Black;
+            int startX = 0;
+            int startY = 0;
+            int finishX = Width - startX;
+            int finishY = Height - startY;
+            e.Graphics.DrawLine(pen, startX, startY, startX, finishY);
+            e.Graphics.DrawLine(pen, startX, startY, finishX, startY);
+            e.Graphics.DrawLine(pen, startX, finishY, finishX, finishY);
+            e.Graphics.DrawLine(pen, finishX, startY, finishX, finishY);
+            int colWidth = (int)Math.Ceiling((double)(finishX - startX) / 10);
+            int rowWidth = (int)Math.Ceiling((double)(finishY - startY) / 10);
+            for (int i = startX + colWidth; i < finishX; i = i + colWidth)
+            {
+                e.Graphics.DrawLine(pen, i, startY, i, finishY);
+            }
+            for (int j = startY + rowWidth; j < finishY; j = j + rowWidth)
+            {
+                e.Graphics.DrawLine(pen, startX, j, finishX, j);
+            }
+        }
+        private void drawTowns(PaintEventArgs e)
+        {
+
+        }
+        private void drawVerticesEdges(PaintEventArgs e)
+        {
             if (network != null)
             {
                 Coordinates startCoordinates = network.Start.Coordinates;
-                e.Graphics.FillEllipse(Brushes.Red, startCoordinates.X - 2, startCoordinates.Y - 2, 5, 5);
+                e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 5, 5);
 
                 Coordinates endCoordinates = network.End.Coordinates;
                 e.Graphics.FillEllipse(Brushes.Green, endCoordinates.X - 2, endCoordinates.Y - 2, 5, 5);
@@ -64,7 +96,7 @@ namespace RoadNetworkDisplay
                         pen = Pens.Red;
                     }
 
-                    e.Graphics.DrawLine(pen, coordinates0.X, coordinates0.Y, coordinates1.X, coordinates1.Y); 
+                    e.Graphics.DrawLine(pen, coordinates0.X, coordinates0.Y, coordinates1.X, coordinates1.Y);
                 }
             }
         }

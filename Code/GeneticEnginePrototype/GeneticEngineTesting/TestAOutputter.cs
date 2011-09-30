@@ -13,15 +13,15 @@ public class TestAOutputter : IOutputter
 	}
 
     //IOutputter has spelling error, int genrationCount -> int generationCount.
-    void OutputGeneration(IGeneration generation, int genrationCount)
+    public void OutputGeneration(IGeneration generation, int generationCount)
     {
         Console.WriteLine("Generations: " + generationCount);
-        for (int i = 0; i < genrationCount; i++)
+        for (int i = 0; i < generationCount; i++)
         {
             IndividualWithFitness thisIndividual = generation[i];
             Console.WriteLine("Current Generation: " + i);
             Console.WriteLine("Best Fitness: " + thisIndividual.Fitness);
-            Console.WriteLine("Value: " + (thisIndividual.Individual.value).ToString());
+            Console.WriteLine("Value: " + (((IntegerIndividual)(thisIndividual.Individual)).value).ToString());
             Console.WriteLine();
         }
     }
