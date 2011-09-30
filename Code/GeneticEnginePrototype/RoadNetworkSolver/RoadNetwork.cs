@@ -6,13 +6,25 @@ using System.Xml;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// Describes a network of roads with a start and end vertex
+    /// </summary>
     public class RoadNetwork
     {
+        /// <summary>
+        /// The list of vertices
+        /// The first vertex is considered the start vertex
+        /// The last vertex is considered the end vertex
+        /// </summary>
         private List<Vertex> vertices = new List<Vertex>();
+
+        /// <summary>
+        /// The list of edges
+        /// </summary>
         private List<Edge> edges = new List<Edge>();
 
 		/// <summary>
-		/// Initial (start) node for the RoadNetwork
+		/// Initial (start) vertex for the RoadNetwork
 		/// </summary>
         public Vertex Start
         {
@@ -23,7 +35,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Final (destination) node for the RoadNetwork
+		/// Final (destination) vertex for the RoadNetwork
 		/// </summary>
         public Vertex End
         {
@@ -34,7 +46,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Number of nodes in the network
+		/// Number of vertices in the network
 		/// </summary>
         public int VertexCount
         {
