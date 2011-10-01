@@ -38,7 +38,7 @@ namespace GeneticEngineSupport
         protected ulong totalFitness;
 
         /// <summary>
-        /// Gets the number of individuals in the generation.
+        /// Get the number of individuals in the generation.
         /// </summary>
         public int Count
         {
@@ -49,7 +49,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the minimum fitness value of all individuals in the generation.
+        /// Get the minimum fitness value of all individuals in the generation.
         /// </summary>
         public uint MinFitness
         {
@@ -60,7 +60,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the maximum fitness value of all individuals in the generation.
+        /// Get the maximum fitness value of all individuals in the generation.
         /// </summary>
         public uint MaxFitness
         {
@@ -71,7 +71,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the sum of the fitness values of all individuals in the generation.
+        /// Get the sum of the fitness values of all individuals in the generation.
         /// </summary>
         public ulong TotalFitness
         {
@@ -82,7 +82,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the average fitness value of the individuals in the generation.
+        /// Get the average fitness value of the individuals in the generation.
         /// </summary>
         public float AverageFitness
         {
@@ -93,7 +93,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the individual at the specified index.
+        /// Get the individual at the specified index.
         /// The individual with the highest fitness will be at index 0
         /// </summary>
         /// <param name="index">The zero-based index of the element to get.</param>
@@ -107,7 +107,7 @@ namespace GeneticEngineSupport
         }
         
         /// <summary>
-        /// Initialises an empty AATreeGeneration
+        /// Initialise an empty AATreeGeneration
         /// </summary>
         public AATreeGeneration()
         {
@@ -133,7 +133,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the individual at the specified index.
+        /// Get the individual at the specified index.
         /// The individual with the highest fitness will be at index 0
         /// </summary>
         /// <param name="index">The zero-based index of the element to get.</param>
@@ -154,7 +154,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the last individual for which the sum of fitneses of all individuals
+        /// Get the last individual for which the sum of fitneses of all individuals
         /// up to and including it is less than the given partial sum.
         /// 
         /// This is intended to be used for random sampling with the probability of each individual weighted by its fitness.
@@ -174,7 +174,7 @@ namespace GeneticEngineSupport
         }
        
         /// <summary>
-        /// Gets the index of the last individual for which the sum of fitneses of all individuals
+        /// Get the index of the last individual for which the sum of fitneses of all individuals
         /// up to and including it is less than the given partial sum.
         /// </summary>
         /// <param name="sum">The partial sum</param>
@@ -214,7 +214,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Gets the last individual for which the sum of fitneses of all individuals
+        /// Remove and return the last individual for which the sum of fitneses of all individuals
         /// up to and including it is less than the given partial sum.
         /// </summary>
         /// <param name="sum">The partial sum</param>
@@ -233,7 +233,7 @@ namespace GeneticEngineSupport
         }
 
         /// <summary>
-        /// Prepare the generation for processing by a genetic operator.
+        /// Prepare the generation for processing by plug-ins (outputter/terminator/genetic operator).
         /// (Do nothing)
         /// </summary>
         public void Prepare() { }
@@ -320,29 +320,17 @@ namespace GeneticEngineSupport
             else if (fitness > currentNode.fitness)
             {
                 //If fitness is greater than the fitness of the current node then go left.
+                //The partial sum and partial count will need to be updated.
+
                 currentNode.partialSum += fitness;
                 currentNode.partialCount++;
 
-                if (currentNode.leftChild == null)
-                {
-                    currentNode.leftChild = new Node(individual, fitness);
-                }
-                else
-                {
-                    Insert(ref currentNode.leftChild, individual, fitness);
-                }
+                Insert(ref currentNode.leftChild, individual, fitness);
             }
             else
             {
                 //If fitness is less than or equal to the fitness of the current node then go left.
-                if (currentNode.rightChild == null)
-                {
-                    currentNode.rightChild = new Node(individual, fitness);
-                }
-                else
-                {
-                    Insert(ref currentNode.rightChild, individual, fitness);
-                }
+                Insert(ref currentNode.rightChild, individual, fitness);
             }
 
             //Rebalance the tree
@@ -412,29 +400,20 @@ namespace GeneticEngineSupport
         {
             if (sum < currentNode.partialSum - currentNode.fitness)
             {
-                if (currentNode.leftChild == null)
-                {
-                    return currentNode.partialCount;
-                }
-                else
-                {
-                    return GetIndexByPartialSum(ref currentNode.leftChild, sum);
-                }
+                //If the partial sum is less than the sum of nodes to the left of the current node then go left
+                return GetIndexByPartialSum(ref currentNode.leftChild, sum);                
             }
             else if (sum < currentNode.partialSum)
             {
+                //If the partial sum is greater than or equal to the sum of nodes to the left of the current node but
+                //less than the partial sum of the current node then return the individual held in the current node.
                 return currentNode.partialCount;
             }
             else
             {
-                if (currentNode.rightChild == null)
-                {
-                    return currentNode.partialCount;
-                }
-                else
-                {
-                    return currentNode.partialCount + GetIndexByPartialSum(ref currentNode.rightChild, sum - currentNode.partialSum);
-                }
+                //If the partial sum is greater than or equal to the partial sum of the current node then
+                //go right
+                return currentNode.partialCount + GetIndexByPartialSum(ref currentNode.rightChild, sum - currentNode.partialSum);
             }
         }
 
@@ -451,21 +430,27 @@ namespace GeneticEngineSupport
 
             if (index < currentNode.partialCount)
             {
+                //If the index is less than the index of the current node then go left.
                 removed = Remove(ref currentNode.leftChild, index);
 
+                //Update the partial sum and partial count values.
                 currentNode.partialSum -= removed.Fitness;
                 currentNode.partialCount--;
             }
             else if (index > currentNode.partialCount)
             {
+                //If the index is greater than the index of the current node then go left.
                 removed = Remove(ref currentNode.rightChild, index - currentNode.partialCount);
             }
             else
             {
+                //If the index is equal to the index of the current node then remove the individual held in the current node.
                 removed = Remove(ref currentNode);
             }
 
+            //Rebalance the tree
             FixDeletion(ref currentNode);
+
             return removed;
         }
 
@@ -482,68 +467,105 @@ namespace GeneticEngineSupport
 
             if (sum < currentNode.partialSum - currentNode.fitness)
             {
+                //If the partial sum is less than the sum of nodes to the left of the current node then go left
                 removed = RemoveByPartialSum(ref currentNode.leftChild, sum);
 
+                //Update the partial sum and partial cound values
                 currentNode.partialSum -= removed.Fitness;
                 currentNode.partialCount--;                
             }
             else if (sum < currentNode.partialSum)
             {
+                //If the partial sum is greater than or equal to the sum of nodes to the left of the current node but
+                //less than the partial sum of the current node then remove the individual held in the current node.
                 removed = Remove(ref currentNode);
             }
             else
             {
+                //If the partial sum is greater than or equal to the partial sum of the current node then
+                //go right
                 removed = RemoveByPartialSum(ref currentNode.rightChild, sum - currentNode.partialSum);
             }
 
+            //Rebalance the tree
             FixDeletion(ref currentNode);
+
             return removed;
         }
 
+        /// <summary>
+        /// Remove a node.
+        /// If the node is not a leaf node then swap it with its inorder successor first.
+        /// </summary>
+        /// <param name="node">The node to remove</param>
+        /// <returns>The individual held in the node and its fitness value</returns>
         protected static IndividualWithFitness Remove(ref Node node)
         {
             IndividualWithFitness removed = node.IndividualWithFitness;
 
             if (node.rightChild == null)
             {
+                //If the node has no right child then it is a leaf node.
+                //It can be removed.
                 node = null;
             }
             else
             {
+                //If the node is not a leaf node then get its succesor.
                 Node replacement = GetReplacement(ref node.rightChild);
 
+                //Replace the individual and fitness value in this node
                 node.individual = replacement.individual;
                 node.fitness = replacement.fitness;
+
+                //Update the partial sum to reflect the replacement.
                 node.partialSum -= removed.Fitness - replacement.fitness;
             }
 
             return removed;
         }
 
+        /// <summary>
+        /// Find the leftmost decendant of the current node then remove and return it.
+        /// </summary>
+        /// <param name="currentNode">The current node</param>
+        /// <returns>The left most decendant</returns>
         protected static Node GetReplacement(ref Node currentNode)
         {
             Node replacement;
 
             if (currentNode.leftChild == null)
             {
+                //If there is no left child then we have found the successor
                 replacement = currentNode;
                 currentNode = currentNode.rightChild;
             }
             else
             {
+                //Otherwise go left
                 replacement = GetReplacement(ref currentNode.leftChild);
+
+                //Update the partial sum and partial count values
+                //because the replacement will no longer be to the left of the current node.
                 currentNode.partialSum -= replacement.fitness;
                 currentNode.partialCount--;
             }
 
+            //Rebalance the tree
             FixDeletion(ref currentNode);
+
             return replacement;
         }
 
+        /// <summary>
+        /// Rebalance the tree after a node is deleted
+        /// </summary>
+        /// <param name="currentNode">The node being rebalanced</param>
         protected static void FixDeletion(ref Node currentNode)
         {
             if (currentNode != null)
             {
+                //Determine what the level of the current node should be.
                 int levelShouldBe;
 
                 if (currentNode.leftChild == null || currentNode.rightChild == null)
@@ -555,6 +577,7 @@ namespace GeneticEngineSupport
                     levelShouldBe = Math.Min(currentNode.leftChild.level, currentNode.rightChild.level) + 1;
                 }
 
+                //If the current node's level is too high then correct it
                 if (levelShouldBe < currentNode.level)
                 {
                     currentNode.level = levelShouldBe;
@@ -564,6 +587,7 @@ namespace GeneticEngineSupport
                     }
                 }
 
+                //Skew if necessary
                 Skew(ref currentNode);
 
                 if (currentNode.rightChild != null)
@@ -576,6 +600,7 @@ namespace GeneticEngineSupport
                     }
                 }
 
+                //Split if necessary
                 Split(ref currentNode);
 
                 if (currentNode.rightChild != null)
@@ -585,6 +610,10 @@ namespace GeneticEngineSupport
             }
         }
 
+        /// <summary>
+        /// Perform a skew around a given node if necessary.
+        /// </summary>
+        /// <param name="root">The node</param>
         protected static void Skew(ref Node root)
         {
             Node left = root.leftChild;
@@ -601,6 +630,10 @@ namespace GeneticEngineSupport
             }
         }
 
+        /// <summary>
+        /// Perform a split around a given node if necessary.
+        /// </summary>
+        /// <param name="root">The node</param>
         protected static void Split(ref Node root)
         {
             Node right = root.rightChild;

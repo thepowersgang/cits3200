@@ -5,11 +5,24 @@ using System.Text;
 
 namespace GeneticEngineSupport
 {
+    /// <summary>
+    /// Holds an individual and its fitness value
+    /// </summary>
     public class IndividualWithFitness
     {
+        /// <summary>
+        /// The individual
+        /// </summary>
         private object individual;
+
+        /// <summary>
+        /// The individual's fitness value
+        /// </summary>
         private uint fitness;
 
+        /// <summary>
+        /// Get the individual
+        /// </summary>
         public object Individual
         {
             get
@@ -18,6 +31,9 @@ namespace GeneticEngineSupport
             }
         }
 
+        /// <summary>
+        /// Get the individual's fitness value
+        /// </summary>
         public uint Fitness
         {
             get
@@ -26,6 +42,11 @@ namespace GeneticEngineSupport
             }
         }
 
+        /// <summary>
+        /// Initialise a new IndividualWithFitness
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <param name="fitness">The individual's fitness</param>
         public IndividualWithFitness(object individual, uint fitness)
         {
             this.individual = individual;
