@@ -5,54 +5,84 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// Represents a location in 2D (x,y) space
+    /// </summary>
     public class Coordinates
     {
+        /// <summary>
+        /// The x-coordinate
+        /// </summary>
         private int x;
-        private int y;
 
+        /// <summary>
+        /// The y-coordinate
+        /// </summary>
+        private int y;
+        
+        /// <summary>
+        /// Get the x-coordinate
+        /// </summary>
         public int X
         {
             get
             {
                 return x;
             }
-            set
-            {
-                x = value;
-            }
         }
 
+        /// <summary>
+        /// Get the y-coordinate
+        /// </summary>
         public int Y
         {
             get
             {
                 return y;
             }
-            set
-            {
-               y = value;
-            }
         }
 
+        /// <summary>
+        /// Initialise a new instance of Coordinates and set its x and y-coordinates
+        /// </summary>
+        /// <param name="x">The x-coordinate</param>
+        /// <param name="y">The y-coordinate</param>
         public Coordinates(int x, int y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public int GetDistanceSquared(Coordinates destination)
+        /// <summary>
+        /// Calcuate the square of the distance between this locations and another.
+        /// 
+        /// This is faster than calculating the distance as no square root operation is required.
+        /// </summary>
+        /// <param name="c">The coordinates of the other location</param>
+        /// <returns>The square of the distance between c0 and c1</returns>
+        public int GetDistanceSquared(Coordinates c)
         {
-            int dx = x - destination.x;
-            int dy = y - destination.y;
+            int dx = x - c.x;
+            int dy = y - c.y;
 
             return dx * dx + dy * dy;
         }
 
-        public double GetDistance(Coordinates destination)
+        /// <summary>
+        /// Calculate the distance between this locations and another.
+        /// </summary>
+        /// <param name="c">The coordinates of the other location</param>
+        /// <returns>The distance between c0 and c1</returns>
+        public double GetDistance(Coordinates c)
         {
-            return Math.Sqrt((double)GetDistanceSquared(destination));
+            return Math.Sqrt((double)GetDistanceSquared(c));
         }
 
+        /// <summary>
+        /// Determine if another set of coordinates is equivalent to this one.
+        /// </summary>
+        /// <param name="c">The other set of coordinates</param>
+        /// <returns>True iff the other set of coordinates are equivalent</returns>
         public bool Equals(Coordinates c)
         {
             return x == c.x && y == c.y;

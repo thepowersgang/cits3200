@@ -32,7 +32,7 @@ public class TestClass
         int[] countNumbers;
         countNumbers = new int[100];
         GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
-        testEngine.Initialise();
+        testEngine.Reset();
         testEngine.Step();
         currentGeneration = testEngine.Generation;
         int temp = 0;
@@ -66,7 +66,7 @@ public class TestClass
         int[] countNumber;
         countNumber = new int[198];
         GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
-        testEngine.Initialise();
+        testEngine.Reset();
         testEngine.Step();
         testEngine.Step();
         currentGeneration = testEngine.Generation;
@@ -95,7 +95,7 @@ public class TestClass
     {
         initialiseA();
         GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
-        testEngine.Initialise();
+        testEngine.Reset();
         if (testEngine.IsComplete) throw new Exception("Is Complete returns true when expected value is false.");
         testEngine.Step();
         if (testEngine.IsComplete) throw new Exception("Is Complete returns true when expected value is false.");
@@ -112,7 +112,7 @@ public class TestClass
     {
         initialiseA();
         GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
-        testEngine.Initialise();
+        testEngine.Reset();
         testEngine.Repeat(5);
         currentGeneration = testEngine.Generation;
 
@@ -123,7 +123,7 @@ public class TestClass
     {
         initialiseA();
         GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
-        testEngine.Initialise();
+        testEngine.Reset();
         testEngine.Run();
         int[] countNumber;
         Boolean passed = true;

@@ -87,7 +87,7 @@ namespace GeneticEngineCore
         }
 
         /// <summary>
-        /// Initialises a new instance of the GeneticEngine class with the supplied plug-ins.
+        /// Initialise a new instance of the GeneticEngine class with the supplied plug-ins.
         /// </summary>
         /// <param name="populator">The populator plug-in. Generates the initial population.</param>
         /// <param name="evaluator">The evaluator plug-in. Provides the fitness function.</param>
@@ -123,14 +123,15 @@ namespace GeneticEngineCore
             this.terminator = terminator;
             this.outputter = outputter;
             this.generationFactory = generationFactory == null ? new DefaultGenerationFactory() : generationFactory;
-            generationCount = -1;
+
+            Reset();
         }
 
         /// <summary>
-        /// Populate the initial generation of individuals.
-        /// This may be called at any time to reset the algorithm.
+        /// Reset the genetic engine by setting the generation count to 0 and using the populator plug-in
+        /// to generate a new initial population 
         /// </summary>
-        public void Initialise()
+        public void Reset()
         {
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);

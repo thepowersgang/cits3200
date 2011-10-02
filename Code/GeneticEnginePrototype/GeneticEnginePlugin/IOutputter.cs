@@ -11,10 +11,10 @@ namespace GeneticEngineSupport
     public interface IOutputter
     {
         /// <summary>
-        /// 
+        /// Output a generation
         /// </summary>
-        /// <param name="generation"></param>
-        /// <param name="genrationCount"></param>
+        /// <param name="generation">The generation to output</param>
+        /// <param name="genrationCount">The number of generations before this one</param>
         void OutputGeneration(IGeneration generation, int genrationCount);
     }
 }
