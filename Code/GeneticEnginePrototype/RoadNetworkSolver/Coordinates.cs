@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace RoadNetworkSolver
 {
@@ -51,6 +52,21 @@ namespace RoadNetworkSolver
         {
             this.x = x;
             this.y = y;
+        }
+
+        /// <summary>
+        /// Initialise a new instance of Coordinates from an XmlReader.
+        /// The reader's current node must be an element which includes the attributes 'x' and 'y', 
+        /// both holding integers.
+        /// </summary>
+        /// <param name="reader">The XmlReader to read the x and y coordinates from.</param>
+        public Coordinates(XmlReader reader)
+        {
+            string xString = reader.GetAttribute("x");
+            string yString = reader.GetAttribute("y");
+            
+            int.TryParse(xString, out x);
+            int.TryParse(yString, out y);
         }
 
         /// <summary>

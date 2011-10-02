@@ -396,7 +396,7 @@ namespace RoadNetworkSolver
         }
 
 		/// <summary>
-		/// Deserealize the vertices and edges from an <see cref="XmlReader"/>
+		/// Deserealise the vertices and edges from an <see cref="XmlReader"/>
 		/// </summary>
 		/// <param name="reader">
 		/// <see cref="XmlReader"/> containing data
@@ -415,24 +415,8 @@ namespace RoadNetworkSolver
                         switch (reader.Name)
                         {
                             case ("vertex"): 
-
-                                string id = reader.GetAttribute("id");
-                                string xString = reader.GetAttribute("x");
-                                string yString = reader.GetAttribute("y");
-
-                                int x;
-                                int y;
-
-                                int.TryParse(xString, out x);
-                                int.TryParse(yString, out y);
-
-                                verticesById.Add(id, AddVertex(x, y));
-
-                                if (!reader.IsEmptyElement)
-                                {
-                                    depth++;
-                                }
-
+                                string id = reader.GetAttribute("id");                                
+                                verticesById.Add(id, AddVertex(new Coordinates(reader)));                                
                                 break;
 
                             case ("edge"):
@@ -444,14 +428,15 @@ namespace RoadNetworkSolver
                                 Vertex end = verticesById[endId];
 
                                 AddEdge(start, end);
-
-                                if (!reader.IsEmptyElement)
-                                {
-                                    depth++;
-                                }
-
+                                
                                 break;
                         }
+
+                        if (!reader.IsEmptyElement)
+                        {
+                            depth++;
+                        }
+
                         break;
 
                     case XmlNodeType.EndElement:

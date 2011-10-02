@@ -61,7 +61,7 @@ namespace RoadNetworkSolver
         }
 
         /// <summary>
-        /// 
+        /// Get or set a flag indicating that the edge is broken.
         /// </summary>
         public bool IsBroken
         {
@@ -77,6 +77,11 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Initialise a new Edge when the 'other side' already exists.
+        /// </summary>
+        /// <param name="end">The end Vertex of this edge.</param>
+        /// <param name="otherSide">The 'other side' of this edge.</param>
         private Edge(Vertex end, Edge otherSide)
         {
             this.end = end;
@@ -84,6 +89,11 @@ namespace RoadNetworkSolver
             end.AddEdge(otherSide);
         }
 
+        /// <summary>
+        /// Initialise a new Edge
+        /// </summary>
+        /// <param name="start">The start Vertex</param>
+        /// <param name="end">The end Vertex</param>
         public Edge(Vertex start, Vertex end)
         {
             this.end = end;

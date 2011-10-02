@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    public class RoadNetwokConjugationOperator
+    public class ConjugationOperator
     {
         Random random = new Random();
                 

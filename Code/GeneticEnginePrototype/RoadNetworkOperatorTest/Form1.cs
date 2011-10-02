@@ -62,7 +62,7 @@ namespace RoadNetworkOperatorTest
 
             parent1.Network = network;
 
-            RoadNetwokConjugationOperator op = new RoadNetwokConjugationOperator();
+            ConjugationOperator op = new ConjugationOperator();
 
             RoadNetwork cut = new RoadNetwork(network);
 
@@ -109,7 +109,7 @@ namespace RoadNetworkOperatorTest
 
             parent2.Network = network;
             
-            RoadNetwokConjugationOperator op = new RoadNetwokConjugationOperator();
+            ConjugationOperator op = new ConjugationOperator();
 
             RoadNetwork cut = new RoadNetwork(network);
 
@@ -123,7 +123,7 @@ namespace RoadNetworkOperatorTest
             Populate1();
             Populate2();
 
-            RoadNetwokConjugationOperator op = new RoadNetwokConjugationOperator();
+            ConjugationOperator op = new ConjugationOperator();
 
             RoadNetwork ch1 = null;
             RoadNetwork ch2 = null;

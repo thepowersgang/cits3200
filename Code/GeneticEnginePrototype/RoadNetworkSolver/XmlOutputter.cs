@@ -6,7 +6,7 @@ using GeneticEngineSupport;
 
 namespace RoadNetworkSolver
 {
-    class RoadNetworkXMLOutputter : IOutputter
+    class XmlOutputter : IOutputter
     {
         public void OutputGeneration(IGeneration generation, int genrationCount)
         {
