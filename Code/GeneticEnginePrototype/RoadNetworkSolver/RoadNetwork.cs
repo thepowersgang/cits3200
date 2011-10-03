@@ -128,7 +128,7 @@ namespace RoadNetworkSolver
 		/// </returns>
         public Vertex AddVertex(Coordinates coordinates)
         {
-            Vertex vertex = new Vertex(coordinates);
+            Vertex vertex = new Vertex(this, coordinates);
             vertices.Add(vertex);
             return vertex;
         }
@@ -174,6 +174,16 @@ namespace RoadNetworkSolver
 		/// </returns>
         public Edge AddEdge(Vertex start, Vertex end)
         {
+            if (!start.BelongsToNetwork(this))
+            {
+                throw new Exception("Start Vertex does not belong to this RoadNetwork.");
+            }
+
+            if (!end.BelongsToNetwork(this))
+            {
+                throw new Exception("End Vertex does not belong to this RoadNetwork.");
+            }
+            
             Edge edge = new Edge(start, end);
             edges.Add(edge);
             return edge;
@@ -319,7 +329,7 @@ namespace RoadNetworkSolver
         {
             foreach (Vertex vertex in sourceVertices)
             {
-                vertices.Add(vertex.CreateCopy());
+                vertex.Copy = AddVertex(vertex.Coordinates);
             }
         }
         
