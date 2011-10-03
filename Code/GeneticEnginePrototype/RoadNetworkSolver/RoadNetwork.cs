@@ -12,6 +12,11 @@ namespace RoadNetworkSolver
     public class RoadNetwork
     {
         /// <summary>
+        /// The map this road network exits within.
+        /// </summary>
+        Map map;
+
+        /// <summary>
         /// The list of vertices
         /// The first vertex is considered the start vertex
         /// The last vertex is considered the end vertex
@@ -22,6 +27,17 @@ namespace RoadNetworkSolver
         /// The list of edges
         /// </summary>
         private List<Edge> edges = new List<Edge>();
+
+        /// <summary>
+        /// Get the map this RoadNetwork exists within.
+        /// </summary>
+        public Map Map
+        {
+            get
+            {
+                return map;
+            }
+        }
 
 		/// <summary>
 		/// Initial (start) vertex for the RoadNetwork
@@ -67,32 +83,15 @@ namespace RoadNetworkSolver
             }
         }
 
-		/// <summary>
-		/// Create an empty RoadNetwork
-		/// </summary>
-        public RoadNetwork()
+        /// <summary>
+        /// Initialise an empty RoadNetwork
+        /// </summary>
+        /// <param name="map">The map this Roadnetwork exists within.</param>
+        public RoadNetwork(Map map)
         {
+            this.map = map;
         }
-
-		/// <summary>
-		/// Create a copy of another RoadNetwork
-		/// </summary>
-		/// <param name="roadNetwork">
-		/// A <see cref="RoadNetwork"/> to duplicate
-		/// </param>
-        public RoadNetwork(RoadNetwork roadNetwork)
-        {
-            foreach (Vertex vertex in roadNetwork.vertices)
-            {
-                vertices.Add(vertex.CreateCopy());
-            }
-
-            foreach (Edge edge in roadNetwork.edges)
-            {
-                AddEdge(edge.Start.Copy, edge.End.Copy);
-            }
-        }
-
+                
 		/// <summary>
 		/// Fetch a vertex by its index
 		/// </summary>
@@ -313,8 +312,20 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Add a copy of each vertex in another RoadNetowrk to this one.
+        /// </summary>
+        /// <param name="sourceNetwork">
+        /// The RoadNetwork to copy from.
+        /// </param>
+        public void CopyVertices(RoadNetwork sourceNetwork)
+        {
+            CopyVertices(sourceNetwork.vertices);
+        }
+
 		/// <summary>
 		/// Add a copy of each edge in a list to the network.
+        /// the "Copy" property of each vertex in the source should already point to a vertex in this RoadNetwork.
 		/// </summary>
 		/// <param name="sourceEdges">
 		/// Source list of edges
@@ -325,6 +336,18 @@ namespace RoadNetworkSolver
             {
                 AddEdge(edge.Start.Copy, edge.End.Copy);
             }
+        }
+
+        /// <summary>
+        /// Add a copy of each edge in another RoadNetowrk to this one.
+        /// the "Copy" property of each vertex in the source should already point to a vertex in this RoadNetwork.
+        /// </summary>
+        /// <param name="sourceNetwork">
+        /// The RoadNetwork to copy from.
+        /// </param>
+        public void CopyEdges(RoadNetwork sourceNetwork)
+        {
+            CopyEdges(sourceNetwork.edges);
         }
         
 		/// <summary>

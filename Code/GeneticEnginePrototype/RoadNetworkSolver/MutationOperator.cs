@@ -24,14 +24,26 @@ namespace RoadNetworkSolver
 		
 		private RoadNetwork Mutate(RoadNetwork ent)
 		{
-			RoadNetwork	ret = new RoadNetwork(ent);
-			for( int ii = 1; ii < ent.VertexCount; ii ++ )
+			RoadNetwork	ret = new RoadNetwork(ent.Map);
+
+            ent.Start.Copy = ret.AddVertex(ent.Start.Coordinates);
+
+			for( int ii = 1; ii < ent.VertexCount-1; ii ++ )
 			{
 				Vertex v = ret.GetVertex(ii);
-				// TODO: Clip values
-				v.Coordinates.X *= (int) (random.NextDouble() * 1.5);
-				v.Coordinates.Y *= (int) (random.NextDouble() * 1.5);
+				
+				int x = v.Coordinates.X * (int) (random.NextDouble() * 1.5);
+				int y = v.Coordinates.Y * (int) (random.NextDouble() * 1.5);
+                
+                // TODO: Clip values
+
+                v.Copy = ret.AddVertex(x, y);
 			}
+
+            ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
+
+            ret.CopyEdges(ent);
+
             return ret;
 		}
 	}

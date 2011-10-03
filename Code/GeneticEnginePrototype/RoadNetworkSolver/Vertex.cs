@@ -46,6 +46,11 @@ namespace RoadNetworkSolver
             {
                 return copy;
             }
+
+            set
+            {
+                copy = value;
+            }
         }
 
         public string Id
