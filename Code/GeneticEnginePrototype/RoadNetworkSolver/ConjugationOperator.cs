@@ -38,8 +38,8 @@ namespace RoadNetworkSolver
             parent1.PartitionEdges(startEdgePartition1, endEdgePartition1, brokenEdgePartition1);
             parent2.PartitionEdges(startEdgePartition2, endEdgePartition2, brokenEdgePartition2);
 
-            child1 = new RoadNetwork();
-            child2 = new RoadNetwork();
+            child1 = new RoadNetwork(parent1.Map);
+            child2 = new RoadNetwork(parent2.Map);
 
             child1.CopyVertices(startVertexPartition1);
             child1.CopyEdges(startEdgePartition1);

@@ -24,7 +24,7 @@ namespace RoadNetworkSolver
 		
 		private RoadNetwork Mutate(RoadNetwork ent)
 		{
-			RoadNetwork	ret = new RoadNetwork();
+			RoadNetwork	ret = new RoadNetwork(ent.Map);
 
             ent.Start.Copy = ret.AddVertex(ent.Start.Coordinates);
 
