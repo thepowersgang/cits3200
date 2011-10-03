@@ -73,7 +73,7 @@ namespace GeneticEngineCore
         /// <param name="pluginName">The name of the plug-in type as returned by GetPluginNames()</param>
         /// <param name="config">The configuration object which will be passes to the constructor.</param>
         /// <returns>A new instance of the plug-in type.</returns>
-        private object GetInstance(string pluginName, object config)
+        public object GetInstance(string pluginName, object config)
         {
             ConstructorInfo constructor = constructors[pluginName];
             return constructor.Invoke(new Object[] { config });
