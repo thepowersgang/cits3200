@@ -17,7 +17,7 @@ namespace RoadNetworkOperatorTest
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new RoadNetworkFinder());
-            Application.Run(new Road_Network_Visualiser());
+            //Application.Run(new Road_Network_Visualiser());
         }
     }
 }

@@ -13,7 +13,6 @@ namespace RoadNetworkDisplay
     public partial class RoadNetworkPanel : UserControl
     {
         RoadNetwork network = null;
-        List<Coordinates> towns = null;
         public RoadNetworkPanel()
         {
             InitializeComponent();
@@ -34,17 +33,6 @@ namespace RoadNetworkDisplay
             }
         }
 
-        public List<Coordinates> Towns
-        {
-            get
-            {
-                return towns;
-            }
-            set
-            {
-                towns = value;
-            }
-        }
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
             drawGrid(e);
@@ -75,11 +63,12 @@ namespace RoadNetworkDisplay
         }
         private void drawTowns(PaintEventArgs e)
         {
-            if (Towns != null)
+            if (network.Map.TownCount > 0)
             {
-                for (int i = 0; i < towns.Count; i++)
+                for (int i = 0; i < network.Map.TownCount; i++)
                 {
-                    e.Graphics.FillEllipse(Brushes.Red, towns[i].X - 2, towns[i].Y - 2, 5, 5);
+                    Coordinates town = network.Map.GetTown(i);
+                    e.Graphics.FillEllipse(Brushes.Red, town.X - 2, town.Y - 2, 10, 10);
                 }
             }
         }
@@ -87,11 +76,11 @@ namespace RoadNetworkDisplay
         {
             if (network != null)
             {
-                Coordinates startCoordinates = network.Start.Coordinates;
-                e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 5, 5);
+                Coordinates startCoordinates = network.Map.Start;
+                e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 10, 10);
 
-                Coordinates endCoordinates = network.End.Coordinates;
-                e.Graphics.FillEllipse(Brushes.Green, endCoordinates.X - 2, endCoordinates.Y - 2, 5, 5);
+                Coordinates endCoordinates = network.Map.End;
+                e.Graphics.FillEllipse(Brushes.Green, endCoordinates.X - 2, endCoordinates.Y - 2, 10, 10);
 
                 for (int i = 0; i < network.EdgeCount; i++)
                 {

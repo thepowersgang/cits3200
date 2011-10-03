@@ -19,12 +19,17 @@ namespace RoadNetworkGUI
     public partial class RoadNetworkFinder : Form
     {
         bool hasInitialised, hasCompleted;
+        IPopulator populator;
+        IEvaluator evaluator;
+        IGeneticOperator geneticOperator;
+        ITerminator terminator;
+        IOutputter outputter;
+        IGenerationFactory generationFactory;
         PluginLoader loader;
         GeneticEngine engine;
         List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
         List<Coordinates> towns = new List<Coordinates>();
         Map map = new Map();
-        //RoadNetwork network = new RoadNetwork();
         public RoadNetworkFinder()
         {
             InitializeComponent();
@@ -35,10 +40,6 @@ namespace RoadNetworkGUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            towns.Add(new Coordinates(0, 0));
-            towns.Add(new Coordinates(55, 43));
-            visualiser1.Network = new RoadNetwork();
-            visualiser1.Towns = towns;
         }
 
 
@@ -52,16 +53,17 @@ namespace RoadNetworkGUI
         {
             if (isOK())
             {
-                loader = new PluginLoader(openDialog.FileName);
+                loader = new PluginLoader();
+                loader.LoadDll(openDialog.FileName);
                 libraryLabel.Text = Path.GetFileName(openDialog.FileName);
                 initEngineButton.Enabled = true;
-                //populators = loader.GetPlugins(typeof(IPopulator));
-                //evaluators = loader.GetPlugins(typeof(IEvaluator));
-                //geneticOperators = loader.GetPlugins(typeof(IGeneticOperator));
-                //terminators = loader.GetPlugins(typeof(ITerminator));
-                //outputters = loader.GetPlugins(typeof(IOutputter));
-                //generationFactories = loader.GetPlugins(typeof(IGenerationFactory));
-            //initPluginDropDowns();
+                populators = loader.GetPluginNames(typeof(IPopulator));
+                evaluators = loader.GetPluginNames(typeof(IEvaluator));
+                geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
+                terminators = loader.GetPluginNames(typeof(ITerminator));
+                outputters = loader.GetPluginNames(typeof(IOutputter));
+                generationFactories = loader.GetPluginNames(typeof(IGenerationFactory));
+                initPluginDropDowns();
             }
         }
 
@@ -86,45 +88,49 @@ namespace RoadNetworkGUI
         private void initEngineButton_Click(object sender, EventArgs e)
         {
             string errorMsg = "";
-            IPopulator populator;
-            IEvaluator evaluator;
-            IGeneticOperator geneticOperator;
-            ITerminator terminator;
-            IOutputter outputter;
-            IGenerationFactory generationFactory;
             if (cbPopulator.SelectedItem == null) errorMsg += "Populator must not be null\n";
             else
             {
                 string choice = getChoice(populators, cbPopulator);
+                populator = (IPopulator) loader.GetInstance(choice, (object)tbMapFile.Text);
             }
             if (cbEvaluator.SelectedItem == null) errorMsg += "Evaluator must not be null\n";
             else
             {
                 string choice = getChoice(evaluators, cbEvaluator);
+                evaluator = (IEvaluator)loader.GetInstance(choice, null);
             }
             if (cbGeneticOperator.SelectedItem == null) errorMsg += "Genetic Operator must not be null\n";
             else
             {
                 string choice = getChoice(geneticOperators, cbGeneticOperator);
+                geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
             }
             if (cbTerminator.SelectedItem == null) errorMsg += "Terminator must not be null\n";
             else
             {
                 string choice = getChoice(terminators, cbTerminator);
+                if(targetFitnessScroller.SelectedIndex == 0 || targetFitnessScroller.SelectedItem == null) MessageBox.Show("Provide a target fitness value greater than 1 for the terminator plug-in\n");
+                else terminator = (ITerminator) loader.GetInstance(choice, (object) targetFitnessScroller.SelectedIndex);
             }
             if (cbOutputter.SelectedItem != null)
             {
                 string choice = getChoice(outputters, cbOutputter);
+                if (tbOutputFile.Text == "")
+                {
+                    MessageBox.Show("Select an output file for the outputter\n");
+                }
+                else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
             }
             if (cbGenerationFactory.SelectedItem != null)
             {
                 string choice = getChoice(generationFactories, cbGenerationFactory);
+                generationFactory = (IGenerationFactory)loader.GetInstance(choice, null);
             }
             if (errorMsg != "") MessageBox.Show(errorMsg);
             else
             {
-                //engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, outputter, generationFactory);
-                //engine.Initialise();
+                engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, outputter, generationFactory);
                 stepButton.Enabled = true;
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
@@ -237,12 +243,7 @@ namespace RoadNetworkGUI
                 {
                     XmlReader reader = XmlReader.Create(tbMapFile.Text);
                     map.ReadXml(reader);
-                    //for (int i = 0; i < map.TownCount; i++)
-                    //{
-                    //    towns.Add(map.GetTown(i));
-                    //}
-                    //network.AddVertex(map.Start);
-                    //network.AddVertex(map.End);
+                    visualiser1.Network = new RoadNetwork(map);
                 }
                 else
                 {
