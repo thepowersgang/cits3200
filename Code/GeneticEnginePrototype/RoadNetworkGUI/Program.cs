@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using RoadNetworkGUI;
 
-namespace RoadNetworkOperatorTest
+namespace RoadNetworkGUI
 {
     static class Program
     {
@@ -17,7 +16,6 @@ namespace RoadNetworkOperatorTest
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new RoadNetworkFinder());
-            //Application.Run(new Road_Network_Visualiser());
         }
     }
 }

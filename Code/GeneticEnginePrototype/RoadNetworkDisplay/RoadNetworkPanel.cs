@@ -13,10 +13,10 @@ namespace RoadNetworkDisplay
     public partial class RoadNetworkPanel : UserControl
     {
         RoadNetwork network = null;
-
         public RoadNetworkPanel()
         {
             InitializeComponent();
+
         }
 
         public RoadNetwork Network
@@ -63,17 +63,24 @@ namespace RoadNetworkDisplay
         }
         private void drawTowns(PaintEventArgs e)
         {
-
+            if (network.Map.TownCount > 0)
+            {
+                for (int i = 0; i < network.Map.TownCount; i++)
+                {
+                    Coordinates town = network.Map.GetTown(i);
+                    e.Graphics.FillEllipse(Brushes.Red, town.X - 2, town.Y - 2, 10, 10);
+                }
+            }
         }
         private void drawVerticesEdges(PaintEventArgs e)
         {
             if (network != null)
             {
-                Coordinates startCoordinates = network.Start.Coordinates;
-                e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 5, 5);
+                Coordinates startCoordinates = network.Map.Start;
+                e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 10, 10);
 
-                Coordinates endCoordinates = network.End.Coordinates;
-                e.Graphics.FillEllipse(Brushes.Green, endCoordinates.X - 2, endCoordinates.Y - 2, 5, 5);
+                Coordinates endCoordinates = network.Map.End;
+                e.Graphics.FillEllipse(Brushes.Green, endCoordinates.X - 2, endCoordinates.Y - 2, 10, 10);
 
                 for (int i = 0; i < network.EdgeCount; i++)
                 {
@@ -81,21 +88,7 @@ namespace RoadNetworkDisplay
                     Coordinates coordinates0 = edge.Start.Coordinates;
                     Coordinates coordinates1 = edge.End.Coordinates;
 
-                    Pen pen;
-
-                    if (edge.IsBroken)
-                    {
-                        pen = Pens.Blue;
-                    }
-                    else if (edge.End.Visited)
-                    {
-                        pen = Pens.Green;
-                    }
-                    else
-                    {
-                        pen = Pens.Red;
-                    }
-
+                    Pen pen = Pens.Blue;
                     e.Graphics.DrawLine(pen, coordinates0.X, coordinates0.Y, coordinates1.X, coordinates1.Y);
                 }
             }
