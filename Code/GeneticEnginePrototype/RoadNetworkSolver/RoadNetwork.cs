@@ -91,6 +91,17 @@ namespace RoadNetworkSolver
         {
             this.map = map;
         }
+
+        /// <summary>
+        /// Initialise an RoadNetwork with edges and vertices identical to another RoadNetwork
+        /// </summary>
+        /// <param name="map">The RoadNetwork to copy</param>
+        public RoadNetwork(RoadNetwork network)
+        {
+            map = network.map;
+            CopyVertices(network.vertices);
+            CopyEdges(network.edges);
+        }
                 
 		/// <summary>
 		/// Fetch a vertex by its index
@@ -134,7 +145,7 @@ namespace RoadNetworkSolver
         {
             return AddVertex(new Coordinates(x, y));
         }
-
+        
 		/// <summary>
 		/// Get an edge by index
 		/// </summary>
@@ -311,18 +322,7 @@ namespace RoadNetworkSolver
                 vertices.Add(vertex.CreateCopy());
             }
         }
-
-        /// <summary>
-        /// Add a copy of each vertex in another RoadNetowrk to this one.
-        /// </summary>
-        /// <param name="sourceNetwork">
-        /// The RoadNetwork to copy from.
-        /// </param>
-        public void CopyVertices(RoadNetwork sourceNetwork)
-        {
-            CopyVertices(sourceNetwork.vertices);
-        }
-
+        
 		/// <summary>
 		/// Add a copy of each edge in a list to the network.
         /// the "Copy" property of each vertex in the source should already point to a vertex in this RoadNetwork.
@@ -337,19 +337,7 @@ namespace RoadNetworkSolver
                 AddEdge(edge.Start.Copy, edge.End.Copy);
             }
         }
-
-        /// <summary>
-        /// Add a copy of each edge in another RoadNetowrk to this one.
-        /// the "Copy" property of each vertex in the source should already point to a vertex in this RoadNetwork.
-        /// </summary>
-        /// <param name="sourceNetwork">
-        /// The RoadNetwork to copy from.
-        /// </param>
-        public void CopyEdges(RoadNetwork sourceNetwork)
-        {
-            CopyEdges(sourceNetwork.edges);
-        }
-        
+                
 		/// <summary>
 		/// Sorts all verticies into two lists, depending on if they have been visited or not
         /// 

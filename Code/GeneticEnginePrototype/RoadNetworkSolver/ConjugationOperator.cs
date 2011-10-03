@@ -13,13 +13,7 @@ namespace RoadNetworkSolver
         {   
             Cut(parent1);
             Cut(parent2);
-
-            Recombine(parent1, parent2, out child1, out child2);
-        }
-
-    
-        public void Recombine(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
-        {
+                     
             List<Vertex> startVertexPartition1 = new List<Vertex>();
             List<Vertex> endVertexPartition1 = new List<Vertex>();
             List<Vertex> startVertexPartition2 = new List<Vertex>();
