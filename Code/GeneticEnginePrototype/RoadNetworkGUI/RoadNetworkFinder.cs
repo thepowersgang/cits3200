@@ -247,7 +247,7 @@ namespace RoadNetworkGUI
                 string e = Path.GetExtension(tbMapFile.Text);
                 if (String.Equals(e, ".xml"))
                 {
-                    XmlReader reader = XmlReader.Create(tbMapFile.Text);
+                    XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
                     map = new Map(reader);
                     visualiser1.Network = new RoadNetwork(map);
                 }
@@ -365,7 +365,7 @@ namespace RoadNetworkGUI
             }
             else
             {
-                XmlWriter writer = XmlWriter.Create(tbOutputFile.Text);
+                XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
                 network.WriteXml(writer);
             }
         }

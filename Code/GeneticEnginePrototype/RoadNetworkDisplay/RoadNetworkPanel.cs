@@ -63,7 +63,7 @@ namespace RoadNetworkDisplay
         }
         private void drawTowns(PaintEventArgs e)
         {
-            if (network.Map.TownCount > 0)
+            if (network.Map.TownCount > 0 && network.Map != null)
             {
                 for (int i = 0; i < network.Map.TownCount; i++)
                 {
@@ -74,7 +74,7 @@ namespace RoadNetworkDisplay
         }
         private void drawVerticesEdges(PaintEventArgs e)
         {
-            if (network != null)
+            if (network != null && network.EdgeCount > 0)
             {
                 Coordinates startCoordinates = network.Map.Start;
                 e.Graphics.FillEllipse(Brushes.Green, startCoordinates.X - 2, startCoordinates.Y - 2, 10, 10);
