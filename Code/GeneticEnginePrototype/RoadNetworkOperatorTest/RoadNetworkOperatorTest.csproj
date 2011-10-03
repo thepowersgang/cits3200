@@ -92,10 +92,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GeneticEnginePrototype\RoadNetworkGUI\RoadNetworkGUI.csproj">
-      <Project>{E3817792-2F45-4367-9276-C92BE60B07E2}</Project>
-      <Name>RoadNetworkGUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GenericPlugins\GenericPlugins.csproj">
       <Project>{756BA368-C28A-4278-94D6-F8809F7F5C42}</Project>
       <Name>GenericPlugins</Name>
@@ -115,6 +111,10 @@
     <ProjectReference Include="..\RoadNetworkDisplay\RoadNetworkDisplay.csproj">
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>
       <Name>RoadNetworkDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RoadNetworkGUI\RoadNetworkGUI.csproj">
+      <Project>{E3817792-2F45-4367-9276-C92BE60B07E2}</Project>
+      <Name>RoadNetworkGUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\RoadNetworkSolver\RoadNetworkSolver.csproj">
       <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>

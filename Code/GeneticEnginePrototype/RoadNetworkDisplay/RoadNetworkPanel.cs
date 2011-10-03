@@ -13,10 +13,11 @@ namespace RoadNetworkDisplay
     public partial class RoadNetworkPanel : UserControl
     {
         RoadNetwork network = null;
-
+        List<Coordinates> towns = null;
         public RoadNetworkPanel()
         {
             InitializeComponent();
+
         }
 
         public RoadNetwork Network
@@ -33,6 +34,17 @@ namespace RoadNetworkDisplay
             }
         }
 
+        public List<Coordinates> Towns
+        {
+            get
+            {
+                return towns;
+            }
+            set
+            {
+                towns = value;
+            }
+        }
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
             drawGrid(e);
@@ -63,7 +75,13 @@ namespace RoadNetworkDisplay
         }
         private void drawTowns(PaintEventArgs e)
         {
-
+            if (Towns != null)
+            {
+                for (int i = 0; i < towns.Count; i++)
+                {
+                    e.Graphics.FillEllipse(Brushes.Red, towns[i].X - 2, towns[i].Y - 2, 5, 5);
+                }
+            }
         }
         private void drawVerticesEdges(PaintEventArgs e)
         {
@@ -81,21 +99,7 @@ namespace RoadNetworkDisplay
                     Coordinates coordinates0 = edge.Start.Coordinates;
                     Coordinates coordinates1 = edge.End.Coordinates;
 
-                    Pen pen;
-
-                    if (edge.IsBroken)
-                    {
-                        pen = Pens.Blue;
-                    }
-                    else if (edge.End.Visited)
-                    {
-                        pen = Pens.Green;
-                    }
-                    else
-                    {
-                        pen = Pens.Red;
-                    }
-
+                    Pen pen = Pens.Blue;
                     e.Graphics.DrawLine(pen, coordinates0.X, coordinates0.Y, coordinates1.X, coordinates1.Y);
                 }
             }
