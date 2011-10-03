@@ -91,17 +91,7 @@ namespace RoadNetworkSolver
             }
         }
 
-        /// <summary>
-        /// Get a town by its index
-        /// </summary>
-        /// <param name="index">A integer denoting the index of the town</param>
-        /// <returns>The Coordinates of the town</returns>
-        public Coordinates GetTown(int index)
-        {
-            return towns[index];
-        }
-                
-        public void ReadXml(XmlReader reader)
+        public Map(XmlReader reader)
         {
             int depth = 1;
 
@@ -113,14 +103,14 @@ namespace RoadNetworkSolver
                         switch (reader.Name)
                         {
                             case ("start"):
-                                start = new Coordinates(reader);                                                                
+                                start = new Coordinates(reader);
                                 break;
                             case ("end"):
                                 end = new Coordinates(reader);
                                 break;
                             case ("town"):
-                                 towns.Add(new Coordinates(reader));
-                                break;                           
+                                towns.Add(new Coordinates(reader));
+                                break;
                         }
 
                         if (!reader.IsEmptyElement)
@@ -136,10 +126,37 @@ namespace RoadNetworkSolver
                 }
             }
         }
-
+        
         public void WriteXml(XmlWriter writer)
         {
-            //TODO
+            writer.WriteStartElement("map");
+
+            writer.WriteStartElement("start");
+            start.WriteXml(writer);
+            writer.WriteEndElement();
+
+            writer.WriteStartElement("end");
+            end.WriteXml(writer);
+            writer.WriteEndElement();
+
+            foreach (Coordinates town in towns)
+            {
+                writer.WriteStartElement("town");
+                end.WriteXml(writer);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Get a town by its index
+        /// </summary>
+        /// <param name="index">A integer denoting the index of the town</param>
+        /// <returns>The Coordinates of the town</returns>
+        public Coordinates GetTown(int index)
+        {
+            return towns[index];
         }
     }
 }

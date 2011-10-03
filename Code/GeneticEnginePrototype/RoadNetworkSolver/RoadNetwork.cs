@@ -422,7 +422,7 @@ namespace RoadNetworkSolver
 		/// <param name="reader">
 		/// <see cref="XmlReader"/> containing data
 		/// </param>
-        public void ReadXml(XmlReader reader)
+        public RoadNetwork(XmlReader reader)
         {
             Dictionary<string, Vertex> verticesById = new Dictionary<string, Vertex>();
 
@@ -485,8 +485,7 @@ namespace RoadNetworkSolver
 
                 writer.WriteStartElement("vertex");
                 writer.WriteAttributeString("id", vertex.Id);
-                writer.WriteAttributeString("x", vertex.Coordinates.X.ToString());
-                writer.WriteAttributeString("y", vertex.Coordinates.Y.ToString());
+                vertex.Coordinates.WriteXml(writer);
                 writer.WriteEndElement();
             }
 

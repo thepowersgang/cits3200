@@ -69,6 +69,11 @@ namespace RoadNetworkSolver
             int.TryParse(yString, out y);
         }
 
+        public void WriteXml(XmlWriter writer) {
+            writer.WriteAttributeString("x", x.ToString());
+            writer.WriteAttributeString("y", y.ToString());
+        }
+
         /// <summary>
         /// Calcuate the square of the distance between this locations and another.
         /// 

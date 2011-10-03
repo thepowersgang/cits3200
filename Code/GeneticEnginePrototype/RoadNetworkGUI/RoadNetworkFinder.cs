@@ -29,7 +29,8 @@ namespace RoadNetworkGUI
         GeneticEngine engine;
         List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
         List<Coordinates> towns = new List<Coordinates>();
-        Map map = new Map();
+        Map map;
+
         public RoadNetworkFinder()
         {
             InitializeComponent();
@@ -242,7 +243,7 @@ namespace RoadNetworkGUI
                 if (String.Equals(e, ".xml"))
                 {
                     XmlReader reader = XmlReader.Create(tbMapFile.Text);
-                    map.ReadXml(reader);
+                    map = new Map(reader);
                     visualiser1.Network = new RoadNetwork(map);
                 }
                 else
