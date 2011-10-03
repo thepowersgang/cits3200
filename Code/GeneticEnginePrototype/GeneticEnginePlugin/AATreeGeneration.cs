@@ -15,27 +15,27 @@ namespace GeneticEngineSupport
         /// <summary>
         /// The root node of the tree.
         /// </summary>
-        protected Node root;
+        private Node root;
 
         /// <summary>
         /// The number of individuals in the generation.
         /// </summary>
-        protected int count;
+        private int count;
 
         /// <summary>
         /// The minimum fitness value of all individuals in the generation.
         /// </summary>
-        protected uint minFitness;
+        private uint minFitness;
 
         /// <summary>
         /// The maximum fitness value of all individuals in the generation.
         /// </summary>
-        protected uint maxFitness;
+        private uint maxFitness;
 
         /// <summary>
         /// The sum of the fitness values of all individuals in the generation.
         /// </summary>
-        protected ulong totalFitness;
+        private ulong totalFitness;
 
         /// <summary>
         /// Get the number of individuals in the generation.
@@ -241,7 +241,7 @@ namespace GeneticEngineSupport
         /// <summary>
         /// A node in the AATree
         /// </summary>
-        protected class Node
+        private class Node
         {
             /// <summary>
             /// The level of the node
@@ -310,7 +310,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="individual">The individual to insert</param>
         /// <param name="fitness">The individual's fitness value</param>
-        protected static void Insert(ref Node currentNode, object individual, uint fitness)
+        private static void Insert(ref Node currentNode, object individual, uint fitness)
         {
             if (currentNode == null)
             {
@@ -344,7 +344,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="index">The zero-based index of the element to get within the subtree rooted at currentNode</param>
         /// <returns>The individual and its fitness value</returns>
-        protected static IndividualWithFitness Get(ref Node currentNode, int index)
+        private static IndividualWithFitness Get(ref Node currentNode, int index)
         {
             if (index < currentNode.partialCount)
             {
@@ -369,7 +369,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="sum">The partial sum within the subtree rooted at currentNode</param>
         /// <returns>The individual and its fitness value</returns>
-        protected static IndividualWithFitness GetByPartialSum(ref Node currentNode, ulong sum)
+        private static IndividualWithFitness GetByPartialSum(ref Node currentNode, ulong sum)
         {
             if (sum < currentNode.partialSum - currentNode.fitness)
             {
@@ -396,7 +396,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="sum">The partial sum within the subtree rooted at currentNode</param>
         /// <returns>The index</returns>
-        protected static int GetIndexByPartialSum(ref Node currentNode, float sum)
+        private static int GetIndexByPartialSum(ref Node currentNode, float sum)
         {
             if (sum < currentNode.partialSum - currentNode.fitness)
             {
@@ -424,7 +424,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="index">The zero-based index of the element to get within the subtree rooted at currentNode</param>
         /// <returns>The individual and its fitness value</returns>
-        protected static IndividualWithFitness Remove(ref Node currentNode, int index)
+        private static IndividualWithFitness Remove(ref Node currentNode, int index)
         {
             IndividualWithFitness removed;
 
@@ -461,7 +461,7 @@ namespace GeneticEngineSupport
         /// <param name="currentNode">The current node in the tree</param>
         /// <param name="sum">The partial sum within the subtree rooted at currentNode</param>
         /// <returns>The individual and its fitness value</returns>
-        protected static IndividualWithFitness RemoveByPartialSum(ref Node currentNode, ulong sum)
+        private static IndividualWithFitness RemoveByPartialSum(ref Node currentNode, ulong sum)
         {
             IndividualWithFitness removed;
 
@@ -499,7 +499,7 @@ namespace GeneticEngineSupport
         /// </summary>
         /// <param name="node">The node to remove</param>
         /// <returns>The individual held in the node and its fitness value</returns>
-        protected static IndividualWithFitness Remove(ref Node node)
+        private static IndividualWithFitness Remove(ref Node node)
         {
             IndividualWithFitness removed = node.IndividualWithFitness;
 
@@ -530,7 +530,7 @@ namespace GeneticEngineSupport
         /// </summary>
         /// <param name="currentNode">The current node</param>
         /// <returns>The left most decendant</returns>
-        protected static Node GetReplacement(ref Node currentNode)
+        private static Node GetReplacement(ref Node currentNode)
         {
             Node replacement;
 
@@ -561,7 +561,7 @@ namespace GeneticEngineSupport
         /// Rebalance the tree after a node is deleted
         /// </summary>
         /// <param name="currentNode">The node being rebalanced</param>
-        protected static void FixDeletion(ref Node currentNode)
+        private static void FixDeletion(ref Node currentNode)
         {
             if (currentNode != null)
             {
@@ -614,7 +614,7 @@ namespace GeneticEngineSupport
         /// Perform a skew around a given node if necessary.
         /// </summary>
         /// <param name="root">The node</param>
-        protected static void Skew(ref Node root)
+        private static void Skew(ref Node root)
         {
             Node left = root.leftChild;
 
@@ -634,7 +634,7 @@ namespace GeneticEngineSupport
         /// Perform a split around a given node if necessary.
         /// </summary>
         /// <param name="root">The node</param>
-        protected static void Split(ref Node root)
+        private static void Split(ref Node root)
         {
             Node right = root.rightChild;
 

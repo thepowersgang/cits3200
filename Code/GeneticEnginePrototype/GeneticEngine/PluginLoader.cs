@@ -8,61 +8,75 @@ using GeneticEngineSupport;
 namespace GeneticEngineCore
 {
     /// <summary>
-    /// Loads a .Net DLL and provides methods to identify and instantiate plugin classes from the DLL.
+    /// Loads .Net DLL files and provides methods to identify and instantiate plug-in classes from them.
     /// </summary>
     public class PluginLoader
-    {
+    {        
         /// <summary>
-        /// The DLL file loaded.
+        /// The constructors of the plugin classes loaded. 
         /// </summary>
-        Assembly assembly;
+        Dictionary<string, ConstructorInfo> constructors = new Dictionary<string,ConstructorInfo>();
+        
+        /// <summary>
+        /// Parameter type array to identify plug-in constructors
+        /// </summary>
+        private static Type[] ConstructorParamTypes = new Type[] { typeof(object) };
 
         /// <summary>
-        /// Initialises a new instance of PluginLoader by loading a .Net DLL file.
+        /// Load the plug-in classes from a DLL file
         /// </summary>
         /// <param name="path">The path to the DLL file</param>
-        public PluginLoader(string path)
+        public void LoadDll(string path)
         {
-            assembly = Assembly.LoadFrom(path); 
+            Assembly assembly = Assembly.LoadFrom(path);
+
+            Type[] types = assembly.GetTypes();
+
+            foreach (Type t in types)
+            {
+                ConstructorInfo constructor = t.GetConstructor(ConstructorParamTypes);
+
+                if (constructor != null)
+                {
+                    constructors.Add(t.Name, constructor);
+                }
+            }
         }
 
         /// <summary>
-        /// Get a list of plugin classed available in the DLL.
-        /// To be considered a plugin the class must have a constructor which accepts one object as its only parameter.
+        /// Get a list of plug-ins which have been loaded.
         /// </summary>
-        /// <param name="pluginType">The type of plugins to list. If supplied only classes which can be cast as this type will be listed.</param>
-        /// <returns></returns>
-        public List<string> GetPlugins(Type pluginType)
-        {            
-            Type[] classes = assembly.GetTypes();
+        /// <param name="pluginType">
+        /// The type of plug-ins to list.
+        /// If null or omitted then all plug-ins are returned. 
+        /// Otherwise only plug-ins which can be cast to the given type are returned.
+        /// </param>
+        /// <returns>A list of plug-in names.</returns>
+        public List<string> GetPluginNames(Type pluginType=null)
+        {
+            List<string> pluginNames = new List<string>();
 
-            List<string> plugins = new List<string>();
-            
-            foreach(Type t in classes)
-			{
-                if (pluginType == null || pluginType.IsAssignableFrom(t))
+            foreach (string pluginName in constructors.Keys)
+            {
+                if (pluginType == null || pluginType.IsAssignableFrom(constructors[pluginName].DeclaringType))
                 {
-                    if (t.GetConstructor(new Type[] { typeof(object) }) != null)
-                    {
-                        plugins.Add(t.Name);
-                    }
+                    pluginNames.Add(pluginName);
                 }
             }
 
-            return plugins;
+            return pluginNames;
         }
-        
+
         /// <summary>
-        /// Get an instance of a class from this DLL
+        /// Get an instance of a plug-in type.
         /// </summary>
-        /// <param name="typeName">The name of the class</param>
-        /// <param name="config">The configuration object to pass to the class's constructor</param>
-        /// <returns>A new instance of the class.</returns>
-        private object GetInstance(string typeName, object config)
+        /// <param name="pluginName">The name of the plug-in type as returned by GetPluginNames()</param>
+        /// <param name="config">The configuration object which will be passes to the constructor.</param>
+        /// <returns>A new instance of the plug-in type.</returns>
+        private object GetInstance(string pluginName, object config)
         {
-            Type type = assembly.GetType(typeName);
-            ConstructorInfo constructor = type.GetConstructor(new Type[]{typeof(Object)});
-            return constructor.Invoke(new Object[]{config});
-        }        
+            ConstructorInfo constructor = constructors[pluginName];
+            return constructor.Invoke(new Object[] { config });
+        }          
     }
 }

@@ -36,6 +36,9 @@ namespace RoadNetworkSolver
         /// </summary>
         private List<Coordinates> towns = new List<Coordinates>();
 
+        /// <summary>
+        /// Get the width of the map
+        /// </summary>
         public int Width
         {
             get
@@ -44,6 +47,9 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Get the height of the map
+        /// </summary>
         public int Height
         {
             get
@@ -52,6 +58,9 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Get the start location for the road network
+        /// </summary>
         public Coordinates Start
         {
             get
@@ -60,6 +69,9 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Get the end location for the road network
+        /// </summary>
         public Coordinates End
         {
             get
@@ -68,6 +80,9 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Get the number of towns
+        /// </summary>
         public int TownCount
         {
             get
@@ -76,6 +91,11 @@ namespace RoadNetworkSolver
             }
         }
 
+        /// <summary>
+        /// Get a town by its index
+        /// </summary>
+        /// <param name="index">A integer denoting the index of the town</param>
+        /// <returns>The Coordinates of the town</returns>
         public Coordinates GetTown(int index)
         {
             return towns[index];
