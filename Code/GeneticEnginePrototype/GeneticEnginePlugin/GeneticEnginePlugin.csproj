@@ -8,7 +8,7 @@
     <ProjectGuid>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneticEngineSupport</RootNamespace>
+    <RootNamespace>GeneticEnginePlugin</RootNamespace>
     <AssemblyName>GeneticEnginePlugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\GeneticEnginePrototype\bin\Debug\GeneticEnginePlugin.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AATreeGeneration.cs" />
     <Compile Include="IPopulator.cs" />
     <Compile Include="IEvaluator.cs" />
     <Compile Include="IGeneration.cs" />

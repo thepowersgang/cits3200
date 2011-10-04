@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEngineSupport.csproj">
+    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
-      <Name>GeneticEngineSupport</Name>
+      <Name>GeneticEnginePlugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

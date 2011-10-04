@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticEngineSupport;
+using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Generation;
 
-namespace GeneticEngineCore
+namespace GeneticAlgorithm
 {
     /// <summary>
     /// Runs a genetic algorithm using the supplied plug-ins.
