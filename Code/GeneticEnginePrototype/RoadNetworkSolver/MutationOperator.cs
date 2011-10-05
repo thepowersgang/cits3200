@@ -18,7 +18,7 @@ namespace RoadNetworkSolver
 		{
 			for(int ii = 0; ii < source.Count; ii ++)
 			{
-				//destination.add( Mutate(source.Get(ii)) );
+                destination.Add( Mutate( (RoadNetwork)source.Get(ii).Individual ) );
 			}
 		}
 		
@@ -31,15 +31,18 @@ namespace RoadNetworkSolver
 			for( int ii = 1; ii < ret.VertexCount-1; ii ++ )
 			{
 				Vertex v = ret.GetVertex(ii);
-				
-				int x = v.Coordinates.X * (int) (random.NextDouble() * 1.5);
-				int y = v.Coordinates.Y * (int) (random.NextDouble() * 1.5);
+
+                
+                double x = (double)v.Coordinates.X * (0.5 + random.NextDouble());
+                double y = (double)v.Coordinates.Y * (0.5 + random.NextDouble());
                 
                 // TODO: Clip values
 
-                v.Coordinates = new Coordinates(x, y);
+                v.Coordinates = new Coordinates( (int)x, (int)y );
 			}
-            
+
+            ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
+
             return ret;
 		}
 	}
