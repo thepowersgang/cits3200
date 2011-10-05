@@ -7,6 +7,8 @@ using GeneticEngineSupport;
 
 public class TestAOutputter : IOutputter
 {
+    public int numberGenerations = 0;
+    public int[] fitnesses;
 	public TestAOutputter()
 	{
 
@@ -15,6 +17,7 @@ public class TestAOutputter : IOutputter
     //IOutputter has spelling error, int genrationCount -> int generationCount.
     public void OutputGeneration(IGeneration generation, int generationCount)
     {
+        fitnesses = new int[100];
         Console.WriteLine("Generations: " + generationCount);
         for (int i = 0; i < generationCount; i++)
         {
@@ -23,6 +26,7 @@ public class TestAOutputter : IOutputter
             Console.WriteLine("Best Fitness: " + thisIndividual.Fitness);
             Console.WriteLine("Value: " + (((IntegerIndividual)(thisIndividual.Individual)).value).ToString());
             Console.WriteLine();
+            fitnesses[i] = ((IntegerIndividual)(thisIndividual.Individual)).value;
         }
     }
 }
