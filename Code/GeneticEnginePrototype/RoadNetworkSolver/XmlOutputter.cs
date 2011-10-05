@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticEngineSupport;
+using GeneticAlgorithm.Plugin;
 using System.Xml;
 
 namespace RoadNetworkSolver

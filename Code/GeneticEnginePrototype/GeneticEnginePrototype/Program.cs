@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticEngineCore;
-using GeneticEngineSupport;
+using GeneticAlgorithm;
+using GeneticAlgorithm.Plugin;
 
 namespace GeneticEnginePrototype
 {

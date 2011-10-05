@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticEngineSupport;
+using GeneticAlgorithm.Plugin;
 
-namespace GeneticEngineCore
+namespace GeneticAlgorithm.Generation
 {
     /// <summary>
     /// Default implementation of IGenerationFactory.

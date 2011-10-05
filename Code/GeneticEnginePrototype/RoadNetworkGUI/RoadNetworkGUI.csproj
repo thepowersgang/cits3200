@@ -86,13 +86,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GenericPlugins\GenericPlugins.csproj">
-      <Project>{756BA368-C28A-4278-94D6-F8809F7F5C42}</Project>
-      <Name>GenericPlugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEngineSupport.csproj">
+    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
-      <Name>GeneticEngineSupport</Name>
+      <Name>GeneticEnginePlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\GeneticEnginePrototype\GeneticEnginePrototype.csproj">
       <Project>{87EEE188-C48A-4925-A3D8-0F5780F85E8D}</Project>

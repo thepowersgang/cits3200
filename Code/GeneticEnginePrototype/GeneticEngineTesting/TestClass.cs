@@ -1,9 +1,8 @@
 ﻿using System;
-using GeneticEngineCore;
+using GeneticAlgorithm;
 using GeneticEnginePrototype;
-using GeneticEngineSupport;
+using GeneticAlgorithm.Plugin;
 using GeneticEngineTesting;
-using GenericPlugins;
 using RoadNetworkDisplay;
 using RoadNetworkOperatorTest;
 using RoadNetworkSolver;

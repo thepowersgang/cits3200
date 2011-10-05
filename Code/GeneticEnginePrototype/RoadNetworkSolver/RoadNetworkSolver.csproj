@@ -46,6 +46,7 @@
     <Compile Include="Coordinates.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="MaxFitnessTerminator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConjugationOperator.cs" />
@@ -55,9 +56,9 @@
     <Compile Include="MutationOperator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEngineSupport.csproj">
+    <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
-      <Name>GeneticEngineSupport</Name>
+      <Name>GeneticEnginePlugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
