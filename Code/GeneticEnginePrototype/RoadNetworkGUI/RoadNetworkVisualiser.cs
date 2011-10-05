@@ -41,7 +41,7 @@ namespace RoadNetworkGUI
                 else
                 {
                     XmlTextReader reader = new XmlTextReader(openDialog.FileName);
-                    network = new RoadNetwork(reader);
+                    network = new RoadNetwork(null, reader);
                     visualiser2.Network = network;
                 }
             }

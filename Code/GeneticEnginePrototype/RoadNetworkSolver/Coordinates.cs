@@ -66,7 +66,7 @@ namespace RoadNetworkSolver
             string yString = reader.GetAttribute("y");
             
             int.TryParse(xString, out x);
-            int.TryParse(yString, out y);
+            int.TryParse(yString, out y);            
         }
 
         public void WriteXml(XmlWriter writer) {

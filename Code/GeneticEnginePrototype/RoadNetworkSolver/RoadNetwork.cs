@@ -422,8 +422,10 @@ namespace RoadNetworkSolver
 		/// <param name="reader">
 		/// <see cref="XmlReader"/> containing data
 		/// </param>
-        public RoadNetwork(XmlReader reader)
+        public RoadNetwork(Map map, XmlReader reader)
         {
+            this.map = map;
+
             Dictionary<string, Vertex> verticesById = new Dictionary<string, Vertex>();
 
             int depth = 1;

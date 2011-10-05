@@ -28,11 +28,13 @@ namespace RoadNetworkSolver
 
             ent.Start.Copy = ret.AddVertex(ent.Start.Coordinates);
 
+            // TODO: Select random verticies to modify instead
 			for( int ii = 1; ii < ret.VertexCount-1; ii ++ )
 			{
 				Vertex v = ret.GetVertex(ii);
-
                 
+                // Move up to 50% of current position from current pos
+                // TODO: Use a % of the map size instead?
                 double x = (double)v.Coordinates.X * (0.5 + random.NextDouble());
                 double y = (double)v.Coordinates.Y * (0.5 + random.NextDouble());
                 
