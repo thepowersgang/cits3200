@@ -3,9 +3,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticEngineSupport;
 
-namespace GeneticEngineCore
+namespace GeneticAlgorithm.Util
 {
     /// <summary>
     /// Loads .Net DLL files and provides methods to identify and instantiate plug-in classes from them.

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using GeneticEngineCore;
-using GenericPlugins;
-using GeneticEngineSupport;
+using GeneticAlgorithm;
+using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Util;
 using RoadNetworkSolver;
 using RoadNetworkDisplay;
 using System.Xml;
@@ -142,6 +142,7 @@ namespace RoadNetworkGUI
         /*
          * calls Step() of the engine only if it initialised. After the step method, the fitness values are updated
          * if the engine is not initialised, a message is displayed to initialise the engine.
+         * If the engine is complete, convert network to xml form. 
          */ 
         private void stepButton_Click(object sender, EventArgs e)
         {
@@ -158,6 +159,7 @@ namespace RoadNetworkGUI
             {
                 hasCompleted = true;
                 viewOutputFileButton.Enabled = true;
+                writeToXmlFile();
             }
         }
 
@@ -165,7 +167,7 @@ namespace RoadNetworkGUI
          * By clicking on the run button, Run() is executed from the engine if it was initialised. Afterwards, the fitness values
          * are updated on the interface. If the engine wasn't initialised, then a message is shown to the user to initialise the engine
          * first
-         * If the engine's generation is terminated, the output file viewer button is activated for the user. 
+         * If the engine's generation is terminated, the output file viewer button is activated for the user and convert network to xml form. 
          */ 
         private void runButton_Click(object sender, EventArgs e)
         {
@@ -179,6 +181,7 @@ namespace RoadNetworkGUI
             {
                 hasCompleted = true;
                 viewOutputFileButton.Enabled = true;
+                writeToXmlFile();
             }
         }
 
@@ -188,7 +191,8 @@ namespace RoadNetworkGUI
          *  choose a legitimiate value.
          *  Once repeat is called, the fitness values are recalculated and display on the interface.
          *  If the engine's generation has terminated after Repeat, then the view Output file button is activated.
-         *  If the engine wasn't initialised, then the message is shown to initialise the engine before pressing the repeat button
+         *  If the engine wasn't initialised, then the message is shown to initialise the engine before pressing the repeat button.
+         *  If the engine is completed, convert network to its Xml form.
          */
         private void runGenerationButton_Click(object sender, EventArgs e)
         {
@@ -206,6 +210,7 @@ namespace RoadNetworkGUI
                 {
                     hasCompleted = true;
                     viewOutputFileButton.Enabled = true;
+                    writeToXmlFile();
                 }
             }
         }
@@ -242,7 +247,7 @@ namespace RoadNetworkGUI
                 string e = Path.GetExtension(tbMapFile.Text);
                 if (String.Equals(e, ".xml"))
                 {
-                    XmlReader reader = XmlReader.Create(tbMapFile.Text);
+                    XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
                     map = new Map(reader);
                     visualiser1.Network = new RoadNetwork(map);
                 }
@@ -327,7 +332,7 @@ namespace RoadNetworkGUI
         #endregion
 
         /**
-         * If the generation has been completed and once the view Output file Button is clicked. 
+         * If the generation has been completed and once the view Output file Button is clicked,
          * Close the current interface and open up the Visualiser interface. 
          */ 
         private void viewOutputFileButton_Click(object sender, EventArgs e)
@@ -337,6 +342,31 @@ namespace RoadNetworkGUI
                 this.Dispose(false);
                 Road_Network_Visualiser form = new Road_Network_Visualiser();
                 form.Visible = true;
+            }
+        }
+        /**
+        * Check if a file has been opened
+        * If not, display an error message
+        * otherwise check if the file is an xml one.
+        * If not, display a different error message
+        * otherwise, create instance of an XmlWriter and write xml stuff to it.  
+        */
+        private void writeToXmlFile()
+        {
+            RoadNetwork network = new RoadNetwork(visualiser1.Network);
+            if (tbOutputFile.Text == "")
+            {
+                MessageBox.Show("Should have opened up an XML file by now\n");
+            }
+            string e = Path.GetExtension(tbOutputFile.Text);
+            if (e != ".xml")
+            {
+                MessageBox.Show("File is not a XML File\n");
+            }
+            else
+            {
+                XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
+                network.WriteXml(writer);
             }
         }
     }
