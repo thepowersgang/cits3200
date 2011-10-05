@@ -13,6 +13,7 @@ namespace RoadNetworkDisplay
     public partial class RoadNetworkPanel : UserControl
     {
         RoadNetwork network = null;
+        bool networkBeenGiven = false;
         public RoadNetworkPanel()
         {
             InitializeComponent();
@@ -28,37 +29,21 @@ namespace RoadNetworkDisplay
 
             set
             {
-                network = value;
+                if (value != null)
+                {
+                    network = value;
+                    networkBeenGiven = true;
+                }
                 Invalidate();
             }
         }
 
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
-            drawGrid(e);
-            drawTowns(e);
-            drawVerticesEdges(e);
-        }
-        private void drawGrid(PaintEventArgs e)
-        {
-            Pen pen = Pens.Black;
-            int startX = 0;
-            int startY = 0;
-            int finishX = Width - startX;
-            int finishY = Height - startY;
-            e.Graphics.DrawLine(pen, startX, startY, startX, finishY);
-            e.Graphics.DrawLine(pen, startX, startY, finishX, startY);
-            e.Graphics.DrawLine(pen, startX, finishY, finishX, finishY);
-            e.Graphics.DrawLine(pen, finishX, startY, finishX, finishY);
-            int colWidth = (int)Math.Ceiling((double)(finishX - startX) / 10);
-            int rowWidth = (int)Math.Ceiling((double)(finishY - startY) / 10);
-            for (int i = startX + colWidth; i < finishX; i = i + colWidth)
+            if (networkBeenGiven)
             {
-                e.Graphics.DrawLine(pen, i, startY, i, finishY);
-            }
-            for (int j = startY + rowWidth; j < finishY; j = j + rowWidth)
-            {
-                e.Graphics.DrawLine(pen, startX, j, finishX, j);
+                drawTowns(e);
+                drawVerticesEdges(e);
             }
         }
         private void drawTowns(PaintEventArgs e)

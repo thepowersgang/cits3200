@@ -30,6 +30,7 @@ namespace RoadNetworkGUI
         List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
         List<Coordinates> towns = new List<Coordinates>();
         Map map;
+        DisplayOutputter displayOutputter;
 
         public RoadNetworkFinder()
         {
@@ -37,6 +38,7 @@ namespace RoadNetworkGUI
             initComponents();
             hasInitialised = false;
             hasCompleted = false;
+            displayOutputter = new DisplayOutputter(visualiser1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -150,6 +152,7 @@ namespace RoadNetworkGUI
             {
                 engine.Step();
                 setFitnessValues();
+                displayOutputter.output(engine.Generation, engine.GenerationCount);
             }
             else
             {
@@ -175,6 +178,7 @@ namespace RoadNetworkGUI
             {
                 engine.Run();
                 setFitnessValues();
+                displayOutputter.output(engine.Generation, engine.GenerationCount);
             }
             else MessageBox.Show("Initialise Generation First\n");
             if (engine.IsComplete)
@@ -204,6 +208,7 @@ namespace RoadNetworkGUI
                 {
                     engine.Repeat(nScroller.SelectedIndex);
                     setFitnessValues();
+                    displayOutputter.output(engine.Generation, engine.GenerationCount);
                 }
                 else MessageBox.Show("Initialise Generation First\n");
                 if (engine.IsComplete)
@@ -274,30 +279,53 @@ namespace RoadNetworkGUI
          */
         private void initPluginDropDowns()
         {
-            for (int i = 0; i < populators.Count; i++)
+            if (populators.Count > 0)
             {
-                cbPopulator.Items.Add(populators[i]);
+                for (int i = 0; i < populators.Count; i++)
+                {
+                    cbPopulator.Items.Add(populators[i]);
+                }
             }
-            for (int i = 0; i < evaluators.Count; i++)
+            else MessageBox.Show("No known populators can be loaded\n");
+            if (evaluators.Count > 0)
             {
-                cbEvaluator.Items.Add(evaluators[i]);
+                for (int i = 0; i < evaluators.Count; i++)
+                {
+                    cbEvaluator.Items.Add(evaluators[i]);
+                }
             }
-            for (int i = 0; i < geneticOperators.Count; i++)
+            else MessageBox.Show("No known evaluators can be loaded\n");
+            if (geneticOperators.Count > 0)
             {
-                cbGeneticOperator.Items.Add(geneticOperators[i]);
+                for (int i = 0; i < geneticOperators.Count; i++)
+                {
+                    cbGeneticOperator.Items.Add(geneticOperators[i]);
+                }
             }
-            for (int i = 0; i < terminators.Count; i++)
+            else MessageBox.Show("No known genetic operators can be loaded\n");
+            if (terminators.Count > 0)
             {
-                cbTerminator.Items.Add(terminators[i]);
+                for (int i = 0; i < terminators.Count; i++)
+                {
+                    cbTerminator.Items.Add(terminators[i]);
+                }
             }
-            for (int i = 0; i < outputters.Count; i++)
+            else MessageBox.Show("No known terminators can be loaded\n");
+            if (outputters.Count > 0)
             {
-                cbOutputter.Items.Add(outputters[i]);
+                for (int i = 0; i < outputters.Count; i++)
+                {
+                    cbOutputter.Items.Add(outputters[i]);
+                }
             }
-            for (int i = 0; i < generationFactories.Count; i++)
+            if (generationFactories.Count > 0)
             {
-                cbGenerationFactory.Items.Add(generationFactories[i]);
+                for (int i = 0; i < generationFactories.Count; i++)
+                {
+                    cbGenerationFactory.Items.Add(generationFactories[i]);
+                }
             }
+
         }
         /**
          * Populate the 'n'scroller and the target fitness scroller with values from 1 up to the maximum values
