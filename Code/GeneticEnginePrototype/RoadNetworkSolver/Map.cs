@@ -93,6 +93,12 @@ namespace RoadNetworkSolver
 
         public Map(XmlReader reader)
         {
+            string widthString = reader.GetAttribute("width");
+            string heightString = reader.GetAttribute("height");
+
+            int.TryParse(widthString, out width);
+            int.TryParse(heightString, out height);
+
             int depth = 1;
 
             while (depth > 0 && reader.Read())

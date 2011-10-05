@@ -15,6 +15,6 @@ namespace GeneticAlgorithm.Plugin
         /// </summary>
         /// <param name="generation">The generation to output</param>
         /// <param name="genrationCount">The number of generations before this one</param>
-        void OutputGeneration(IGeneration generation, int genrationCount);
+        void OutputGeneration(IGeneration generation, int generationIndex);
     }
 }

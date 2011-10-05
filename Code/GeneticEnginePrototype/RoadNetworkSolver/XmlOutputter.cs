@@ -8,8 +8,12 @@ using System.Xml;
 namespace RoadNetworkSolver
 {
     class XmlOutputter : IOutputter
-    {
-        public void OutputGeneration(IGeneration generation, int genrationCount)
+    {        
+        public XmlOutputter(object config)
+        {
+        }
+
+        public void OutputGeneration(IGeneration generation, int generationIndex)
         {
         }
     }

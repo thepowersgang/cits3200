@@ -54,7 +54,7 @@ namespace GeneticAlgorithm
         IGeneration generation = null;
 
         /// <summary>
-        /// Gets the number of generations processed or -1 if the engine has not been initialised.
+        /// Get the number of generations before the current generation.
         /// </summary>
         public int GenerationCount
         {
@@ -65,7 +65,7 @@ namespace GeneticAlgorithm
         }
 
         /// <summary>
-        /// Gets the current generation.
+        /// Get the current generation.
         /// </summary>
         public IGeneration Generation
         {
@@ -76,9 +76,8 @@ namespace GeneticAlgorithm
         }
 
         /// <summary>
-        /// Gets a value indicating whether the current generation satisfies the termination condidtion.
+        /// Get a value indicating whether the current generation satisfies the termination condidtion.
         /// </summary>
-        /// <value>true if the termination condition is satisfied; otherwise false.</value>
         public bool IsComplete
         {
             get
@@ -88,7 +87,7 @@ namespace GeneticAlgorithm
         }
 
         /// <summary>
-        /// Initialise a new instance of the GeneticEngine class with the supplied plug-ins.
+        /// Initialise a new instance of the GeneticEngine class with the supplied plug-ins and populate the initial generation.
         /// </summary>
         /// <param name="populator">The populator plug-in. Generates the initial population.</param>
         /// <param name="evaluator">The evaluator plug-in. Provides the fitness function.</param>

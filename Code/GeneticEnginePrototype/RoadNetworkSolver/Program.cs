@@ -42,7 +42,7 @@ namespace RoadNetworkSolver
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("network"))
                 {
-                    network2 = new RoadNetwork(reader);
+                    network2 = new RoadNetwork(map, reader);
                 }
             }
 
