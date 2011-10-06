@@ -44,7 +44,7 @@ namespace GeneticEngineTesting
             for (int i = 0; i < 100; i++)
             {
                 temp = (((IntegerIndividual)(currentGeneration.Get(i)).Individual)).value;
-                countNumbers[temp-1]++;
+                countNumbers[temp - 1]++;
             }
             for (int i = 0; i < 100; i++)
             {
@@ -55,7 +55,7 @@ namespace GeneticEngineTesting
                 }
             }
             //if (!passed) throw new Exception("Individuals not populated from 1-100 exactly once each");
-            Assert.IsTrue(passed);           
+            Assert.IsTrue(passed);
             //If no exceptions halt test:
             Console.WriteLine("Test A1 Successful");
         }
@@ -67,7 +67,7 @@ namespace GeneticEngineTesting
             Boolean passed = true;
             int[] countNumber;
             countNumber = new int[198];
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);          
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
             //testEngine.Step();
             //testEngine.Step();
             currentGeneration = testEngine.Generation;
@@ -76,7 +76,7 @@ namespace GeneticEngineTesting
             for (int i = 0; i < currentGeneration.Count; i++)
             {
                 temp = (((IntegerIndividual)(currentGeneration.Get(i)).Individual)).value;
-                countNumber[temp-1]++;
+                countNumber[temp - 1]++;
             }
             for (int i = 0; i < currentGeneration.Count; i++)
             {
@@ -102,6 +102,7 @@ namespace GeneticEngineTesting
             if (testEngine.IsComplete) passed = false;//throw new Exception("Is Complete returns true when expected value is false.");
             testEngine.Step();
             if (testEngine.IsComplete) passed = false;// throw new Exception("Is Complete returns true when expected value is false.");
+            //Fails here, passed is true when it should be false.
             testEngine.Repeat(99);
             if (testEngine.IsComplete) passed = false;// throw new Exception("Is Complete returns true when expected value is false.");
             testEngine.Step();
@@ -112,22 +113,22 @@ namespace GeneticEngineTesting
             Console.WriteLine("Test A3 Successful");
         }
 
-        [TestMethod] //How do we check this one?
+        [TestMethod]
         public void TestA4()
         {
             initialiseA();
             GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
             //testEngine.Reset();
             testEngine.Repeat(5);
-            currentGeneration = testEngine.Generation;          
+            currentGeneration = testEngine.Generation;
             //Assert.Equals
-            Assert.AreEqual(AOutputter.numberGenerations, 5);
-            Assert.AreEqual(AOutputter.fitnesses[0], 99);
-            Assert.AreEqual(AOutputter.fitnesses[0], 101);
-            Assert.AreEqual(AOutputter.fitnesses[0], 103);
-            Assert.AreEqual(AOutputter.fitnesses[0], 105);
-            Assert.AreEqual(AOutputter.fitnesses[0], 107);
-            //Console.WriteLine("Test A4 Completed, visually inspect output to verify.");
+            Assert.AreEqual(5, AOutputter.numberGenerations);
+            //Fails here, output expected is 99 but 0 is returned. The assertions after this pass though (101, 103,..)
+            Assert.AreEqual(99, AOutputter.fitnesses[0]);
+            Assert.AreEqual(101, AOutputter.fitnesses[1]);
+            Assert.AreEqual(103, AOutputter.fitnesses[2]);
+            Assert.AreEqual(105, AOutputter.fitnesses[3]);
+            Assert.AreEqual(107, AOutputter.fitnesses[4]);
         }
 
         [TestMethod]
@@ -139,14 +140,14 @@ namespace GeneticEngineTesting
             testEngine.Run();
             int[] countNumber;
             Boolean passed = true;
-            countNumber = new int[101];
+            countNumber = new int[100];
             currentGeneration = testEngine.Generation;
             int temp = 0;
-            //Check that individuals exist from 100 to 200.
+            //Check that individuals exist from 101 to 200.
             for (int i = 0; i < currentGeneration.Count; i++)
             {
                 temp = (((IntegerIndividual)(currentGeneration.Get(i)).Individual)).value;
-                countNumber[temp-1]++;
+                countNumber[temp - 101]++;
             }
             for (int i = 0; i < currentGeneration.Count; i++)
             {
@@ -238,4 +239,5 @@ namespace GeneticEngineTesting
         }
     }
 }
+
 
