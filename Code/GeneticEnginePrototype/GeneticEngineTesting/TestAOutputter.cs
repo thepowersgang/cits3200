@@ -9,23 +9,32 @@ public class TestAOutputter : IOutputter
 {
     public int numberGenerations = 0;
     public int[] fitnesses;
-	public TestAOutputter()
-	{
+    public int best;
 
-	}
+    public TestAOutputter()
+    {
+        fitnesses = new int[1000];
+    }
 
     public void OutputGeneration(IGeneration generation, int generationIndex)
     {
-        fitnesses = new int[100];
-        Console.WriteLine("Generations: " + generationIndex);
-        for (int i = 0; i < generationIndex; i++)
+        best = 0;
+
+        for (int i = 0; i < generation.Count; i++)
         {
             IndividualWithFitness thisIndividual = generation[i];
-            Console.WriteLine("Current Generation: " + i);
-            Console.WriteLine("Best Fitness: " + thisIndividual.Fitness);
-            Console.WriteLine("Value: " + (((IntegerIndividual)(thisIndividual.Individual)).value).ToString());
-            Console.WriteLine();
-            fitnesses[i] = ((IntegerIndividual)(thisIndividual.Individual)).value;
+            //Console.WriteLine("Current Generation: " + i);
+            //Console.WriteLine("Best Fitness: " + thisIndividual.Fitness);
+            //Console.WriteLine("Value: " + (((IntegerIndividual)(thisIndividual.Individual)).value).ToString());
+            //Console.WriteLine();
+            if (((IntegerIndividual)(thisIndividual.Individual)).value > best)
+            {
+                best = ((IntegerIndividual)(thisIndividual.Individual)).value;
+            }
+            //numberGenerations = i + 1;
         }
+        fitnesses[generationIndex] = best;
+        numberGenerations = generationIndex;
     }
 }
+
