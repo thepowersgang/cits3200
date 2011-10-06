@@ -66,6 +66,7 @@
             this.generationScroller.ReadOnly = true;
             this.generationScroller.Size = new System.Drawing.Size(83, 20);
             this.generationScroller.TabIndex = 1;
+            this.generationScroller.SelectedItemChanged += new System.EventHandler(this.generationScroller_SelectedItemChanged);
             // 
             // individualScroller
             // 
@@ -74,6 +75,7 @@
             this.individualScroller.ReadOnly = true;
             this.individualScroller.Size = new System.Drawing.Size(83, 20);
             this.individualScroller.TabIndex = 2;
+            this.individualScroller.SelectedItemChanged += new System.EventHandler(this.individualScroller_SelectedItemChanged);
             // 
             // label1
             // 

@@ -20,6 +20,10 @@ namespace RoadNetworkGUI
         {
             InitializeComponent();
             openDialog = new OpenFileDialog();
+            for (int i = 0; i <= 200; i++)
+            {
+                generationScroller.Items.Add(i.ToString());
+            }
         }
 
         /**
@@ -46,5 +50,40 @@ namespace RoadNetworkGUI
                 }
             }
         }
+
+        /**
+         * The index selected is the index of the generation
+         * If the index is 0 or the generation is not selected, display an error message to select a proper generation index.
+         * The index ranges from 1 to 200. 
+         * For a specific generation, dynamically fill up the 'individual' scroll bar from 1 up to the number of individuals. 
+         */ 
+        private void generationScroller_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (generationScroller.SelectedIndex == 0 || generationScroller.SelectedItem == null)
+            {
+                MessageBox.Show("Select a proper generation index from 1 to 200\n");
+            }
+            else
+            {
+                for (int i = 1; i <= 200; i++)
+                {
+                    individualScroller.Items.Add(i.ToString());
+                }
+            }
+        }
+
+        private void individualScroller_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (individualScroller.SelectedIndex == 0 || individualScroller.SelectedItem == null)
+            {
+                MessageBox.Show("Select an individual index from 1 to 200 for this generation\n");
+            }
+            else
+            {
+                int index = individualScroller.SelectedIndex - 1;
+            }
+        }
+
+
     }
 }
