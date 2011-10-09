@@ -29,8 +29,9 @@ namespace RoadNetworkGUI
         /**
          * Prompt user to select a file.
          * If a file is selected, check if the file is an xml file.
-         * If not, display error message to alert the user that they cannot open the file.
+         * If not, display error message to alert the user that they cannot open the file and terminate the program.
          * If it is, then read from file and create new network and use it to draw up the network. 
+         * If the file is selected, display an error message and terminate the program.
          */ 
         private void Road_Network_Visualiser_Load(object sender, EventArgs e)
         {
@@ -40,7 +41,8 @@ namespace RoadNetworkGUI
                 string extension = Path.GetExtension(openDialog.FileName);
                 if (extension != ".xml")
                 {
-                    MessageBox.Show("Cannot open file for reading XML\n");
+                    MessageBox.Show("Cannot open file for reading XML.\n Terminating program now");
+                    this.Dispose(true);
                 }
                 else
                 {
@@ -48,6 +50,11 @@ namespace RoadNetworkGUI
                     network = new RoadNetwork(null, reader);
                     visualiser2.Network = network;
                 }
+            }
+            else
+            {
+                MessageBox.Show("No file is chosen. Terminating program now\n");
+                this.Dispose(true);
             }
         }
 
@@ -72,6 +79,11 @@ namespace RoadNetworkGUI
             }
         }
 
+        /**
+         * If an individual index is selected by the user, then check if the individual is valid,
+         * if so, redraw the individual on the visualiser. 
+         * If not, display an error message to select a proper individual index. 
+         */ 
         private void individualScroller_SelectedItemChanged(object sender, EventArgs e)
         {
             if (individualScroller.SelectedIndex == 0 || individualScroller.SelectedItem == null)
