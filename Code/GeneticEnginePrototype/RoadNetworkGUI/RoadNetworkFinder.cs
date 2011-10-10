@@ -261,6 +261,10 @@ namespace RoadNetworkGUI
                     MessageBox.Show("Map file should be in xml form. Please reload another file.\n");
                 }
             }
+            else
+            {
+                MessageBox.Show("Select a file so a map can be created on the visualiser\n");
+            }
         }
 
         /**
@@ -277,6 +281,7 @@ namespace RoadNetworkGUI
                     MessageBox.Show("Output file should be in xml form. Please reload another file\n");
                 }
             }
+            else MessageBox.Show("Select a file so information can be written to an output file\n");
         }
 
         /**
