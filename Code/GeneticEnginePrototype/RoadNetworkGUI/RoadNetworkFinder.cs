@@ -130,7 +130,7 @@ namespace RoadNetworkGUI
                 string choice = getChoice(generationFactories, cbGenerationFactory);
                 generationFactory = (IGenerationFactory)loader.GetInstance(choice, null);
             }
-            if (errorMsg != "") MessageBox.Show(errorMsg);
+            if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n" );
             else
             {
                 engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, outputter, generationFactory);
@@ -258,7 +258,7 @@ namespace RoadNetworkGUI
                 }
                 else
                 {
-                    MessageBox.Show("Map file should be in xml form\n");
+                    MessageBox.Show("Map file should be in xml form. Please reload another file.\n");
                 }
             }
         }
@@ -268,7 +268,15 @@ namespace RoadNetworkGUI
          */
         private void loadOutputFile()
         {
-            if (isOK()) tbOutputFile.Text = openDialog.FileName;
+            if (isOK())
+            {
+                tbOutputFile.Text = openDialog.FileName;
+                string e = Path.GetExtension(tbOutputFile.Text);
+                if (!String.Equals(e, ".xml"))
+                {
+                    MessageBox.Show("Output file should be in xml form. Please reload another file\n");
+                }
+            }
         }
 
         /**
@@ -286,7 +294,7 @@ namespace RoadNetworkGUI
                     cbPopulator.Items.Add(populators[i]);
                 }
             }
-            else MessageBox.Show("No known populators can be loaded\n");
+            else MessageBox.Show("No known populators can be loaded. Load another dll file\n");
             if (evaluators.Count > 0)
             {
                 for (int i = 0; i < evaluators.Count; i++)
@@ -294,7 +302,7 @@ namespace RoadNetworkGUI
                     cbEvaluator.Items.Add(evaluators[i]);
                 }
             }
-            else MessageBox.Show("No known evaluators can be loaded\n");
+            else MessageBox.Show("No known evaluators can be loaded. Load another dll file\n");
             if (geneticOperators.Count > 0)
             {
                 for (int i = 0; i < geneticOperators.Count; i++)
@@ -302,7 +310,7 @@ namespace RoadNetworkGUI
                     cbGeneticOperator.Items.Add(geneticOperators[i]);
                 }
             }
-            else MessageBox.Show("No known genetic operators can be loaded\n");
+            else MessageBox.Show("No known genetic operators can be loaded. Load another dll file\n");
             if (terminators.Count > 0)
             {
                 for (int i = 0; i < terminators.Count; i++)
@@ -310,7 +318,7 @@ namespace RoadNetworkGUI
                     cbTerminator.Items.Add(terminators[i]);
                 }
             }
-            else MessageBox.Show("No known terminators can be loaded\n");
+            else MessageBox.Show("No known terminators can be loaded. \n");
             if (outputters.Count > 0)
             {
                 for (int i = 0; i < outputters.Count; i++)
