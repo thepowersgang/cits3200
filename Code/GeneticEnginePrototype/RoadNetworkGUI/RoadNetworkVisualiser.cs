@@ -139,6 +139,7 @@ namespace RoadNetworkGUI
             {
                 IndividualIndex = individualScroller.SelectedIndex - 1;
                 visualiser2.Network = (RoadNetwork)generations[GenerationIndex][IndividualIndex].Individual;
+                fitnessLabel.Text = (generations[GenerationIndex][IndividualIndex].Fitness).ToString();
                 outputter.OutputGeneration(generations[GenerationIndex], generations[GenerationIndex].Count);
             }
         }
