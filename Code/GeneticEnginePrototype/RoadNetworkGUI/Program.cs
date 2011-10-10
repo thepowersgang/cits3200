@@ -15,7 +15,15 @@ namespace RoadNetworkGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Road_Network_Visualiser());
+            Road_Network_Visualiser program = new Road_Network_Visualiser(false, null);
+            try
+            {
+                Application.Run(program);
+                program.Dispose();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

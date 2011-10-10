@@ -374,14 +374,14 @@ namespace RoadNetworkGUI
 
         /**
          * If the generation has been completed and once the view Output file Button is clicked,
-         * Close the current interface and open up the Visualiser interface. 
+         * Close the current interface and open up the Visualiser interface with the current file. 
          */ 
         private void viewOutputFileButton_Click(object sender, EventArgs e)
         {
             if (hasCompleted)
             {
                 this.Dispose(false);
-                Road_Network_Visualiser form = new Road_Network_Visualiser();
+                Road_Network_Visualiser form = new Road_Network_Visualiser(true,tbOutputFile.Text);
                 form.Visible = true;
             }
         }
