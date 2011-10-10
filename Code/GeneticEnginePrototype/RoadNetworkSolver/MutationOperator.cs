@@ -9,7 +9,7 @@ namespace RoadNetworkSolver
 	public class MutationOperator: IGeneticOperator
 	{
 		private Random random = new Random();
-        static const double chance_move_vertex = 0.1;
+        double chance_move_vertex = 0.1;
 		
 		public MutationOperator()
 		{

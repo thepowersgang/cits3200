@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using RoadNetworkSolver;
+using GeneticAlgorithm.Generation;
+using GeneticAlgorithm.Plugin;
 using System.Xml;
 
 namespace RoadNetworkGUI
@@ -16,6 +18,9 @@ namespace RoadNetworkGUI
     {
         OpenFileDialog openDialog;
         RoadNetwork network;
+        IGeneration[] generations;
+        int IndividualIndex = -1, GenerationIndex = -1;
+        IOutputter outputter;
         public Road_Network_Visualiser()
         {
             InitializeComponent();
@@ -61,8 +66,8 @@ namespace RoadNetworkGUI
         /**
          * The index selected is the index of the generation
          * If the index is 0 or the generation is not selected, display an error message to select a proper generation index.
-         * The index ranges from 1 to 200. 
-         * For a specific generation, dynamically fill up the 'individual' scroll bar from 1 up to the number of individuals. 
+         * For a specific generation, if the individual count is at least 1, dynamically fill up the 'individual' scroll bar from 1 up to the number of individuals. 
+         * Otherwise, request user to select another generation through an displayed error message.
          */ 
         private void generationScroller_SelectedItemChanged(object sender, EventArgs e)
         {
@@ -72,9 +77,20 @@ namespace RoadNetworkGUI
             }
             else
             {
-                for (int i = 1; i <= 200; i++)
+                GenerationIndex = generationScroller.SelectedIndex - 1;
+                if (generations[GenerationIndex].Count > 0)
                 {
-                    individualScroller.Items.Add(i.ToString());
+                    individualScroller.Items.Clear();
+                    for (int i = 1; i <= generations[GenerationIndex].Count + 1; i++)
+                    {
+                        individualScroller.Items.Add(i.ToString());
+                    }
+                }
+                else
+                {
+                    string errorMsg = "There are no individuals for this Generation\n";
+                    errorMsg += "Therefore please select another generation with at least one individual\n";
+                    MessageBox.Show(errorMsg);
                 }
             }
         }
@@ -92,7 +108,9 @@ namespace RoadNetworkGUI
             }
             else
             {
-                int index = individualScroller.SelectedIndex - 1;
+                IndividualIndex = individualScroller.SelectedIndex - 1;
+                visualiser2.Network = (RoadNetwork)generations[GenerationIndex][IndividualIndex].Individual;
+                outputter.OutputGeneration(generations[GenerationIndex], generations[GenerationIndex].Count);
             }
         }
 
