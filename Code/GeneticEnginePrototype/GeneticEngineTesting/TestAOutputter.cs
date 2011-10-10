@@ -33,7 +33,7 @@ public class TestAOutputter : IOutputter
             }
             //numberGenerations = i + 1;
         }
-        fitnesses[generationIndex] = best;
+        fitnesses[generationIndex-1] = best;
         numberGenerations = generationIndex;
     }
 }
