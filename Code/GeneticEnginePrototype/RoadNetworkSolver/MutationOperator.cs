@@ -8,8 +8,24 @@ namespace RoadNetworkSolver
 {
 	public class MutationOperator: IGeneticOperator
 	{
-		private Random random = new Random();
-		double chance_move_vertex = 0.1;
+        private Random random = new Random();
+        /// <summary>
+        /// Chance out of 1 for an individual vertex to altered
+        /// </summary>
+        double chance_move_vertex = 0.1;
+        /// <summary>
+        /// Chance out of 1 for an individual vertex to be deleted
+        /// </summary>
+        double chance_delete_vertex = 0.01;
+        /// <summary>
+        /// Maximum fraction of the total vertex population to add (linear spread)
+        /// </summary>
+        double max_new_verticies = 0.1;
+        /// <summary>
+        /// Maximum fraction of the total edge population to add (linear spread)
+        /// </summary>
+        double max_new_edges = 0.1;
+        
 		
 		public MutationOperator()
 		{
@@ -39,12 +55,11 @@ namespace RoadNetworkSolver
 			v.Coordinates = new Coordinates((int)x, (int)y);
 		}
 
-		private void AddVertex(RoadNetwork network, int Position)
+		private void AddVertex(RoadNetwork network)
 		{
 			int x = (int)( random.NextDouble() * network.Map.Width );
 			int y = (int)( random.NextDouble() * network.Map.Height );
-			Vertex v = new Vertex(network, new Coordinates(x, y));
-			network.AddVertex( v );
+			Vertex v = network.AddVertex( new Coordinates(x, y) );
 
 			if(network.VertexCount >= 2)
 			{			
@@ -69,10 +84,15 @@ namespace RoadNetworkSolver
 				}
 				
 				// Create two edges for it
-				network.AddEdge(start, v);
+                network.AddEdge(prev, v);
 				network.AddEdge(v, next);
 			}
 		}
+
+        private void DeleteVertex(RoadNetwork network, int VertexID)
+        {
+            Vertex v = network.GetVertex(VertexID);
+        }
 
 		/// <summary>
 		/// Add a random edge to the network
@@ -87,14 +107,14 @@ namespace RoadNetworkSolver
 			int start_idx = (int)(random.NextDouble() * network.VertexCount);
 			int end_idx = (int)(random.NextDouble() * (network.VertexCount - 1));
 			// Handle collision
-			if(end_idx >= start_idx) end ++;
-			Vector start = network.GetVertex(start_idx);
-			Vector end = network.GetVertex(end_idx);
+			if(end_idx >= start_idx) end_idx ++;
+			Vertex start = network.GetVertex(start_idx);
+            Vertex end = network.GetVertex(end_idx);
 			
 			// Make sure this isn't making a duplicate (or reverse duplicate)
 			for( int i = 0; i < network.EdgeCount; i ++ )
 			{
-				Edge	edge = network.GetEdge(i);
+				Edge edge = network.GetEdge(i);
 				if( edge.Start == start && edge.End == end )
 					return false;
 				if( edge.End == start && edge.Start == end )
@@ -149,25 +169,26 @@ namespace RoadNetworkSolver
 			network.ClearVisited();
 			int num_unknown = network.VertexCount;
 			LinkedList<Vertex> to_check = new LinkedList<Vertex>();
-			to_check.Add( network.Start );
+			to_check.AddLast( network.Start );
 			
 			while( num_unknown > 0 )
 			{
 				while(to_check.Count > 0)
 				{
-					Vertext v = to_check.RemoveFirst();
+					Vertex v = to_check.First.Value;
+                    to_check.RemoveFirst();
 					v.Visited = true;
 					num_unknown --;
 						
 					for( int i = 0; i < v.EdgeCount; i ++ )
 					{
 						if( v.Visited )	continue;
-						to_check.Add( v );
+                        to_check.AddLast(v);
 					}
 				}
 				
 				// If there are still unreached verticies, pick one and connect
-				if( num_unknown )
+				if( num_unknown > 0 )
 				{
 					// TODO:
 				}
