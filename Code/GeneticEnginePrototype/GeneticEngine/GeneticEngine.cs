@@ -46,7 +46,7 @@ namespace GeneticAlgorithm
         /// <summary>
         /// The number of generations which have been processed
         /// </summary>
-        int generationCount;
+        int generationNumber;
 
         /// <summary>
         /// The most recent generation
@@ -60,7 +60,7 @@ namespace GeneticAlgorithm
         {
             get
             {
-                return generationCount;
+                return generationNumber;
             }
         }
 
@@ -124,19 +124,32 @@ namespace GeneticAlgorithm
             this.outputter = outputter;
             this.generationFactory = generationFactory == null ? new DefaultGenerationFactory() : generationFactory;
 
-            Reset();
+            Setup();
         }
 
         /// <summary>
         /// Reset the genetic engine by setting the generation count to 0 and using the populator plug-in
         /// to generate a new initial population 
         /// </summary>
-        public void Reset()
+        public void Setup()
         {
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);
             processIndividuals(individuals);
-            generationCount = 0;
+            generationNumber = 0;
+
+            if (outputter != null)
+            {
+                outputter.StartOutput();
+            }
+        }
+
+        public void Cleanup()
+        {
+            if (outputter != null)
+            {
+                outputter.FinishOutput();
+            }
         }
 
         /// <summary>
@@ -171,7 +184,7 @@ namespace GeneticAlgorithm
             generation = generationFactory.CreateGeneration(individuals);
 
             //Inform the evaluator that an new generation has been started.
-            evaluator.Initialise(generationCount, individuals);
+            evaluator.Initialise(generationNumber, individuals);
 
             //Evaluate each individual and add it to the generation.
             foreach (object individual in individuals)
@@ -183,12 +196,12 @@ namespace GeneticAlgorithm
             generation.Prepare();
 
             //Increment the generation counter.
-            generationCount++;
+            generationNumber++;
 
             //If an outputter plug-in has been supplied then output the new generation.
             if (outputter != null)
             {
-                outputter.OutputGeneration(generation, generationCount);
+                outputter.OutputGeneration(generation, generationNumber);
             }
         }
 

@@ -16,7 +16,11 @@ public class TestAOutputter : IOutputter
         fitnesses = new int[1000];
     }
 
-    public void OutputGeneration(IGeneration generation, int generationIndex)
+    public void StartOutput()
+    {
+    }
+
+    public void OutputGeneration(IGeneration generation, int generationNumber)
     {
         best = 0;
 
@@ -33,8 +37,12 @@ public class TestAOutputter : IOutputter
             }
             //numberGenerations = i + 1;
         }
-        fitnesses[generationIndex-1] = best;
-        numberGenerations = generationIndex;
+        fitnesses[generationNumber-1] = best;
+        numberGenerations = generationNumber;
+    }
+
+    public void FinishOutput()
+    {
     }
 }
 
