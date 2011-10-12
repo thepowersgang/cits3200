@@ -422,10 +422,8 @@ namespace RoadNetworkSolver
 		/// <param name="reader">
 		/// <see cref="XmlReader"/> containing data
 		/// </param>
-        public RoadNetwork(Map map, XmlReader reader)
+        public RoadNetwork(XmlReader reader)
         {
-            this.map = map;
-
             Dictionary<string, Vertex> verticesById = new Dictionary<string, Vertex>();
 
             int depth = 1;
@@ -437,12 +435,15 @@ namespace RoadNetworkSolver
                     case XmlNodeType.Element:
                         switch (reader.Name)
                         {
-                            case ("vertex"): 
+                            case "map":
+                                map = new Map(reader);
+                                break;
+                            case "vertex": 
                                 string id = reader.GetAttribute("id");                                
                                 verticesById.Add(id, AddVertex(new Coordinates(reader)));                                
                                 break;
 
-                            case ("edge"):
+                            case "edge":
 
                                 string startId = reader.GetAttribute("start");
                                 string endId = reader.GetAttribute("end");
@@ -479,7 +480,9 @@ namespace RoadNetworkSolver
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("network");
-            
+
+            map.WriteXml(writer);
+
             for (int i = 0; i < vertices.Count; i++)
             {
                 Vertex vertex = vertices[i];

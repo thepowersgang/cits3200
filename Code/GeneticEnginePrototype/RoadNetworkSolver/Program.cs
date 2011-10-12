@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Plugin.Generic;
+using GeneticAlgorithm.Generation;
 
 namespace RoadNetworkSolver
 {
@@ -10,47 +13,42 @@ namespace RoadNetworkSolver
     {
         static void Main(string[] args)
         {
+            Random random = new Random();
+
             XmlTextReader mapreader = new XmlTextReader("map.xml");
+
+            while(mapreader.Read() && mapreader.Name!="map");
 
             Map map = new Map(mapreader);
 
-            mapreader.Close();
+            IOutputter outputter = new RoadNetworkXmlOutputter("c:\\cits3200test\\roadnetworks.xml");
+            outputter.StartOutput();
 
-            XmlTextWriter writer = new XmlTextWriter("test.xml", Encoding.ASCII);
-
-            writer.Formatting = Formatting.Indented;
-
-            RoadNetwork network = new RoadNetwork(map);
-
-            network.AddVertex(1, 2);
-            network.AddVertex(2, 3);
-            network.AddVertex(3, 4);
-
-            network.AddEdge(network.GetVertex(0), network.GetVertex(1));
-            network.AddEdge(network.GetVertex(1), network.GetVertex(2));
-
-            network.WriteXml(writer);
-
-            writer.Flush();
-            writer.Close();
-
-            XmlTextReader reader = new XmlTextReader("test.xml");
-
-            RoadNetwork network2 = new RoadNetwork(map);
-
-            while (reader.Read())
+            for (int g = 0; g < 10; g++)
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals("network"))
+                AATreeGeneration generation = new AATreeGeneration();
+
+                for (int i = 0; i < 20; i++)
                 {
-                    network2 = new RoadNetwork(map, reader);
+                    RoadNetwork network = new RoadNetwork(map);
+
+                    for (int v = 0; v < 100; v++)
+                    {
+                        network.AddVertex(random.Next(100), random.Next(100));
+                    }
+
+                    for (int e = 0; e < 1000; e++)
+                    {
+                        network.AddEdge(network.GetVertex(random.Next(100)), network.GetVertex(random.Next(100)));
+                    }
+
+                    generation.Insert(network, (uint)i);
                 }
+
+                outputter.OutputGeneration(generation, g);
             }
 
-            reader.Close();
-
-            Console.WriteLine(network2.VertexCount);
-            Console.WriteLine(network2.EdgeCount);
-            Console.ReadLine();
+            outputter.FinishOutput();
         }
     }
 }

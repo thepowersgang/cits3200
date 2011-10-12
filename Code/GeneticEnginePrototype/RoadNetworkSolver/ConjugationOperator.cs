@@ -1,14 +1,27 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    public class ConjugationOperator
+    public class ConjugationOperator : IGeneticOperator
     {
         Random random = new Random();
-                
+
+        public ConjugationOperator(object config)
+        {
+        }
+
+        public void Operate(IGeneration source, ArrayList destination)
+        {
+            int n = source.Count;
+
+            
+        }
+
         private void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
         {   
             Cut(parent1);

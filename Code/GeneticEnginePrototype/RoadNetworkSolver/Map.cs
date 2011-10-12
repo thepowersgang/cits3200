@@ -137,6 +137,9 @@ namespace RoadNetworkSolver
         {
             writer.WriteStartElement("map");
 
+            writer.WriteAttributeString("width", width.ToString());
+            writer.WriteAttributeString("height", height.ToString());
+
             writer.WriteStartElement("start");
             start.WriteXml(writer);
             writer.WriteEndElement();

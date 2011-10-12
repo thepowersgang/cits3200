@@ -127,11 +127,7 @@ namespace GeneticAlgorithm
             Setup();
         }
 
-        /// <summary>
-        /// Reset the genetic engine by setting the generation count to 0 and using the populator plug-in
-        /// to generate a new initial population 
-        /// </summary>
-        public void Setup()
+        private void Setup()
         {
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);
@@ -142,6 +138,16 @@ namespace GeneticAlgorithm
             {
                 outputter.StartOutput();
             }
+        }
+
+        /// <summary>
+        /// Reset the genetic engine by setting the generation count to 0 and using the populator plug-in
+        /// to generate a new initial population 
+        /// </summary>
+        public void Reset()
+        {
+            Cleanup();
+            Setup();            
         }
 
         public void Cleanup()
