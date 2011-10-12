@@ -8,7 +8,7 @@
     <ProjectGuid>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneticEnginePlugin</RootNamespace>
+    <RootNamespace>GeneticAlgorithm.Plugin</RootNamespace>
     <AssemblyName>GeneticEnginePlugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,19 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeneticAlgorithm\Plugin\Generic\GenerationIndex.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\Generic\GenerationIndexEntry.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IPopulator.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IEvaluator.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IGeneration.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IGenerationFactory.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IGeneticOperator.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IndividualWithFitness.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\IOutputter.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\Generic\FitnessThresholdTerminator.cs" />
+    <Compile Include="Generic\GenerationIndex.cs" />
+    <Compile Include="Generic\GenerationIndexEntry.cs" />
+    <Compile Include="IPopulator.cs" />
+    <Compile Include="IEvaluator.cs" />
+    <Compile Include="IGeneration.cs" />
+    <Compile Include="IGenerationFactory.cs" />
+    <Compile Include="IGeneticOperator.cs" />
+    <Compile Include="IndividualWithFitness.cs" />
+    <Compile Include="IOutputter.cs" />
+    <Compile Include="Generic\FitnessThresholdTerminator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\ITerminator.cs" />
-    <Compile Include="GeneticAlgorithm\Plugin\Generic\XmlOutputter.cs" />
+    <Compile Include="ITerminator.cs" />
+    <Compile Include="Generic\XmlOutputter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

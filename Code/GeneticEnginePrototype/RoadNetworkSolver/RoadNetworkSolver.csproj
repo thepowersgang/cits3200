@@ -60,9 +60,9 @@
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
       <Name>GeneticEnginePlugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GeneticEngine\GeneticEngineCore.csproj">
+    <ProjectReference Include="..\GeneticEngine\GeneticEngine.csproj">
       <Project>{F42AB250-665B-41C3-B772-518D01659D32}</Project>
-      <Name>GeneticEngineCore</Name>
+      <Name>GeneticEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

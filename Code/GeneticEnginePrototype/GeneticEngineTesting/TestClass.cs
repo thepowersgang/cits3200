@@ -1,10 +1,8 @@
 ﻿using System;
 using GeneticAlgorithm;
-using GeneticEnginePrototype;
 using GeneticAlgorithm.Plugin;
 using GeneticEngineTesting;
 using RoadNetworkDisplay;
-using RoadNetworkOperatorTest;
 using RoadNetworkSolver;
 using System.Collections;
 using System.Collections.Generic;

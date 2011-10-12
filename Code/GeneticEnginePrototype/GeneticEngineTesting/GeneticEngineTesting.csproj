@@ -59,13 +59,9 @@
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
       <Name>GeneticEnginePlugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GeneticEnginePrototype\GeneticEnginePrototype.csproj">
-      <Project>{87EEE188-C48A-4925-A3D8-0F5780F85E8D}</Project>
-      <Name>GeneticEnginePrototype</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GeneticEngine\GeneticEngineCore.csproj">
+    <ProjectReference Include="..\GeneticEngine\GeneticEngine.csproj">
       <Project>{F42AB250-665B-41C3-B772-518D01659D32}</Project>
-      <Name>GeneticEngineCore</Name>
+      <Name>GeneticEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\RoadNetworkDisplay\RoadNetworkDisplay.csproj">
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>

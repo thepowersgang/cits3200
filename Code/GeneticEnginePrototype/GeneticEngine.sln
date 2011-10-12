@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEnginePrototype", "GeneticEnginePrototype\GeneticEnginePrototype.csproj", "{87EEE188-C48A-4925-A3D8-0F5780F85E8D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineCore", "GeneticEngine\GeneticEngineCore.csproj", "{F42AB250-665B-41C3-B772-518D01659D32}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngine", "GeneticEngine\GeneticEngine.csproj", "{F42AB250-665B-41C3-B772-518D01659D32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEnginePlugin", "GeneticEnginePlugin\GeneticEnginePlugin.csproj", "{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}"
 EndProject
@@ -13,7 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkDisplay", "RoadN
 	ProjectSection(ProjectDependencies) = postProject
 		{25B2A245-A242-4F2A-9E82-B73AA0FCC04D} = {25B2A245-A242-4F2A-9E82-B73AA0FCC04D}
 		{F42AB250-665B-41C3-B772-518D01659D32} = {F42AB250-665B-41C3-B772-518D01659D32}
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D} = {87EEE188-C48A-4925-A3D8-0F5780F85E8D}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineTesting", "GeneticEngineTesting\GeneticEngineTesting.csproj", "{660ECC4B-AE4F-4777-860A-069316A7D973}"
@@ -30,16 +27,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Debug|x86.ActiveCfg = Debug|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Debug|x86.Build.0 = Debug|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Release|Any CPU.ActiveCfg = Release|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Release|x86.ActiveCfg = Release|x86
-		{87EEE188-C48A-4925-A3D8-0F5780F85E8D}.Release|x86.Build.0 = Release|x86
 		{F42AB250-665B-41C3-B772-518D01659D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F42AB250-665B-41C3-B772-518D01659D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F42AB250-665B-41C3-B772-518D01659D32}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
