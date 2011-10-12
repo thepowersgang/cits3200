@@ -68,6 +68,7 @@ namespace RoadNetworkGUI
             this.label2 = new System.Windows.Forms.Label();
             this.maxFitnessValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.cleanupButton = new System.Windows.Forms.Button();
             this.gbMap.SuspendLayout();
             this.gbPlugins.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -193,7 +194,7 @@ namespace RoadNetworkGUI
             // gbMap
             // 
             this.gbMap.Controls.Add(this.visualiser1);
-            this.gbMap.Location = new System.Drawing.Point(425, 13);
+            this.gbMap.Location = new System.Drawing.Point(524, 12);
             this.gbMap.Name = "gbMap";
             this.gbMap.Size = new System.Drawing.Size(592, 472);
             this.gbMap.TabIndex = 16;
@@ -204,7 +205,7 @@ namespace RoadNetworkGUI
             // 
             this.visualiser1.BackColor = System.Drawing.Color.White;
             this.visualiser1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.visualiser1.Location = new System.Drawing.Point(20, 21);
+            this.visualiser1.Location = new System.Drawing.Point(21, 19);
             this.visualiser1.Name = "visualiser1";
             this.visualiser1.Network = null;
             this.visualiser1.Size = new System.Drawing.Size(550, 430);
@@ -228,7 +229,7 @@ namespace RoadNetworkGUI
             this.gbPlugins.Controls.Add(this.cbTerminator);
             this.gbPlugins.Location = new System.Drawing.Point(12, 14);
             this.gbPlugins.Name = "gbPlugins";
-            this.gbPlugins.Size = new System.Drawing.Size(406, 243);
+            this.gbPlugins.Size = new System.Drawing.Size(506, 243);
             this.gbPlugins.TabIndex = 17;
             this.gbPlugins.TabStop = false;
             this.gbPlugins.Text = "Plug-ins";
@@ -245,6 +246,7 @@ namespace RoadNetworkGUI
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.cleanupButton);
             this.gbSettings.Controls.Add(this.viewOutputFileButton);
             this.gbSettings.Controls.Add(this.nScroller);
             this.gbSettings.Controls.Add(this.nlabel);
@@ -262,14 +264,14 @@ namespace RoadNetworkGUI
             this.gbSettings.Controls.Add(this.MapFileLabel);
             this.gbSettings.Location = new System.Drawing.Point(13, 263);
             this.gbSettings.Name = "gbSettings";
-            this.gbSettings.Size = new System.Drawing.Size(406, 179);
+            this.gbSettings.Size = new System.Drawing.Size(505, 179);
             this.gbSettings.TabIndex = 18;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
             // 
             // viewOutputFileButton
             // 
-            this.viewOutputFileButton.Location = new System.Drawing.Point(269, 150);
+            this.viewOutputFileButton.Location = new System.Drawing.Point(371, 119);
             this.viewOutputFileButton.Name = "viewOutputFileButton";
             this.viewOutputFileButton.Size = new System.Drawing.Size(119, 23);
             this.viewOutputFileButton.TabIndex = 14;
@@ -414,7 +416,7 @@ namespace RoadNetworkGUI
             this.gbGeneration.Controls.Add(this.label1);
             this.gbGeneration.Location = new System.Drawing.Point(13, 444);
             this.gbGeneration.Name = "gbGeneration";
-            this.gbGeneration.Size = new System.Drawing.Size(405, 41);
+            this.gbGeneration.Size = new System.Drawing.Size(505, 41);
             this.gbGeneration.TabIndex = 19;
             this.gbGeneration.TabStop = false;
             this.gbGeneration.Text = "Current Generation";
@@ -455,11 +457,21 @@ namespace RoadNetworkGUI
             this.label1.TabIndex = 0;
             this.label1.Text = "Max Fitness:";
             // 
+            // cleanupButton
+            // 
+            this.cleanupButton.Location = new System.Drawing.Point(267, 148);
+            this.cleanupButton.Name = "cleanupButton";
+            this.cleanupButton.Size = new System.Drawing.Size(88, 23);
+            this.cleanupButton.TabIndex = 15;
+            this.cleanupButton.Text = "Clean up";
+            this.cleanupButton.UseVisualStyleBackColor = true;
+            this.cleanupButton.Click += new System.EventHandler(this.cleanupButton_Click);
+            // 
             // RoadNetworkFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 489);
+            this.ClientSize = new System.Drawing.Size(1128, 499);
             this.Controls.Add(this.gbGeneration);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.gbPlugins);
@@ -518,6 +530,7 @@ namespace RoadNetworkGUI
         private System.Windows.Forms.Label averageFitnessValue;
         private RoadNetworkDisplay.RoadNetworkPanel visualiser1;
         private Button viewOutputFileButton;
+        private Button cleanupButton;
     }
 }
 
