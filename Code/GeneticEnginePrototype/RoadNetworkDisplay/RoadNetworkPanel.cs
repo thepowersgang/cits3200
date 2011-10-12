@@ -42,8 +42,19 @@ namespace RoadNetworkDisplay
         {
             if (networkBeenGiven)
             {
+                drawStartEndCoords(e);
                 drawTowns(e);
                 drawVerticesEdges(e);
+            }
+        }
+        private void drawStartEndCoords(PaintEventArgs e)
+        {
+            if (network.Map != null)
+            {
+                Coordinates start = network.Map.Start;
+                Coordinates end = network.Map.End;
+                e.Graphics.FillEllipse(Brushes.Green, start.X - 2, start.Y - 2, 10, 10);
+                e.Graphics.FillEllipse(Brushes.Green, end.X - 2, end.Y - 2, 10, 10);
             }
         }
         private void drawTowns(PaintEventArgs e)
