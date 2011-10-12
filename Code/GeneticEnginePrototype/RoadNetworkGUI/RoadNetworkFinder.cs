@@ -148,6 +148,7 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 displayOutputter.FinishOutput();
+                cleanupButton.Enabled = false;
             }
         }
         /*
@@ -163,6 +164,7 @@ namespace RoadNetworkGUI
                 engine.Step();
                 setFitnessValues();
                 displayOutputter.output(engine.Generation, engine.GenerationCount);
+                cleanupButton.Enabled = true;
             }
             else
             {
@@ -190,6 +192,7 @@ namespace RoadNetworkGUI
                 engine.Run();
                 setFitnessValues();
                 displayOutputter.output(engine.Generation, engine.GenerationCount);
+                cleanupButton.Enabled = true;
             }
             else MessageBox.Show("Initialise Generation First\n");
             if (engine.IsComplete)
@@ -221,6 +224,7 @@ namespace RoadNetworkGUI
                     engine.Repeat(nScroller.SelectedIndex);
                     setFitnessValues();
                     displayOutputter.output(engine.Generation, engine.GenerationCount);
+                    cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
                 if (engine.IsComplete)
@@ -374,6 +378,7 @@ namespace RoadNetworkGUI
             runGenerationButton.Enabled = false;
             stepButton.Enabled = false;
             viewOutputFileButton.Enabled = false;
+            cleanupButton.Enabled = false;
         }
         /**
          * Based on the selected index from a particular combo box, obtain the string from the index of the specified list.
