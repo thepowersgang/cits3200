@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEnginePrototype", "GeneticEnginePrototype\GeneticEnginePrototype.csproj", "{87EEE188-C48A-4925-A3D8-0F5780F85E8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineCore", "GeneticEngine\GeneticEngineCore.csproj", "{F42AB250-665B-41C3-B772-518D01659D32}"
@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkDisplay", "RoadN
 		{F42AB250-665B-41C3-B772-518D01659D32} = {F42AB250-665B-41C3-B772-518D01659D32}
 		{87EEE188-C48A-4925-A3D8-0F5780F85E8D} = {87EEE188-C48A-4925-A3D8-0F5780F85E8D}
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkOperatorTest", "RoadNetworkOperatorTest\RoadNetworkOperatorTest.csproj", "{1B62E571-AD6B-4713-B774-357C9FA45743}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticEngineTesting", "GeneticEngineTesting\GeneticEngineTesting.csproj", "{660ECC4B-AE4F-4777-860A-069316A7D973}"
 EndProject
@@ -82,16 +80,6 @@ Global
 		{43B8DC23-D614-4789-B165-F7A07D120FF8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{43B8DC23-D614-4789-B165-F7A07D120FF8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{43B8DC23-D614-4789-B165-F7A07D120FF8}.Release|x86.ActiveCfg = Release|Any CPU
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Debug|x86.ActiveCfg = Debug|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Debug|x86.Build.0 = Debug|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Release|Any CPU.ActiveCfg = Release|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Release|Mixed Platforms.Build.0 = Release|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Release|x86.ActiveCfg = Release|x86
-		{1B62E571-AD6B-4713-B774-357C9FA45743}.Release|x86.Build.0 = Release|x86
 		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660ECC4B-AE4F-4777-860A-069316A7D973}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
