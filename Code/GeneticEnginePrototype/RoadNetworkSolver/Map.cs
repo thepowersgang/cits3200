@@ -167,5 +167,20 @@ namespace RoadNetworkSolver
         {
             return towns[index];
         }
+
+        public static Map FromFile(string filename)
+        {
+            XmlTextReader reader = new XmlTextReader(filename);
+            reader.MoveToContent();
+
+            if (reader.Name != "map")
+            {
+                throw new Exception("Map XML file must have <map> element as root.");
+            }
+
+            Map map = new Map(reader);
+            reader.Close();
+            return map;
+        }
     }
 }

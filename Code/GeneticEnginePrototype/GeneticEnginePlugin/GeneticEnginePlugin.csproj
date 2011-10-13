@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generic\IndividualIndex.cs" />
     <Compile Include="Generic\GenerationIndex.cs" />
     <Compile Include="Generic\GenerationIndexEntry.cs" />
+    <Compile Include="Generic\IndividualIndexEntry.cs" />
     <Compile Include="IPopulator.cs" />
     <Compile Include="IEvaluator.cs" />
     <Compile Include="IGeneration.cs" />

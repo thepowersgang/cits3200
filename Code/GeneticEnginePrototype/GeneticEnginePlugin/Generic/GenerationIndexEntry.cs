@@ -9,20 +9,11 @@ namespace GeneticAlgorithm.Plugin.Generic
 {
     public class GenerationIndexEntry
     {
-        private int generationNumber;
         private string generationPath;
         private int count;
         private uint minFitness;
         private uint maxFitness;
         private float averageFitness;
-
-        public int GenerationNumber
-        {
-            get
-            {
-                return generationNumber;
-            }
-        }
 
         public string GenerationPath
         {
@@ -73,9 +64,8 @@ namespace GeneticAlgorithm.Plugin.Generic
             }
         }
 
-        public GenerationIndexEntry(IGeneration generation, int generationNumber, string generationPath)
+        public GenerationIndexEntry(IGeneration generation, string generationPath)
         {
-            this.generationNumber = generationNumber;
             this.generationPath = generationPath;
 
             count = generation.Count;
@@ -94,7 +84,6 @@ namespace GeneticAlgorithm.Plugin.Generic
 
             generationPath = reader.GetAttribute("path");
 
-            int.TryParse(generationNumberString, out generationNumber);
             int.TryParse(countString, out count);
             uint.TryParse(minFitnessString, out minFitness);
             uint.TryParse(maxFitnessString, out maxFitness);
@@ -104,7 +93,6 @@ namespace GeneticAlgorithm.Plugin.Generic
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("generation");
-            writer.WriteAttributeString("index", generationNumber.ToString());
             writer.WriteAttributeString("count", count.ToString());
             writer.WriteAttributeString("min", minFitness.ToString());
             writer.WriteAttributeString("max", maxFitness.ToString());
