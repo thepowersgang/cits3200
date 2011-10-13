@@ -12,6 +12,7 @@ using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Util;
 using RoadNetworkSolver;
 using RoadNetworkDisplay;
+using GeneticAlgorithm.Plugin.Generic;
 using System.Xml;
 
 namespace RoadNetworkGUI
@@ -23,7 +24,6 @@ namespace RoadNetworkGUI
         IEvaluator evaluator;
         IGeneticOperator geneticOperator;
         ITerminator terminator;
-        IOutputter outputter;
         IGenerationFactory generationFactory;
         PluginLoader loader;
         GeneticEngine engine;
@@ -31,6 +31,8 @@ namespace RoadNetworkGUI
         List<Coordinates> towns = new List<Coordinates>();
         Map map;
         DisplayOutputter displayOutputter;
+        IOutputter outputter;
+        XmlOutputter xmlOutputter;
 
         public RoadNetworkFinder()
         {
@@ -141,6 +143,14 @@ namespace RoadNetworkGUI
                 setFitnessValues();
             }
         }
+        private void cleanupButton_Click(object sender, EventArgs e)
+        {
+            if (hasInitialised)
+            {
+                displayOutputter.FinishOutput();
+                cleanupButton.Enabled = false;
+            }
+        }
         /*
          * calls Step() of the engine only if it initialised. After the step method, the fitness values are updated
          * if the engine is not initialised, a message is displayed to initialise the engine.
@@ -150,9 +160,11 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
+                displayOutputter.StartOutput();
                 engine.Step();
                 setFitnessValues();
                 displayOutputter.output(engine.Generation, engine.GenerationCount);
+                cleanupButton.Enabled = true;
             }
             else
             {
@@ -176,9 +188,11 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
+                displayOutputter.StartOutput();
                 engine.Run();
                 setFitnessValues();
                 displayOutputter.output(engine.Generation, engine.GenerationCount);
+                cleanupButton.Enabled = true;
             }
             else MessageBox.Show("Initialise Generation First\n");
             if (engine.IsComplete)
@@ -206,9 +220,11 @@ namespace RoadNetworkGUI
             {
                 if (hasInitialised)
                 {
+                    displayOutputter.StartOutput();
                     engine.Repeat(nScroller.SelectedIndex);
                     setFitnessValues();
                     displayOutputter.output(engine.Generation, engine.GenerationCount);
+                    cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
                 if (engine.IsComplete)
@@ -280,6 +296,7 @@ namespace RoadNetworkGUI
                 {
                     MessageBox.Show("Output file should be in xml form. Please reload another file\n");
                 }
+                
             }
             else MessageBox.Show("Select a file so information can be written to an output file\n");
         }
@@ -361,6 +378,7 @@ namespace RoadNetworkGUI
             runGenerationButton.Enabled = false;
             stepButton.Enabled = false;
             viewOutputFileButton.Enabled = false;
+            cleanupButton.Enabled = false;
         }
         /**
          * Based on the selected index from a particular combo box, obtain the string from the index of the specified list.

@@ -52,14 +52,8 @@ namespace RoadNetworkGUI
                 }
                 else
                 {
-                    try
-                    {
                         MessageBox.Show("No file is chosen. Terminating program now\n");
                         this.Dispose(true);
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                    }
                 }
             }
             else
@@ -72,14 +66,8 @@ namespace RoadNetworkGUI
             string extension = Path.GetExtension(openDialog.FileName);
             if (extension != ".xml")
             {
-                try
-                {
                     MessageBox.Show("Cannot open file for reading XML.\n Terminating program now");
                     this.Dispose(true);
-                }
-                catch (ObjectDisposedException)
-                {
-                }
             }
             else
             {
@@ -138,8 +126,8 @@ namespace RoadNetworkGUI
             else
             {
                 IndividualIndex = individualScroller.SelectedIndex - 1;
-                visualiser2.Network = (RoadNetwork)generations[GenerationIndex][IndividualIndex].Individual;
-                fitnessLabel.Text = (generations[GenerationIndex][IndividualIndex].Fitness).ToString();
+                visualiser2.Network = (RoadNetwork)generations[GenerationIndex].Get(IndividualIndex).Individual;
+                fitnessLabel.Text = (generations[GenerationIndex].Get(IndividualIndex).Fitness).ToString();
                 outputter.OutputGeneration(generations[GenerationIndex], generations[GenerationIndex].Count);
             }
         }

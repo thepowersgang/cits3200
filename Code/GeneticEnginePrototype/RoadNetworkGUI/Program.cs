@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
+using RoadNetworkSolver;
 
 namespace RoadNetworkGUI
 {
@@ -15,15 +17,7 @@ namespace RoadNetworkGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Road_Network_Visualiser program = new Road_Network_Visualiser(false, null);
-            try
-            {
-                Application.Run(program);
-                program.Dispose();
-            }
-            catch (Exception)
-            {
-            }
+            Application.Run(new RoadNetworkFinder());
         }
     }
 }

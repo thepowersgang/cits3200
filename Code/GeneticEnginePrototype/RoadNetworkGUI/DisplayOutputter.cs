@@ -19,10 +19,18 @@ namespace RoadNetworkGUI
             this.visualiser = visualiser;
         }
 
+        public void StartOutput()
+        {
+            wrappedOutputter.StartOutput();
+        }
         public void output(IGeneration generation, int generationCount)
         {
             visualiser.Network = (RoadNetwork)generation[0].Individual;
             wrappedOutputter.OutputGeneration(generation, generationCount);
+        }
+        public void FinishOutput()
+        {
+            wrappedOutputter.FinishOutput();
         }
     }
 }
