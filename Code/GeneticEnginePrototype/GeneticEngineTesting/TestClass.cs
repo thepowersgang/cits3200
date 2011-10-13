@@ -7,6 +7,8 @@ using RoadNetworkSolver;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GeneticAlgorithm.Generation;
+using System.Xml;
 
 namespace GeneticEngineTesting
 {
@@ -129,7 +131,7 @@ namespace GeneticEngineTesting
             Assert.AreEqual(107, AOutputter.fitnesses[4]);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestA5()
         {
             initialiseA();
@@ -172,6 +174,26 @@ namespace GeneticEngineTesting
             //If no exceptions halt test, then successful:
             Console.WriteLine("Test A5 Successful");
         }
+        
+        /*
+        [TestMethod]
+        public void TestB1() {
+            PluginLoader PL = new PluginLoader(pathToDll);
+            ArrayList pluginList = PL.getPlugins();
+            Assert.Equals(pluginList.RemoveAt(0).NAMEFIELD, "Adder");
+            Assert.Equals(pluginList.RemoveAt(1).NAMEFIELD, "Prefixer");
+        }
+
+        [TestMethod]
+        public void TestB2() {
+            PluginLoader PL = new PluginLoader(pathToDll);
+            ArrayList pluginList = PL.getPlugins();
+            PluginType PL1 = PL.GetInstance("Adder", (object)5));
+            PluginType PL2 = PL.GetInstance("Prefixer", (object)"Hello "));
+            Assert.AreSame(PL1.Add(2), 7);
+            Assert.AreEqual(PL2.Prefix("World"), "Hello World");
+        }
+          */
         /*
         public void TestC1()
         {
@@ -184,54 +206,165 @@ namespace GeneticEngineTesting
             //Ensure population is made up of valid roadnetworks.
             //Ensure all are not the same.
         }
-
+        
         public void TestD1()
         {
-            RoadNetworkMutationOperator RNMO = new RoadNetworkMutationOperator();
-            IGeneration generation = new IGeneration();
+            MutationOperator RNCO = new MutationOperator(null);
+            AATreeGeneration generation = new AATreeGeneration();
             ArrayList individuals = new ArrayList();
             //Populate with identical entries.
-            RoadNetwork RN = new RoadNetwork(someRoadNetworkSolverObject);
+            Vertex[] theVertices = new Vertex[5];
+            RoadNetwork theRoad;
+            Map theMap = null; // Somehow have to load a map.
+            ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
-                generation.Insert(RN, 1);
-            }
-            RNMO.Operate(generation, individuals);
-            //Ensure population is made up of valid roadnetworks.
-            //Ensure all are not the same.
-        }
-
-        public void TestD2()
-        {
-            RoadNetworkConjugationOperator RNCO = new RoadNetworkConjugationOperator();
-            IGeneration generation = new IGeneration();
-            ArrayList individuals = new ArrayList();
-            //Populate with identical entries.
-            RoadNetwork RN = new RoadNetwork(someRoadNetworkSolverObject);
-            for (int i = 0; i < 10; i++)
-            {
+                theRoad = new RoadNetwork(theMap);
+                RN.Add(theRoad);
+                //RN[i] = new RoadNetwork(theMap);
+                theVertices[0] = ((RoadNetwork)RN[i]).AddVertex(0, 0);
+                theVertices[1] = ((RoadNetwork)RN[i]).AddVertex(10, 0);
+                theVertices[2] = ((RoadNetwork)RN[i]).AddVertex(5, 5);
+                theVertices[3] = ((RoadNetwork)RN[i]).AddVertex(0, 10);
+                theVertices[4] = ((RoadNetwork)RN[i]).AddVertex(10, 10);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[1]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[3]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[3], theVertices[4]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[1], theVertices[4]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[1], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[3], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[4], theVertices[2]);
                 //Add vertex and add edge
-                generation.Insert(RN, 1);
+                generation.Insert(RN[i], 1);
             }
             RNCO.Operate(generation, individuals);
             //Ensure population is made up of valid roadnetworks.
             //Ensure all are not the same.
+                     Boolean passed = false;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    //Cross check each of the 5 vertices
+                    for (int k = 0; k < 5; k++)
+                    {
+                        if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(k).Coordinates.X)
+                        {
+                            passed = true;
+                        }
+                    }
+                }
+            }
+            Assert.IsTrue(passed); 
+        }
+        */
+        [TestMethod]
+        public void TestD2()
+        {
+            ConjugationOperator RNCO = new ConjugationOperator(null);
+            AATreeGeneration generation = new AATreeGeneration();
+            ArrayList individuals = new ArrayList();
+            //Populate with identical entries.
+            RoadNetwork theRoad;
+            Vertex[] theVertices = new Vertex[5];
+            Map theMap = null;
+            ArrayList RN = new ArrayList();
+            for (int i = 0; i < 10; i++)
+            {
+                theRoad = new RoadNetwork(theMap);
+                RN.Add(theRoad);
+                //RN[i] = new RoadNetwork(theMap);
+                theVertices[0] = ((RoadNetwork)RN[i]).AddVertex(0, 0);
+                theVertices[1] = ((RoadNetwork)RN[i]).AddVertex(10, 0);
+                theVertices[2] = ((RoadNetwork)RN[i]).AddVertex(5, 5);
+                theVertices[3] = ((RoadNetwork)RN[i]).AddVertex(0, 10);
+                theVertices[4] = ((RoadNetwork)RN[i]).AddVertex(10, 10);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[1]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[3]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[3], theVertices[4]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[1], theVertices[4]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[1], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[3], theVertices[2]);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[4], theVertices[2]);
+                //Add vertex and add edge
+                generation.Insert(RN[i], 1);
+            }
+            RNCO.Operate(generation, individuals);
+            //Ensure population is made up of valid roadnetworks.
+            //Ensure all are not the same.
+            Boolean passed = false;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    //Cross check each of the 5 vertices
+                    for (int k = 0; k < 5; k++)
+                    {
+                        if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(k).Coordinates.X)
+                        {
+                            passed = true;
+                        }
+                    }
+                }
+            }
+            Assert.IsTrue(passed);
         }
 
+        /*
         public void TestE1()
         {
-            RoadNetworkEvaluator RoadEvaluator = new RoadNetworkEvaluator();
-            IGeneration individuals = new IGeneration();
-            //Where do we get the RoadNetworks we need to test?
-            individuals.Insert(theRoadNetworksWeNeedToTest, RoadEvaluator.Evaluate(theRoadNetworksWeNeedToTest));
-            //Maybe we don't even have to add it to an IGeneration, just do the console writeln thing with each road network we have just like that.
+            RoadNetworkEvaluator RoadEvaluator = new RoadNetworkEvaluator();            
             for (int i = 0; i < numberofroadnetworks; i++)
             {
-                Console.WriteLine("Checking individual: " + i + ", Fitness: " + RoadEvaluator.Evaluate(individuals.Get(i).Individual));
+                Console.WriteLine("Checking individual: " + i + ", Fitness: " + RoadEvaluator.Evaluate(theRoadNetworksWeNeedToTest));
             }
         }
         */
+        /*
+        public void Test F1() {
+            RoadNetworkOutputter RNO = new RoadNetworkOutputter(null);
+            String path = "";
+            Map theMap = null;
+            Vertex[] theVertices = new Vertex[4];
+            RoadNetwork RN1 = new RoadNetwork(theMap);
+                theVertices[0] = ((RoadNetwork)RN[i]).AddVertex(0, 0);
+                theVertices[1] = ((RoadNetwork)RN[i]).AddVertex(10, 0);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[1]);
+            RoadNetwork RN2 = new RoadNetwork(theMap);
+                theVertices[2] = ((RoadNetwork)RN[i]).AddVertex(5, 5);
+                theVertices[3] = ((RoadNetwork)RN[i]).AddVertex(10, 10);
+                ((RoadNetwork)RN[i]).AddEdge(theVertices[0], theVertices[1]);
+            AATreeGeneration generation = new AATreeGeneration();
+            generation.Insert(RN1, 1);
+            generation.Insert(RN2, 2);
+            RNO.Output(generation, path);
 
+            //Insert some load function
+            AATreeGeneration generationLoaded = new AATreeGeneration();
+            RoadNetwork RNL1 = generationLoaded.Remove(0);
+            RoadNetwork RNL2 = generationLoaded.Remove(1);
+            Assert.AreSame(RNL1.Fitness, 1);
+            Assert.AreSame(RNL2.Fitness, 2);
+            Assert.AreSame(RNL1.GetVertex(0).Coordinates.X, 0);
+            Assert.AreSame(RNL1.GetVertex(0).Coordinates.Y, 0);
+            Assert.AreSame(RNL1.GetVertex(1).Coordinates.X, 10);
+            Assert.AreSame(RNL1.GetVertex(1).Coordinates.Y, 0);
+            Assert.AreSame(RNL2.GetVertex(0).Coordinates.X, 5);
+            Assert.AreSame(RNL2.GetVertex(0).Coordinates.Y, 5);
+            Assert.AreSame(RNL2.GetVertex(1).Coordinates.X, 10);
+            Assert.AreSame(RNL2.GetVertex(1).Coordinates.Y, 10);
+            Assert.AreSame(RNL1.GetEdge(0).Start.Coordinates.X, 0);
+            Assert.AreSame(RNL1.GetEdge(0).Start.Coordinates.Y, 0);
+            Assert.AreSame(RNL1.GetEdge(0).End.Coordinates.X, 10);
+            Assert.AreSame(RNL1.GetEdge(0).End.Coordinates.Y, 0);            
+            Assert.AreSame(RNL2.GetEdge(0).Start.Coordinates.X, 5);
+            Assert.AreSame(RNL2.GetEdge(0).Start.Coordinates.Y, 5);
+            Assert.AreSame(RNL2.GetEdge(0).End.Coordinates.X, 10);
+            Assert.AreSame(RNL2.GetEdge(0).End.Coordinates.Y, 10);            
+        }
+        */
         public void initialiseA()
         {
             APopulator = new TestAPopulator();
