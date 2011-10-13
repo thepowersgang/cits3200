@@ -40,7 +40,6 @@ namespace RoadNetworkGUI
             initComponents();
             hasInitialised = false;
             hasCompleted = false;
-            displayOutputter = new DisplayOutputter(visualiser1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -163,7 +162,7 @@ namespace RoadNetworkGUI
                 displayOutputter.StartOutput();
                 engine.Step();
                 setFitnessValues();
-                displayOutputter.output(engine.Generation, engine.GenerationCount);
+                displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
             else
@@ -191,7 +190,7 @@ namespace RoadNetworkGUI
                 displayOutputter.StartOutput();
                 engine.Run();
                 setFitnessValues();
-                displayOutputter.output(engine.Generation, engine.GenerationCount);
+                displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
             else MessageBox.Show("Initialise Generation First\n");
@@ -223,7 +222,7 @@ namespace RoadNetworkGUI
                     displayOutputter.StartOutput();
                     engine.Repeat(nScroller.SelectedIndex);
                     setFitnessValues();
-                    displayOutputter.output(engine.Generation, engine.GenerationCount);
+                    displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
@@ -271,6 +270,7 @@ namespace RoadNetworkGUI
                     XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
                     map = new Map(reader);
                     visualiser1.Network = new RoadNetwork(map);
+                    displayOutputter = new DisplayOutputter(visualiser1, outputter);
                 }
                 else
                 {
