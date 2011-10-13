@@ -9,20 +9,31 @@ using RoadNetworkDisplay;
 
 namespace RoadNetworkGUI
 {
-    class DisplayOutputter
+    class DisplayOutputter : IOutputter //Implement IOutputter
     {
         IOutputter wrappedOutputter;
         RoadNetworkPanel visualiser;
 
-        public DisplayOutputter(RoadNetworkPanel visualiser)
+        public DisplayOutputter(RoadNetworkPanel visualiser, IOutputter wrappedOutputter)
         {
             this.visualiser = visualiser;
+            this.wrappedOutputter = wrappedOutputter; //Set wrappedOutputter
         }
 
-        public void output(IGeneration generation, int generationCount)
+        public void StartOutput()
+        {
+            wrappedOutputter.StartOutput();
+        }
+
+        public void OutputGeneration(IGeneration generation, int generationCount)//Renamed from output
         {
             visualiser.Network = (RoadNetwork)generation[0].Individual;
             wrappedOutputter.OutputGeneration(generation, generationCount);
+        }
+
+        public void FinishOutput()
+        {
+            wrappedOutputter.FinishOutput();
         }
     }
 }

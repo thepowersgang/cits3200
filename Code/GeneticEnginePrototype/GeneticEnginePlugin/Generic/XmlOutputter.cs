@@ -13,22 +13,20 @@ namespace GeneticAlgorithm.Plugin.Generic
         private string path;
         private string directory;
         private string prefix;
-        private GenerationIndex index;
+        private GenerationList index;
                 
         public XmlOutputter(string path)
         {
-            this.path = path;            
+            this.path = path;
+            index = new GenerationList();
+            directory = Path.GetDirectoryName(path);
+            prefix = Path.GetFileNameWithoutExtension(path);  
         }
 
         abstract protected void WriteIndividual(object individual, XmlWriter writer);
 
         public void StartOutput()
-        {
-            index = new GenerationIndex();
-            index.StartTime = DateTime.Now;
-
-            directory = Path.GetDirectoryName(path);
-            prefix = Path.GetFileNameWithoutExtension(path);            
+        {             
         }
         
         public void OutputGeneration(IGeneration generation, int generationNumber)
@@ -68,7 +66,7 @@ namespace GeneticAlgorithm.Plugin.Generic
                 individualWriter.Close();
 
                 generationWriter.WriteStartElement("individual");
-                generationWriter.WriteAttributeString("index", i.ToString());
+                generationWriter.WriteAttributeString("fitness", individualWithFitness.Fitness.ToString());
                 generationWriter.WriteAttributeString("path", "." + individualPath);
                 generationWriter.WriteEndElement();
             }
@@ -77,13 +75,11 @@ namespace GeneticAlgorithm.Plugin.Generic
             generationWriter.Flush();
             generationWriter.Close();
 
-            index.AddGeneration(generation, generationNumber, "." + generationPath);
+            index.AddGeneration(generation, "." + generationPath);
         }
 
         public void FinishOutput()
         {
-            index.FinishTime = DateTime.Now;
-
             XmlTextWriter indexWriter = new XmlTextWriter(path, Encoding.ASCII);
             indexWriter.Formatting = Formatting.Indented;
 

@@ -7,7 +7,7 @@ using GeneticAlgorithm.Plugin;
 namespace GeneticAlgorithm.Plugin.Generic
 {
     /// <summary>
-    /// Simple implementation of IGenerationFactory.
+    /// Simple implementation of ITerminator.
     /// Terminates the algorithm when a fitness threshold is met.
     /// </summary>
     public class FitnessThresholdTerminator : ITerminator
