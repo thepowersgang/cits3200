@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GeneticAlgorithm.Plugin.Generic
+namespace RoadNetworkSolver
 {
-    class IndividualIndex
+    class RoadNetworkXmlLoader
     {
+
     }
 }

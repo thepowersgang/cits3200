@@ -13,12 +13,12 @@ namespace GeneticAlgorithm.Plugin.Generic
         private string path;
         private string directory;
         private string prefix;
-        private GenerationIndex index;
+        private GenerationList index;
                 
         public XmlOutputter(string path)
         {
             this.path = path;
-            index = new GenerationIndex();
+            index = new GenerationList();
             directory = Path.GetDirectoryName(path);
             prefix = Path.GetFileNameWithoutExtension(path);  
         }
