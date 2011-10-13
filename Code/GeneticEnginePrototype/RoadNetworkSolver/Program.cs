@@ -15,11 +15,7 @@ namespace RoadNetworkSolver
         {
             Random random = new Random();
 
-            XmlTextReader mapreader = new XmlTextReader("map.xml");
-
-            while(mapreader.Read() && mapreader.Name!="map");
-
-            Map map = new Map(mapreader);
+            Map map = Map.FromFile("map.xml");
 
             IOutputter outputter = new RoadNetworkXmlOutputter("c:\\cits3200test\\roadnetworks.xml");
             outputter.StartOutput();

@@ -9,38 +9,11 @@ namespace GeneticAlgorithm.Plugin.Generic
 {
     public class GenerationIndex : List<GenerationIndexEntry>
     {
-        private DateTime startTime;
-        private DateTime finishTime;
-
-        public DateTime StartTime
+        private string path;
+     
+        public void AddGeneration(IGeneration generation, string generationPath)
         {
-            get
-            {
-                return startTime;
-            }
-
-            set
-            {
-                startTime = value;
-            }
-        }
-
-        public DateTime FinishTime
-        {
-            get
-            {
-                return finishTime;
-            }
-
-            set
-            {
-                finishTime = value;
-            }
-        }
-        
-        public void AddGeneration(IGeneration generation, int generationNumber, string generationPath)
-        {
-            Add(new GenerationIndexEntry(generation, generationNumber, generationPath));
+            Add(new GenerationIndexEntry(generation, generationPath));
         }
 
         public GenerationIndex()
@@ -81,8 +54,6 @@ namespace GeneticAlgorithm.Plugin.Generic
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("results");
-            writer.WriteAttributeString("start", startTime.ToString());
-            writer.WriteAttributeString("finish", finishTime.ToString());
 
             foreach (GenerationIndexEntry entry in this)
             {
@@ -90,6 +61,21 @@ namespace GeneticAlgorithm.Plugin.Generic
             }
 
             writer.WriteEndElement();
+        }
+
+        public static GenerationIndex FromFile(string filename)
+        {
+            XmlTextReader reader = new XmlTextReader(filename);
+            reader.MoveToContent();
+
+            if (reader.Name != "results")
+            {
+                throw new Exception("Results index XML file must have <results> element as root.");
+            }
+
+            GenerationIndex index = new GenerationIndex(reader);
+            reader.Close();
+            return index;
         }
     }
 }

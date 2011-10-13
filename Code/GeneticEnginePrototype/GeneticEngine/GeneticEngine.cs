@@ -129,15 +129,15 @@ namespace GeneticAlgorithm
 
         private void Setup()
         {
-            ArrayList individuals = new ArrayList();
-            populator.Populate(individuals);
-            processIndividuals(individuals);
-            generationNumber = 0;
-
             if (outputter != null)
             {
                 outputter.StartOutput();
             }
+
+            ArrayList individuals = new ArrayList();
+            populator.Populate(individuals);
+            processIndividuals(individuals);
+            generationNumber = 0;            
         }
 
         /// <summary>
@@ -163,18 +163,9 @@ namespace GeneticAlgorithm
         /// </summary>
         public void Step()
         {
-            //If there is no current generation then throw an exception.
-            //Otherwise pass the current generation to the genetic operator.
-            if (generation == null)
-            {
-                throw new InvalidOperationException("Initialise() must be called before running the algorithm.");
-            }
-            else
-            {
-                ArrayList individuals = new ArrayList();
-                geneticOperator.Operate(generation, individuals);
-                processIndividuals(individuals);
-            }
+            ArrayList individuals = new ArrayList();
+            geneticOperator.Operate(generation, individuals);
+            processIndividuals(individuals);
         }
 
         /// <summary>
