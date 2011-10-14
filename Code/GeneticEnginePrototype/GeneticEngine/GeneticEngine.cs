@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GeneticAlgorithm.Plugin;
-using GeneticAlgorithm.Generation;
+using GeneticAlgorithm.Plugin.Generic;
 
 namespace GeneticAlgorithm
 {
@@ -122,22 +122,17 @@ namespace GeneticAlgorithm
             this.geneticOperator = geneticOperator;            
             this.terminator = terminator;
             this.outputter = outputter;
-            this.generationFactory = generationFactory == null ? new DefaultGenerationFactory() : generationFactory;
+            this.generationFactory = generationFactory == null ? new AATreeGenerationFactory() : generationFactory;
 
             Setup();
         }
-
+                
         private void Setup()
         {
-            if (outputter != null)
-            {
-                outputter.StartOutput();
-            }
-
+            generationNumber = 0;
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);
-            processIndividuals(individuals);
-            generationNumber = 0;            
+            processIndividuals(individuals);                  
         }
 
         /// <summary>
@@ -146,13 +141,13 @@ namespace GeneticAlgorithm
         /// </summary>
         public void Reset()
         {
-            Cleanup();
+            FinishOutput();
             Setup();            
         }
 
-        public void Cleanup()
+        public void FinishOutput()
         {
-            if (outputter != null)
+            if (outputter != null && outputter.Status == OutputterStatus.Open)
             {
                 outputter.FinishOutput();
             }

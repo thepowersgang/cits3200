@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GeneticAlgorithm.Plugin;
-using GeneticAlgorithm.Generation;
 using RoadNetworkSolver;
 using RoadNetworkDisplay;
 
@@ -14,6 +13,14 @@ namespace RoadNetworkGUI
         IOutputter wrappedOutputter;
         RoadNetworkPanel visualiser;
 
+        public OutputterStatus Status
+        {
+            get
+            {
+                return OutputterStatus.Open;
+            }
+        }
+
         public DisplayOutputter(RoadNetworkPanel visualiser, IOutputter wrappedOutputter)
         {
             this.visualiser = visualiser;
@@ -22,18 +29,33 @@ namespace RoadNetworkGUI
 
         public void StartOutput()
         {
-            wrappedOutputter.StartOutput();
+            if (wrappedOutputter.Status == OutputterStatus.Closed)
+            {
+                wrappedOutputter.StartOutput();
+            }
         }
 
         public void OutputGeneration(IGeneration generation, int generationCount)//Renamed from output
         {
             visualiser.Network = (RoadNetwork)generation[0].Individual;
-            wrappedOutputter.OutputGeneration(generation, generationCount);
+
+            if (wrappedOutputter.Status == OutputterStatus.Closed)
+            {
+                wrappedOutputter.StartOutput();
+            }
+
+            if (wrappedOutputter.Status == OutputterStatus.Open)
+            {
+                wrappedOutputter.OutputGeneration(generation, generationCount);
+            }
         }
 
         public void FinishOutput()
         {
-            wrappedOutputter.FinishOutput();
+            if (wrappedOutputter.Status == OutputterStatus.Open)
+            {
+                wrappedOutputter.FinishOutput();
+            }            
         }
     }
 }

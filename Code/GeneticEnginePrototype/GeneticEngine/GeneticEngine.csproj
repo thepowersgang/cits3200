@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generation\AATreeGeneration.cs" />
-    <Compile Include="Generation\DefaultGenerationFactory.cs" />
     <Compile Include="GeneticEngine.cs" />
     <Compile Include="Util\PluginLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

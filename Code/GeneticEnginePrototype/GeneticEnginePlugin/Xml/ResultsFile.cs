@@ -5,22 +5,24 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Plugin.Generic;
 
-namespace GeneticAlgorithm.Plugin.Generic
+namespace GeneticAlgorithm.Plugin.Xml
 {
-    public class GenerationList : List<GenerationList.Entry>
+    public class ResultsFile : List<ResultsFile.Entry>
     {
-        public void AddGeneration(IGeneration generation, string generationPath)
+        IIndividualReader individualReader;
+        private string filename;
+
+        public ResultsFile(string filename)
         {
-            Add(new Entry(generation, generationPath));
+            this.filename = filename;
         }
 
-        public GenerationList()
+        public ResultsFile(string filename, XmlReader reader)
         {
-        }
+            this.filename = filename;
 
-        public GenerationList(XmlReader reader)
-        {
             int depth = 1;
 
             while (depth > 0 && reader.Read())
@@ -31,7 +33,7 @@ namespace GeneticAlgorithm.Plugin.Generic
                         switch (reader.Name)
                         {
                             case "generation":
-                                Add(new Entry(reader));
+                                Add(new Entry(this, reader));
                                 break;
                         }
 
@@ -62,8 +64,24 @@ namespace GeneticAlgorithm.Plugin.Generic
             writer.WriteEndElement();
         }
 
-        public static GenerationList FromFile(string filename)
+        public void Save()
         {
+            XmlTextWriter writer = new XmlTextWriter(filename, Encoding.ASCII);
+            writer.Formatting = Formatting.Indented;
+
+            WriteXml(writer);
+
+            writer.Flush();
+            writer.Close();
+        }
+
+        public void AddGeneration(IGeneration generation, string generationPath)
+        {
+            Add(new Entry(this, generation, generationPath));
+        }
+
+        public static ResultsFile Load(string filename)
+        {            
             XmlTextReader reader = new XmlTextReader(filename);
             reader.MoveToContent();
 
@@ -72,13 +90,14 @@ namespace GeneticAlgorithm.Plugin.Generic
                 throw new Exception("Results XML file must have <results> element as root.");
             }
 
-            GenerationList list = new GenerationList(reader);
+            ResultsFile index = new ResultsFile(filename, reader);
             reader.Close();
-            return list;
+            return index;
         }
-
+                
         public class Entry
         {
+            private ResultsFile index;
             private string generationPath;
             private int count;
             private uint minFitness;
@@ -126,8 +145,9 @@ namespace GeneticAlgorithm.Plugin.Generic
                 }
             }
 
-            public Entry(IGeneration generation, string generationPath)
+            public Entry(ResultsFile index, IGeneration generation, string generationPath)
             {
+                this.index = index;
                 this.generationPath = generationPath;
 
                 count = generation.Count;
@@ -136,7 +156,7 @@ namespace GeneticAlgorithm.Plugin.Generic
                 averageFitness = generation.AverageFitness;
             }
 
-            public Entry(XmlReader reader)
+            public Entry(ResultsFile index, XmlReader reader)
             {
                 string generationNumberString = reader.GetAttribute("index");
                 string countString = reader.GetAttribute("count");
@@ -163,11 +183,86 @@ namespace GeneticAlgorithm.Plugin.Generic
                 writer.WriteEndElement();
             }
 
-            public IndividualList LoadGeneration(string workingDirectory)
+            private string GetAbsolutePath(string workingPath, string relativePath)
             {
-                string combinedPath = Path.Combine(workingDirectory, generationPath);
-                string absolutePath =  (new Uri(combinedPath)).LocalPath;
-                return IndividualList.FromFile(absolutePath);
+                string combined = Path.Combine(workingPath, relativePath);
+                Uri combinedUri = new Uri(combined);
+                return combinedUri.LocalPath;
+            }
+
+            private object LoadIndividual(string filename)
+            {
+                XmlTextReader reader = new XmlTextReader(filename);
+
+                reader.MoveToContent();
+
+                if (index.individualReader.HandleTag(reader.Name))
+                {
+                    throw new Exception("<"+reader.Name+"> element invalid as root in individual XML file.");
+                }
+
+                object individual = index.individualReader.ReadIndividual(reader);
+                
+                reader.Close();
+
+                return individual;
+            }
+            
+            public IGeneration LoadGeneration()
+            {
+                string generationAbsolutePath = GetAbsolutePath(index.filename, generationPath);
+
+                IGeneration generation = new AATreeGeneration();
+
+                XmlTextReader reader = new XmlTextReader(generationAbsolutePath);
+
+                reader.MoveToContent();
+
+                if (reader.Name != "generation")
+                {
+                    throw new Exception("Generation XML file must have <generation> element as root.");
+                }
+
+                int depth = 1;
+
+                while (depth>0 && reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            switch (reader.Name)
+                            {
+                                case "individual":
+                                    uint fitness;
+                                    string fitnessString = reader.GetAttribute("fitness");
+                                    uint.TryParse(fitnessString, out fitness);
+
+                                    string individualPath = reader.GetAttribute("path");
+                                    string individualAbsolutePath = GetAbsolutePath(generationAbsolutePath, individualPath);
+
+                                    object individual = LoadIndividual(individualAbsolutePath);
+
+                                    generation.Insert(individual, fitness);
+
+                                    break;
+                            }
+
+                            if (!reader.IsEmptyElement)
+                            {
+                                depth++;
+                            }
+
+                            break;
+
+                        case XmlNodeType.EndElement:
+                            depth--;
+                            break;
+                    }
+                }
+
+                reader.Close();
+
+                return generation;
             }
         }
     }

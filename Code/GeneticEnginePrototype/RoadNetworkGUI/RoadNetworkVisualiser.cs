@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using RoadNetworkSolver;
-using GeneticAlgorithm.Generation;
 using GeneticAlgorithm.Plugin;
 using System.Xml;
 

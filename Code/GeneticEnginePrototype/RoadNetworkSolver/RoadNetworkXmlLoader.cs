@@ -7,6 +7,6 @@ namespace RoadNetworkSolver
 {
     class RoadNetworkXmlLoader
     {
-
+        
     }
 }

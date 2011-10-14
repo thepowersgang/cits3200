@@ -10,6 +10,11 @@ namespace GeneticAlgorithm.Plugin
     /// </summary>
     public interface IOutputter
     {
+        OutputterStatus Status
+        {
+            get;
+        }
+
         /// <summary>
         /// Prepare to start outputting generations.
         /// </summary>

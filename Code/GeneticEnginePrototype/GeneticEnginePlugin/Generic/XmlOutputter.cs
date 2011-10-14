@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Plugin.Xml;
 using System.Xml;
 using System.IO;
 
@@ -13,12 +14,20 @@ namespace GeneticAlgorithm.Plugin.Generic
         private string path;
         private string directory;
         private string prefix;
-        private GenerationList index;
-                
+        private ResultsFile generationList;
+
+        public OutputterStatus Status
+        {
+            get
+            {
+                return OutputterStatus.Open;
+            }
+        }
+ 
         public XmlOutputter(string path)
         {
             this.path = path;
-            index = new GenerationList();
+            generationList = new ResultsFile(path);
             directory = Path.GetDirectoryName(path);
             prefix = Path.GetFileNameWithoutExtension(path);  
         }
@@ -45,10 +54,6 @@ namespace GeneticAlgorithm.Plugin.Generic
             generationWriter.Formatting = Formatting.Indented;
 
             generationWriter.WriteStartElement("generation");
-            generationWriter.WriteAttributeString("count", generation.Count.ToString());
-            generationWriter.WriteAttributeString("min", generation.MinFitness.ToString());
-            generationWriter.WriteAttributeString("max", generation.MaxFitness.ToString());
-            generationWriter.WriteAttributeString("average", generation.AverageFitness.ToString());
 
             for (int i = 0; i < generation.Count; i++)
             {
@@ -58,10 +63,7 @@ namespace GeneticAlgorithm.Plugin.Generic
                 XmlTextWriter individualWriter  = new XmlTextWriter(generationDirectoryAbsolute+individualPath, Encoding.ASCII);
                 individualWriter.Formatting = Formatting.Indented;
 
-                individualWriter.WriteStartElement("individual");
-                individualWriter.WriteAttributeString("fitness", individualWithFitness.Fitness.ToString());
-                WriteIndividual(individualWithFitness.Individual, individualWriter);
-                individualWriter.WriteEndElement();
+                WriteIndividual(individualWithFitness.Individual, individualWriter);                
                 individualWriter.Flush();
                 individualWriter.Close();
 
@@ -75,18 +77,12 @@ namespace GeneticAlgorithm.Plugin.Generic
             generationWriter.Flush();
             generationWriter.Close();
 
-            index.AddGeneration(generation, "." + generationPath);
+            generationList.AddGeneration(generation, "." + generationPath);
         }
 
         public void FinishOutput()
         {
-            XmlTextWriter indexWriter = new XmlTextWriter(path, Encoding.ASCII);
-            indexWriter.Formatting = Formatting.Indented;
-
-            index.WriteXml(indexWriter);
-            
-            indexWriter.Flush();
-            indexWriter.Close();
+            generationList.Save();
         }
     }
 }

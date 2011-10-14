@@ -11,6 +11,14 @@ public class TestAOutputter : IOutputter
     public int[] fitnesses;
     public int best;
 
+    public OutputterStatus Status
+    {
+        get
+        {
+            return OutputterStatus.Open;
+        }
+    }
+
     public TestAOutputter()
     {
         fitnesses = new int[1000];
