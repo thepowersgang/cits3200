@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generic\IndividualList.cs" />
-    <Compile Include="Generic\GenerationList.cs" />
+    <Compile Include="OutputterStatus.cs" />
+    <Compile Include="Generic\AATreeGeneration.cs" />
+    <Compile Include="Generic\AATreeGenerationFactory.cs" />
+    <Compile Include="Xml\IIndividualReader.cs" />
+    <Compile Include="Xml\GenerationIndex.cs" />
     <Compile Include="IPopulator.cs" />
     <Compile Include="IEvaluator.cs" />
     <Compile Include="IGeneration.cs" />

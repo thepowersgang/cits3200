@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using GeneticAlgorithm.Plugin;
 
-namespace GeneticAlgorithm.Generation
+namespace GeneticAlgorithm.Plugin.Generic
 {
     /// <summary>
     /// Default implementation of IGenerationFactory.
     /// Produces an AATreeGeneration which provides O(lg(n)) time performance for all operations.
     /// </summary>
-    class DefaultGenerationFactory : IGenerationFactory
+    public class AATreeGenerationFactory : IGenerationFactory
     {
         /// <summary>
         /// Create an empty instance of the AATreeGeneration class.

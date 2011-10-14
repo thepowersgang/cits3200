@@ -32,6 +32,7 @@ namespace RoadNetworkGUI
         Map map;
         DisplayOutputter displayOutputter;
         IOutputter outputter;
+        XmlOutputter xmlOutputter;
 
         public RoadNetworkFinder()
         {
@@ -138,14 +139,14 @@ namespace RoadNetworkGUI
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
                 hasInitialised = true;
-                SetFitnessValues();
+                setFitnessValues();
             }
         }
         private void cleanupButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised)
             {
-                engine.Cleanup();
+                displayOutputter.CloseOutput();
                 cleanupButton.Enabled = false;
             }
         }
@@ -158,9 +159,9 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.StartOutput();
+                displayOutputter.OpenOutput();
                 engine.Step();
-                SetFitnessValues();
+                setFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -186,9 +187,9 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.StartOutput();
+                displayOutputter.OpenOutput();
                 engine.Run();
-                SetFitnessValues();
+                setFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -218,9 +219,9 @@ namespace RoadNetworkGUI
             {
                 if (hasInitialised)
                 {
-                    displayOutputter.StartOutput();
+                    displayOutputter.OpenOutput();
                     engine.Repeat(nScroller.SelectedIndex);
-                    SetFitnessValues();
+                    setFitnessValues();
                     displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
@@ -237,7 +238,7 @@ namespace RoadNetworkGUI
         /**
          * these values are obtained from the generation of the engine and are displayed on the interface. 
          */ 
-        private void SetFitnessValues()
+        private void setFitnessValues()
         {
             maxFitnessValue.Text = engine.Generation.MaxFitness.ToString();
             averageFitnessValue.Text = engine.Generation.AverageFitness.ToString();

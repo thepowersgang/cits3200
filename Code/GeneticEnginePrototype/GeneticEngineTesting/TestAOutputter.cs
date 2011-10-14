@@ -11,12 +11,20 @@ public class TestAOutputter : IOutputter
     public int[] fitnesses;
     public int best;
 
+    public OutputterStatus Status
+    {
+        get
+        {
+            return OutputterStatus.Open;
+        }
+    }
+
     public TestAOutputter()
     {
         fitnesses = new int[1000];
     }
 
-    public void StartOutput()
+    public void OpenOutput()
     {
     }
 
@@ -41,7 +49,7 @@ public class TestAOutputter : IOutputter
         numberGenerations = generationNumber;
     }
 
-    public void FinishOutput()
+    public void CloseOutput()
     {
     }
 }

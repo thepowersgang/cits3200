@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GeneticAlgorithm.Plugin;
 
-namespace GeneticAlgorithm.Generation
+namespace GeneticAlgorithm.Plugin.Generic
 {
     /// <summary>
     /// Default implementation of IGeneration.
