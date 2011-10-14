@@ -18,7 +18,7 @@ namespace GeneticEngineTesting
         TestAPopulator APopulator;
         TestAEvaluator AEvaluator;
         TestAGeneticOperator AGeneticOperator;
-        MaxFitnessTerminator AMaxFitnessTerminator;
+        FitnessThresholdTerminator AFitnessThresholdTerminator;
         TestAOutputter AOutputter;
         IGeneration currentGeneration;
 
@@ -34,7 +34,7 @@ namespace GeneticEngineTesting
             Boolean passed = true;
             int[] countNumbers;
             countNumbers = new int[150];
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AFitnessThresholdTerminator, AOutputter, null);
             currentGeneration = testEngine.Generation;
             int temp = 0;
             //Check that 100 individuals were generated:
@@ -67,7 +67,7 @@ namespace GeneticEngineTesting
             Boolean passed = true;
             int[] countNumber;
             countNumber = new int[198];
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AFitnessThresholdTerminator, AOutputter, null);
             //testEngine.Step();
             //testEngine.Step();
             currentGeneration = testEngine.Generation;
@@ -97,7 +97,7 @@ namespace GeneticEngineTesting
         {
             Boolean passed = true;
             initialiseA();
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AFitnessThresholdTerminator, AOutputter, null);
             //testEngine.Reset();
             if (testEngine.IsComplete) passed = false;//throw new Exception("Is Complete returns true when expected value is false.");
             testEngine.Step();
@@ -117,7 +117,7 @@ namespace GeneticEngineTesting
         public void TestA4()
         {
             initialiseA();
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AFitnessThresholdTerminator, AOutputter, null);
             //testEngine.Reset();
             testEngine.Repeat(5);
             currentGeneration = testEngine.Generation;
@@ -135,7 +135,7 @@ namespace GeneticEngineTesting
         public void TestA5()
         {
             initialiseA();
-            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AMaxFitnessTerminator, AOutputter, null);
+            GeneticEngine testEngine = new GeneticEngine(APopulator, AEvaluator, AGeneticOperator, AFitnessThresholdTerminator, AOutputter, null);
             //testEngine.Reset();
             testEngine.Run();
             int[] countNumber;
@@ -370,7 +370,7 @@ namespace GeneticEngineTesting
             APopulator = new TestAPopulator();
             AEvaluator = new TestAEvaluator();
             AGeneticOperator = new TestAGeneticOperator();
-            AMaxFitnessTerminator = new MaxFitnessTerminator((uint)200);
+            AFitnessThresholdTerminator = new FitnessThresholdTerminator((uint)200);
             AOutputter = new TestAOutputter();
         }
 

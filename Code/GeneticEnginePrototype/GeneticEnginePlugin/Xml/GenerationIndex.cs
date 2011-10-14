@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -207,12 +208,18 @@ namespace GeneticAlgorithm.Plugin.Xml
 
                 return individual;
             }
-            
-            public IGeneration LoadGeneration(IIndividualReader individualReader)
+
+            public IGeneration LoadGeneration(IIndividualReader individualReader, IGenerationFactory generationFactory=null)
             {
                 string generationAbsolutePath = GetAbsolutePath(index.filename, generationPath);
 
-                IGeneration generation = new AATreeGeneration();
+                if (generationFactory == null)
+                {
+                    generationFactory = new AATreeGenerationFactory();
+                }
+
+                ArrayList individuals = new ArrayList();
+                List<uint> fitnesses = new List<uint>();
 
                 XmlTextReader reader = new XmlTextReader(generationAbsolutePath);
 
@@ -236,13 +243,14 @@ namespace GeneticAlgorithm.Plugin.Xml
                                     uint fitness;
                                     string fitnessString = reader.GetAttribute("fitness");
                                     uint.TryParse(fitnessString, out fitness);
+                                    fitnesses.Add(fitness);
 
                                     string individualPath = reader.GetAttribute("path");
                                     string individualAbsolutePath = GetAbsolutePath(generationAbsolutePath, individualPath);
 
                                     object individual = LoadIndividual(individualAbsolutePath, individualReader);
 
-                                    generation.Insert(individual, fitness);
+                                    individuals.Add(individual);
 
                                     break;
                             }
@@ -262,6 +270,14 @@ namespace GeneticAlgorithm.Plugin.Xml
 
                 reader.Close();
 
+                IGeneration generation = generationFactory.CreateGeneration(individuals);
+
+                for (int i = 0; i < individuals.Count; i++)
+                {
+                    generation.Insert(individuals[i], fitnesses[i]);
+                }
+
+                generation.Prepare();
                 return generation;
             }
         }

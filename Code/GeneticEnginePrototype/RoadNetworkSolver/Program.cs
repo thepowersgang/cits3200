@@ -51,10 +51,14 @@ namespace RoadNetworkSolver
         {
             GenerationIndex results = GenerationIndex.Load("c:\\cits3200test\\roadnetworks.xml");
 
+            Console.WriteLine(results[0].Count);
+
             IGeneration generation = results[0].LoadGeneration(new RoadNetworkReader());
 
-            Console.WriteLine(generation.Count);
 
+
+            Console.WriteLine(generation.Count);
+            
             Console.WriteLine(((RoadNetwork)generation[0].Individual).Map.Width);
 
             Console.ReadLine();

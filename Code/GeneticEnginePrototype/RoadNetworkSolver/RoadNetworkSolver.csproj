@@ -46,7 +46,6 @@
     <Compile Include="Coordinates.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="MaxFitnessTerminator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConjugationOperator.cs" />
