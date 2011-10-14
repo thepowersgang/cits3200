@@ -1,13 +1,13 @@
 ﻿using System;
 using GeneticAlgorithm;
 using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Plugin.Generic;
 using GeneticEngineTesting;
 using RoadNetworkDisplay;
 using RoadNetworkSolver;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GeneticAlgorithm.Generation;
 using System.Xml;
 
 namespace GeneticEngineTesting

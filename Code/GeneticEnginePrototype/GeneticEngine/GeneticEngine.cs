@@ -193,7 +193,15 @@ namespace GeneticAlgorithm
             //If an outputter plug-in has been supplied then output the new generation.
             if (outputter != null)
             {
-                outputter.OutputGeneration(generation, generationNumber);
+                if (outputter.Status == OutputterStatus.Closed)
+                {
+                    outputter.StartOutput();
+                }
+
+                if (outputter.Status == OutputterStatus.Open)
+                {
+                    outputter.OutputGeneration(generation, generationNumber);
+                }
             }
         }
 
