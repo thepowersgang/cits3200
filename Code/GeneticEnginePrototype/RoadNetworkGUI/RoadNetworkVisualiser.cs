@@ -10,6 +10,7 @@ using System.IO;
 using RoadNetworkSolver;
 using GeneticAlgorithm.Generation;
 using GeneticAlgorithm.Plugin;
+using GeneticAlgorithm.Plugin.Generic;
 using System.Xml;
 
 namespace RoadNetworkGUI
@@ -18,7 +19,7 @@ namespace RoadNetworkGUI
     {
         OpenFileDialog openDialog;
         RoadNetwork network;
-        IGeneration[] generations;
+        GenerationIndex generations;
         int IndividualIndex = -1, GenerationIndex = -1;
         IOutputter outputter;
         public Road_Network_Visualiser(bool isFileLoaded, string filename )
@@ -72,8 +73,11 @@ namespace RoadNetworkGUI
             else
             {
                 XmlTextReader reader = new XmlTextReader(openDialog.FileName);
-                network = new RoadNetwork(reader);
-                visualiser2.Network = network;
+                generations = new GenerationIndex(reader);
+                for (int i = 0; i < generations.Count; i++)
+                {
+                    generationScroller.Items.Add(i.ToString());
+                }
             }
         }
         private void Road_Network_Visualiser_Load(object sender, EventArgs e)
@@ -94,11 +98,11 @@ namespace RoadNetworkGUI
             }
             else
             {
-                GenerationIndex = generationScroller.SelectedIndex - 1;
+                GenerationIndex = generationScroller.SelectedIndex;
                 if (generations[GenerationIndex].Count > 0)
                 {
                     individualScroller.Items.Clear();
-                    for (int i = 1; i <= generations[GenerationIndex].Count + 1; i++)
+                    for (int i = 0; i < generations[GenerationIndex].Count; i++)
                     {
                         individualScroller.Items.Add(i.ToString());
                     }
@@ -126,9 +130,6 @@ namespace RoadNetworkGUI
             else
             {
                 IndividualIndex = individualScroller.SelectedIndex - 1;
-                visualiser2.Network = (RoadNetwork)generations[GenerationIndex].Get(IndividualIndex).Individual;
-                fitnessLabel.Text = (generations[GenerationIndex].Get(IndividualIndex).Fitness).ToString();
-                outputter.OutputGeneration(generations[GenerationIndex], generations[GenerationIndex].Count);
             }
         }
 

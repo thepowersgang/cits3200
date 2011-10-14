@@ -32,7 +32,6 @@ namespace RoadNetworkGUI
         Map map;
         DisplayOutputter displayOutputter;
         IOutputter outputter;
-        XmlOutputter xmlOutputter;
 
         public RoadNetworkFinder()
         {
@@ -139,14 +138,14 @@ namespace RoadNetworkGUI
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
                 hasInitialised = true;
-                setFitnessValues();
+                SetFitnessValues();
             }
         }
         private void cleanupButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised)
             {
-                displayOutputter.FinishOutput();
+                engine.Cleanup();
                 cleanupButton.Enabled = false;
             }
         }
@@ -161,7 +160,7 @@ namespace RoadNetworkGUI
             {
                 displayOutputter.StartOutput();
                 engine.Step();
-                setFitnessValues();
+                SetFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -189,7 +188,7 @@ namespace RoadNetworkGUI
             {
                 displayOutputter.StartOutput();
                 engine.Run();
-                setFitnessValues();
+                SetFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -221,7 +220,7 @@ namespace RoadNetworkGUI
                 {
                     displayOutputter.StartOutput();
                     engine.Repeat(nScroller.SelectedIndex);
-                    setFitnessValues();
+                    SetFitnessValues();
                     displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
@@ -238,7 +237,7 @@ namespace RoadNetworkGUI
         /**
          * these values are obtained from the generation of the engine and are displayed on the interface. 
          */ 
-        private void setFitnessValues()
+        private void SetFitnessValues()
         {
             maxFitnessValue.Text = engine.Generation.MaxFitness.ToString();
             averageFitnessValue.Text = engine.Generation.AverageFitness.ToString();
