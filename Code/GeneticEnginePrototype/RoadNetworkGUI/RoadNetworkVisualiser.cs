@@ -136,7 +136,7 @@ namespace RoadNetworkGUI
             else
             {
                 IndividualIndex = individualScroller.SelectedIndex - 1;
-                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader());
+                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(),null);
                 IndividualWithFitness iwf = generation[IndividualIndex];
                 uint fitness = iwf.Fitness;
                 fitnessLabel.Text = fitness.ToString();
