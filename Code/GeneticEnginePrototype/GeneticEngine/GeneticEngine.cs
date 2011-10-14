@@ -149,7 +149,7 @@ namespace GeneticAlgorithm
         {
             if (outputter != null && outputter.Status == OutputterStatus.Open)
             {
-                outputter.FinishOutput();
+                outputter.CloseOutput();
             }
         }
 
@@ -195,7 +195,7 @@ namespace GeneticAlgorithm
             {
                 if (outputter.Status == OutputterStatus.Closed)
                 {
-                    outputter.StartOutput();
+                    outputter.OpenOutput();
                 }
 
                 if (outputter.Status == OutputterStatus.Open)

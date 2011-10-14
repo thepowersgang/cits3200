@@ -27,11 +27,11 @@ namespace RoadNetworkGUI
             this.wrappedOutputter = wrappedOutputter; //Set wrappedOutputter
         }
 
-        public void StartOutput()
+        public void OpenOutput()
         {
             if (wrappedOutputter.Status == OutputterStatus.Closed)
             {
-                wrappedOutputter.StartOutput();
+                wrappedOutputter.OpenOutput();
             }
         }
 
@@ -41,7 +41,7 @@ namespace RoadNetworkGUI
 
             if (wrappedOutputter.Status == OutputterStatus.Closed)
             {
-                wrappedOutputter.StartOutput();
+                wrappedOutputter.OpenOutput();
             }
 
             if (wrappedOutputter.Status == OutputterStatus.Open)
@@ -50,11 +50,11 @@ namespace RoadNetworkGUI
             }
         }
 
-        public void FinishOutput()
+        public void CloseOutput()
         {
             if (wrappedOutputter.Status == OutputterStatus.Open)
             {
-                wrappedOutputter.FinishOutput();
+                wrappedOutputter.CloseOutput();
             }            
         }
     }

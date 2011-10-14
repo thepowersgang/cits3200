@@ -45,7 +45,7 @@
     <Compile Include="Generic\AATreeGeneration.cs" />
     <Compile Include="Generic\AATreeGenerationFactory.cs" />
     <Compile Include="Xml\IIndividualReader.cs" />
-    <Compile Include="Xml\ResultsFile.cs" />
+    <Compile Include="Xml\GenerationIndex.cs" />
     <Compile Include="IPopulator.cs" />
     <Compile Include="IEvaluator.cs" />
     <Compile Include="IGeneration.cs" />

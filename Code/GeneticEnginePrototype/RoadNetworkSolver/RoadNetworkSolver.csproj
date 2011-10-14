@@ -52,7 +52,6 @@
     <Compile Include="ConjugationOperator.cs" />
     <Compile Include="RoadNetwork.cs" />
     <Compile Include="RoadNetworkReader.cs" />
-    <Compile Include="RoadNetworkXmlLoader.cs" />
     <Compile Include="RoadNetworkXmlOutputter.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="MutationOperator.cs" />

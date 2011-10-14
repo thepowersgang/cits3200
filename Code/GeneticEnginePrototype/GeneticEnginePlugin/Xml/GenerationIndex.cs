@@ -9,17 +9,16 @@ using GeneticAlgorithm.Plugin.Generic;
 
 namespace GeneticAlgorithm.Plugin.Xml
 {
-    public class ResultsFile : List<ResultsFile.Entry>
+    public class GenerationIndex : List<GenerationIndex.Entry>
     {
-        IIndividualReader individualReader;
         private string filename;
 
-        public ResultsFile(string filename)
+        public GenerationIndex(string filename)
         {
             this.filename = filename;
         }
 
-        public ResultsFile(string filename, XmlReader reader)
+        public GenerationIndex(string filename, XmlReader reader)
         {
             this.filename = filename;
 
@@ -80,7 +79,7 @@ namespace GeneticAlgorithm.Plugin.Xml
             Add(new Entry(this, generation, generationPath));
         }
 
-        public static ResultsFile Load(string filename)
+        public static GenerationIndex Load(string filename)
         {            
             XmlTextReader reader = new XmlTextReader(filename);
             reader.MoveToContent();
@@ -90,14 +89,14 @@ namespace GeneticAlgorithm.Plugin.Xml
                 throw new Exception("Results XML file must have <results> element as root.");
             }
 
-            ResultsFile index = new ResultsFile(filename, reader);
+            GenerationIndex index = new GenerationIndex(filename, reader);
             reader.Close();
             return index;
         }
                 
         public class Entry
         {
-            private ResultsFile index;
+            private GenerationIndex index;
             private string generationPath;
             private int count;
             private uint minFitness;
@@ -145,7 +144,7 @@ namespace GeneticAlgorithm.Plugin.Xml
                 }
             }
 
-            public Entry(ResultsFile index, IGeneration generation, string generationPath)
+            public Entry(GenerationIndex index, IGeneration generation, string generationPath)
             {
                 this.index = index;
                 this.generationPath = generationPath;
@@ -156,8 +155,9 @@ namespace GeneticAlgorithm.Plugin.Xml
                 averageFitness = generation.AverageFitness;
             }
 
-            public Entry(ResultsFile index, XmlReader reader)
+            public Entry(GenerationIndex index, XmlReader reader)
             {
+                this.index = index;
                 string generationNumberString = reader.GetAttribute("index");
                 string countString = reader.GetAttribute("count");
                 string minFitnessString = reader.GetAttribute("min");
@@ -185,30 +185,30 @@ namespace GeneticAlgorithm.Plugin.Xml
 
             private string GetAbsolutePath(string workingPath, string relativePath)
             {
-                string combined = Path.Combine(workingPath, relativePath);
+                string combined = Path.Combine(Path.GetDirectoryName(workingPath), relativePath);
                 Uri combinedUri = new Uri(combined);
                 return combinedUri.LocalPath;
             }
 
-            private object LoadIndividual(string filename)
+            private object LoadIndividual(string filename, IIndividualReader individualReader)
             {
                 XmlTextReader reader = new XmlTextReader(filename);
 
                 reader.MoveToContent();
 
-                if (index.individualReader.HandleTag(reader.Name))
+                if (!individualReader.HandleTag(reader.Name))
                 {
                     throw new Exception("<"+reader.Name+"> element invalid as root in individual XML file.");
                 }
 
-                object individual = index.individualReader.ReadIndividual(reader);
+                object individual = individualReader.ReadIndividual(reader);
                 
                 reader.Close();
 
                 return individual;
             }
             
-            public IGeneration LoadGeneration()
+            public IGeneration LoadGeneration(IIndividualReader individualReader)
             {
                 string generationAbsolutePath = GetAbsolutePath(index.filename, generationPath);
 
@@ -240,7 +240,7 @@ namespace GeneticAlgorithm.Plugin.Xml
                                     string individualPath = reader.GetAttribute("path");
                                     string individualAbsolutePath = GetAbsolutePath(generationAbsolutePath, individualPath);
 
-                                    object individual = LoadIndividual(individualAbsolutePath);
+                                    object individual = LoadIndividual(individualAbsolutePath, individualReader);
 
                                     generation.Insert(individual, fitness);
 

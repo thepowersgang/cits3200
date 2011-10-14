@@ -14,7 +14,7 @@ namespace GeneticAlgorithm.Plugin.Generic
         private string path;
         private string directory;
         private string prefix;
-        private ResultsFile generationList;
+        private GenerationIndex index;
 
         public OutputterStatus Status
         {
@@ -27,14 +27,14 @@ namespace GeneticAlgorithm.Plugin.Generic
         public XmlOutputter(string path)
         {
             this.path = path;
-            generationList = new ResultsFile(path);
+            index = new GenerationIndex(path);
             directory = Path.GetDirectoryName(path);
             prefix = Path.GetFileNameWithoutExtension(path);  
         }
 
         abstract protected void WriteIndividual(object individual, XmlWriter writer);
 
-        public void StartOutput()
+        public void OpenOutput()
         {             
         }
         
@@ -77,12 +77,12 @@ namespace GeneticAlgorithm.Plugin.Generic
             generationWriter.Flush();
             generationWriter.Close();
 
-            generationList.AddGeneration(generation, "." + generationPath);
+            index.AddGeneration(generation, "." + generationPath);
         }
 
-        public void FinishOutput()
+        public void CloseOutput()
         {
-            generationList.Save();
+            index.Save();
         }
     }
 }

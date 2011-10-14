@@ -146,7 +146,7 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.FinishOutput();
+                displayOutputter.CloseOutput();
                 cleanupButton.Enabled = false;
             }
         }
@@ -159,7 +159,7 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.StartOutput();
+                displayOutputter.OpenOutput();
                 engine.Step();
                 setFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
@@ -187,7 +187,7 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.StartOutput();
+                displayOutputter.OpenOutput();
                 engine.Run();
                 setFitnessValues();
                 displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
@@ -219,7 +219,7 @@ namespace RoadNetworkGUI
             {
                 if (hasInitialised)
                 {
-                    displayOutputter.StartOutput();
+                    displayOutputter.OpenOutput();
                     engine.Repeat(nScroller.SelectedIndex);
                     setFitnessValues();
                     displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);

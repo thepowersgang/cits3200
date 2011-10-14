@@ -5,19 +5,20 @@ using System.Text;
 using System.Xml;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
+using GeneticAlgorithm.Plugin.Xml;
 
 namespace RoadNetworkSolver
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Save()
         {
             Random random = new Random();
 
             Map map = Map.FromFile("map.xml");
 
             IOutputter outputter = new RoadNetworkXmlOutputter("c:\\cits3200test\\roadnetworks.xml");
-            outputter.StartOutput();
+            outputter.OpenOutput();
 
             for (int g = 0; g < 10; g++)
             {
@@ -43,7 +44,20 @@ namespace RoadNetworkSolver
                 outputter.OutputGeneration(generation, g);
             }
 
-            outputter.FinishOutput();
+            outputter.CloseOutput();
+        }
+        
+        static void Main(string[] args)
+        {
+            GenerationIndex results = GenerationIndex.Load("c:\\cits3200test\\roadnetworks.xml");
+
+            IGeneration generation = results[0].LoadGeneration(new RoadNetworkReader());
+
+            Console.WriteLine(generation.Count);
+
+            Console.WriteLine(((RoadNetwork)generation[0].Individual).Map.Width);
+
+            Console.ReadLine();
         }
     }
 }
