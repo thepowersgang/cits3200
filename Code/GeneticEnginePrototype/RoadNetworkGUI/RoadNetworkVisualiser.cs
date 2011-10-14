@@ -10,6 +10,7 @@ using System.IO;
 using RoadNetworkSolver;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
+using GeneticAlgorithm.Plugin.Xml;
 using System.Xml;
 
 namespace RoadNetworkGUI
@@ -18,9 +19,9 @@ namespace RoadNetworkGUI
     {
         OpenFileDialog openDialog;
         RoadNetwork network;
-        GenerationIndex generations;
         int IndividualIndex = -1, GenerationIndex = -1;
         IOutputter outputter;
+        GenerationIndex results; 
         public Road_Network_Visualiser(bool isFileLoaded, string filename )
         {
             InitializeComponent();
@@ -63,7 +64,7 @@ namespace RoadNetworkGUI
         }
         private void loadFile(string filename)
         {
-            string extension = Path.GetExtension(openDialog.FileName);
+            string extension = Path.GetExtension(filename);
             if (extension != ".xml")
             {
                     MessageBox.Show("Cannot open file for reading XML.\n Terminating program now");
@@ -71,9 +72,15 @@ namespace RoadNetworkGUI
             }
             else
             {
-                XmlTextReader reader = new XmlTextReader(openDialog.FileName);
-                generations = new GenerationIndex(reader);
-                for (int i = 0; i < generations.Count; i++)
+                XmlTextReader reader = new XmlTextReader(filename);
+                reader.MoveToContent();
+                if (reader.Name != "results")
+                {
+                    throw new Exception("Results XML file must have <results> element as root.");
+                }
+                results = new GenerationIndex(filename,reader);
+                
+                for (int i = 0; i < results.Count; i++)
                 {
                     generationScroller.Items.Add(i.ToString());
                 }
@@ -98,10 +105,10 @@ namespace RoadNetworkGUI
             else
             {
                 GenerationIndex = generationScroller.SelectedIndex;
-                if (generations[GenerationIndex].Count > 0)
+                if (results[GenerationIndex].Count > 0)
                 {
                     individualScroller.Items.Clear();
-                    for (int i = 0; i < generations[GenerationIndex].Count; i++)
+                    for (int i = 0; i < results[GenerationIndex].Count; i++)
                     {
                         individualScroller.Items.Add(i.ToString());
                     }
@@ -129,6 +136,11 @@ namespace RoadNetworkGUI
             else
             {
                 IndividualIndex = individualScroller.SelectedIndex - 1;
+                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader());
+                IndividualWithFitness iwf = generation[IndividualIndex];
+                uint fitness = iwf.Fitness;
+                fitnessLabel.Text = fitness.ToString();
+                visualiser2.Network = (RoadNetwork)iwf.Individual;
             }
         }
 
