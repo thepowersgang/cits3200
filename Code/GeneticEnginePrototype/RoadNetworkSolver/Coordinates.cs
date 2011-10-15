@@ -10,16 +10,8 @@ namespace RoadNetworkSolver
     /// Represents a location in 2D (x,y) space
     /// </summary>
     public class Coordinates
-    {
-        /// <summary>
-        /// The x-coordinate
-        /// </summary>
-        private int x;
-
-        /// <summary>
-        /// The y-coordinate
-        /// </summary>
-        private int y;
+    {        
+        private int[] values;
         
         /// <summary>
         /// Get the x-coordinate
@@ -28,7 +20,7 @@ namespace RoadNetworkSolver
         {
             get
             {
-                return x;
+                return values[0];
             }
         }
 
@@ -39,7 +31,15 @@ namespace RoadNetworkSolver
         {
             get
             {
-                return y;
+                return values[1];
+            }
+        }
+
+        public int this[int index]
+        {
+            get
+            {
+                return values[index];
             }
         }
 
@@ -50,8 +50,7 @@ namespace RoadNetworkSolver
         /// <param name="y">The y-coordinate</param>
         public Coordinates(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            values = new int[] { x, y };
         }
 
         /// <summary>
@@ -64,14 +63,19 @@ namespace RoadNetworkSolver
         {
             string xString = reader.GetAttribute("x");
             string yString = reader.GetAttribute("y");
-            
+
+            int x;
+            int y;
+
             int.TryParse(xString, out x);
-            int.TryParse(yString, out y);            
+            int.TryParse(yString, out y);
+
+            values = new int[] { x, y };
         }
 
         public void WriteXml(XmlWriter writer) {
-            writer.WriteAttributeString("x", x.ToString());
-            writer.WriteAttributeString("y", y.ToString());
+            writer.WriteAttributeString("x", values[0].ToString());
+            writer.WriteAttributeString("y", values[1].ToString());
         }
 
         /// <summary>
@@ -83,8 +87,8 @@ namespace RoadNetworkSolver
         /// <returns>The square of the distance between c0 and c1</returns>
         public int GetDistanceSquared(Coordinates c)
         {
-            int dx = x - c.x;
-            int dy = y - c.y;
+            int dx = values[0] - c.values[0];
+            int dy = values[1] - c.values[1];
 
             return dx * dx + dy * dy;
         }
@@ -106,7 +110,7 @@ namespace RoadNetworkSolver
         /// <returns>True iff the other set of coordinates are equivalent</returns>
         public bool Equals(Coordinates c)
         {
-            return x == c.x && y == c.y;
+            return values[0] == c.values[0] && values[1] == c.values[1];
         }
     }
 }
