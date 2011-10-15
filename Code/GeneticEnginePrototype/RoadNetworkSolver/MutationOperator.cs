@@ -22,9 +22,17 @@ namespace RoadNetworkSolver
         /// </summary>
         double max_new_verticies = 0.1;
         /// <summary>
+        /// Chance from 0 to 1 of an idividual edge to be deleted
+        /// </summary>
+        double chance_delete_edge = 0.1;
+        /// <summary>
         /// Maximum fraction of the total edge population to add (linear spread)
         /// </summary>
         double max_new_edges = 0.1;
+        /// <summary>
+        /// Fraction of the population to mutate
+        /// </summary>
+        double fraction_to_mutate = 0.25;
         
 		
 		public MutationOperator()
@@ -33,18 +41,18 @@ namespace RoadNetworkSolver
 		
 		public void Operate(IGeneration source, ArrayList destination)
 		{
-			for(int ii = 0; ii < source.Count; ii ++)
+            int num_to_mutate = (int)( source.Count * fraction_to_mutate );
+            for (int ii = 0; ii < num_to_mutate; ii++)
 			{
 				destination.Add( Mutate( (RoadNetwork)source.Get(ii).Individual ) );
 			}
 		}
 
-		private void MoveVertex(RoadNetwork network, int Index)
+        private Vertex MoveVertex(RoadNetwork network, Vertex template)
 		{
-			Vertex v = network.GetVertex(Index);
 
-			double x = (double)v.Coordinates.X * (0.5 + random.NextDouble());
-			double y = (double)v.Coordinates.Y * (0.5 + random.NextDouble());
+            double x = (double)template.Coordinates.X * (0.5 + random.NextDouble());
+            double y = (double)template.Coordinates.Y * (0.5 + random.NextDouble());
 
 			// Clip values
 			if (x >= network.Map.Width)
@@ -52,7 +60,7 @@ namespace RoadNetworkSolver
 			if (y >= network.Map.Height)
 				y = network.Map.Height;
 
-			v.Coordinates = new Coordinates((int)x, (int)y);
+			return network.AddVertex( new Coordinates((int)x, (int)y) );
 		}
 
 		private void AddVertex(RoadNetwork network)
@@ -91,7 +99,8 @@ namespace RoadNetworkSolver
 
         private void DeleteVertex(RoadNetwork network, int VertexID)
         {
-            Vertex v = network.GetVertex(VertexID);
+            //Vertex v = network.GetVertex(VertexID);
+            // TODO: Need to be able to delete verticies and edges from the network
         }
 
 		/// <summary>
@@ -128,37 +137,55 @@ namespace RoadNetworkSolver
 		/// Perform mutations on the network
 		/// </summary>
 		/// <param name="ent">Network to mutate</param>
-		private RoadNetwork Mutate(RoadNetwork ent)
+		public RoadNetwork Mutate(RoadNetwork ent)
 		{
-			RoadNetwork	ret = new RoadNetwork(ent);
+			RoadNetwork	ret = new RoadNetwork(ent.Map);
 
 			ent.Start.Copy = ret.AddVertex(ent.Start.Coordinates);
 
-			// Iterate through all verticies and randomly change some
-			for( int ii = 1; ii < ret.VertexCount-1; ii ++ )
+			// Copy over verticies
+            for (int ii = 1; ii < ent.VertexCount - 1; ii++)
 			{
+                Vertex v = ent.GetVertex(ii);
+                v.Copy = null;
 				// Only move the vertex if a random number succeeds
-				if(random.NextDouble() < chance_move_vertex)
-					MoveVertex(ret, ii);
-				if(random.NextDouble() < chance_delete_vertex)
-					DeleteVertex(ret, ii);
+                if (random.NextDouble() < chance_delete_vertex)
+                    continue;
+                else if (random.NextDouble() < chance_move_vertex)
+                    v.Copy = MoveVertex(ret, v);
+                else
+                    v.Copy = ret.AddVertex(v.Coordinates);
 			}
 
 			// Create some new verticies
-			int num_new_verts = (int)(ret.VertexCount * max_new_verticies * random.NextDouble());
+            int num_new_verts = (int)(ent.VertexCount * max_new_verticies * random.NextDouble());
 			for( int ii = 0; ii < num_new_verts; ii ++ )
 			{
 				AddVertex(ret);
-			}
+            }
+
+            ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
+
+            // Copy over edges
+            for (int ii = 0; ii < ent.EdgeCount; ii++)
+            {
+                Edge e = ent.GetEdge(ii);
+                if (random.NextDouble() < chance_delete_edge)
+                    continue;
+                else if (e.Start.Copy == null || e.End.Copy == null)
+                    continue;
+                else
+                    ret.AddEdge(e.Start.Copy, e.End.Copy);
+            }
 
 			// Create some new edges
-			int num_new_edges = (int)(ret.EdgeCount * max_new_edges * random.NextDouble());
+			int num_new_edges = (int)(ent.EdgeCount * max_new_edges * random.NextDouble());
 			for( int ii = 0; ii < num_new_edges; ii ++ )
 			{
 				AddEdge(ret);
 			}
 
-			ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
+            RepairMesh(ret);
 
 			return ret;
 		}
@@ -173,24 +200,38 @@ namespace RoadNetworkSolver
 			
 			while( num_unknown > 0 )
 			{
+				Vertex v = null;
+
+                // While there's still unchecked nodes in this group
 				while(to_check.Count > 0)
 				{
-					Vertex v = to_check.First.Value;
+                    v = to_check.First.Value;
                     to_check.RemoveFirst();
 					v.Visited = true;
 					num_unknown --;
 						
 					for( int i = 0; i < v.EdgeCount; i ++ )
 					{
-						if( v.Visited )	continue;
-                        to_check.AddLast(v);
+                        Vertex next = v.GetEdge(i).End;
+                        if (next.Visited) continue;
+                        to_check.AddLast(next);
 					}
 				}
 				
-				// If there are still unreached verticies, pick one and connect
+				// If there are still unreached verticies, pick the first and connect
 				if( num_unknown > 0 )
 				{
+                    Vertex end = null;
 					// TODO:
+                    for (int i = 0; i < network.VertexCount; i++)
+                    {
+                        if (network.GetVertex(i).Visited) continue;
+                        end = network.GetVertex(i);
+                        break;
+                    }
+
+                    network.AddEdge(v, end);
+                    to_check.AddLast(end);
 				}
 			}
 		}

@@ -47,8 +47,8 @@ namespace RoadNetworkSolver
 
             outputter.CloseOutput();
         }
-        
-        static void Main(string[] args)
+
+        static void evaluate()
         {
             XmlTextReader reader = new XmlTextReader("network.xml");
 
@@ -56,7 +56,7 @@ namespace RoadNetworkSolver
 
             RoadNetwork network = new RoadNetwork(reader);
 
-            Console.WriteLine("Dimensions: " + network.Map.Width+ " x " + network.Map.Height);
+            Console.WriteLine("Dimensions: " + network.Map.Width + " x " + network.Map.Height);
             Console.WriteLine("Start:" + network.Map.Start.X + ", " + network.Map.Start.Y);
             Console.WriteLine("End:" + network.Map.End.X + ", " + network.Map.End.Y);
 
@@ -76,9 +76,75 @@ namespace RoadNetworkSolver
 
             uint fitness = evaluator.Evaluate(network);
             float v = FitnessConverter.ToFloat(fitness);
-            
+
             Console.WriteLine("Fitness: " + fitness);
-            Console.WriteLine("Floating Point Fitness: " + v + " " + 1/v);
+            Console.WriteLine("Floating Point Fitness: " + v + " " + 1 / v);
+        }
+
+        static void mutate()
+        {
+            XmlTextReader reader = new XmlTextReader("network.xml");
+
+            reader.MoveToContent();
+
+            RoadNetwork network = new RoadNetwork(reader);
+
+            MutationOperator mutator = new MutationOperator();
+
+            RoadNetwork mutated = mutator.Mutate(network);
+
+            XmlTextWriter writer = new XmlTextWriter("mutant.xml", Encoding.ASCII);
+
+            writer.Formatting = Formatting.Indented;
+
+            mutated.WriteXml(writer);
+
+            writer.Flush();
+            writer.Close();
+        }
+
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+
+            List<Coordinates> points = new List<Coordinates>();
+
+            for (int i = 0; i < 1000000; i++)
+            {
+                points.Add(new Coordinates(random.Next(1000), random.Next(1000)));
+            }
+
+            Coordinates queryPoint = new Coordinates(random.Next(1000), random.Next(1000));
+
+            DateTime dt1 = DateTime.Now;
+
+            int minDistanceSquared = int.MaxValue;
+            for (int i = 0; i < 1000000; i++)
+            {
+                minDistanceSquared = Math.Min(points[i].GetDistanceSquared(queryPoint), minDistanceSquared);
+            }
+
+            DateTime dt2 = DateTime.Now;
+
+            //Console.WriteLine(minDistanceSquared);
+            Console.WriteLine(dt2.Subtract(dt1).Milliseconds);
+
+            DateTime dt3 = DateTime.Now;
+
+            CoordinateTree tree = new CoordinateTree(points);
+
+            DateTime dt4 = DateTime.Now;
+
+            Console.WriteLine(dt4.Subtract(dt3).Milliseconds);
+
+            DateTime dt5 = DateTime.Now;
+
+            minDistanceSquared = tree.minDistanceSquared(queryPoint);
+
+            DateTime dt6 = DateTime.Now;
+
+            //Console.WriteLine(minDistanceSquared);
+            Console.WriteLine(dt6.Subtract(dt5).Milliseconds);
 
             Console.ReadLine();
         }
