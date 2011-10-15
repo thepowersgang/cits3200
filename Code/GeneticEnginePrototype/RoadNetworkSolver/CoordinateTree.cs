@@ -9,12 +9,19 @@ namespace RoadNetworkSolver
     {
         private class Node
         {
-            private Coordinates coordinates;            
+            private Coordinates coordinates;  
+            private Node leftChild;
+            private Node rightChild;
         }
 
         private class xNode : Node
         {
+            
 
+            public void build(List<Coordinates> data)
+            {
+                
+            }
         }
     }
 }
