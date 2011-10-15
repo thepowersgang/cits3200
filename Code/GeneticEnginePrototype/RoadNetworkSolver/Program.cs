@@ -6,6 +6,7 @@ using System.Xml;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;
+using GeneticAlgorithm.Plugin.Util;
 
 namespace RoadNetworkSolver
 {
@@ -49,17 +50,35 @@ namespace RoadNetworkSolver
         
         static void Main(string[] args)
         {
-            GenerationIndex results = GenerationIndex.Load("c:\\cits3200test\\roadnetworks.xml");
+            XmlTextReader reader = new XmlTextReader("network.xml");
 
-            Console.WriteLine(results[0].Count);
+            reader.MoveToContent();
 
-            IGeneration generation = results[0].LoadGeneration(new RoadNetworkReader());
+            RoadNetwork network = new RoadNetwork(reader);
 
+            Console.WriteLine("Dimensions: " + network.Map.Width+ " x " + network.Map.Height);
+            Console.WriteLine("Start:" + network.Map.Start.X + ", " + network.Map.Start.Y);
+            Console.WriteLine("End:" + network.Map.End.X + ", " + network.Map.End.Y);
 
+            for (int i = 0; i < network.Map.TownCount; i++)
+            {
+                Coordinates town = network.Map.GetTown(i);
+                Console.WriteLine("Town:" + town.X + "," + town.Y);
+            }
 
-            Console.WriteLine(generation.Count);
+            for (int i = 0; i < network.EdgeCount; i++)
+            {
+                Edge edge = network.GetEdge(i);
+                Console.WriteLine("Edge:" + edge.Start.Coordinates.X + "," + edge.Start.Coordinates.Y + " - " + edge.End.Coordinates.X + "," + edge.End.Coordinates.Y);
+            }
+
+            IEvaluator evaluator = new Evaluator(null);
+
+            uint fitness = evaluator.Evaluate(network);
+            float v = FitnessConverter.ToFloat(fitness);
             
-            Console.WriteLine(((RoadNetwork)generation[0].Individual).Map.Width);
+            Console.WriteLine("Fitness: " + fitness);
+            Console.WriteLine("Floating Point Fitness: " + v + " " + 1/v);
 
             Console.ReadLine();
         }

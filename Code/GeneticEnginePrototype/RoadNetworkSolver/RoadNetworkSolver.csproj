@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="Evaluator.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

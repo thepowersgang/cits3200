@@ -36,10 +36,15 @@ namespace RoadNetworkSolver
                     Conjugate(parent1, parent2, out child1, out child2);
 
                     destination.Add(child1);
-                    destination.Add(child2);
-
-                    index2++;
                     count++;
+
+                    if (count < source.Count)
+                    {
+                        destination.Add(child2);
+                        count++;
+                    }
+
+                    index2++;                    
                 }
 
                 index1++;

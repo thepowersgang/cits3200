@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\FitnessConverter.cs" />
     <Compile Include="OutputterStatus.cs" />
     <Compile Include="Generic\AATreeGeneration.cs" />
     <Compile Include="Generic\AATreeGenerationFactory.cs" />
