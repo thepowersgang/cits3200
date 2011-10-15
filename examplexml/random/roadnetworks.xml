@@ -1,0 +1,12 @@
+<results>
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000000/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000001/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000002/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000003/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000004/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000005/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000006/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000007/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000008/generation.xml" />
+  <generation count="20" min="0" max="19" average="9.5" path="./roadnetworks00000009/generation.xml" />
+</results>

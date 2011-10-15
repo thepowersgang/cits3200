@@ -1,0 +1,4 @@
+<generation>
+  <individual fitness="0" path="./network1.xml" />
+  <individual fitness="2" path="./network2.xml" />
+</generation>
