@@ -200,24 +200,38 @@ namespace RoadNetworkSolver
 			
 			while( num_unknown > 0 )
 			{
+				Vertex v = null;
+
+                // While there's still unchecked nodes in this group
 				while(to_check.Count > 0)
 				{
-					Vertex v = to_check.First.Value;
+                    v = to_check.First.Value;
                     to_check.RemoveFirst();
 					v.Visited = true;
 					num_unknown --;
 						
 					for( int i = 0; i < v.EdgeCount; i ++ )
 					{
-						if( v.Visited )	continue;
-                        to_check.AddLast(v);
+                        Vertex next = v.GetEdge(i).End;
+                        if (next.Visited) continue;
+                        to_check.AddLast(next);
 					}
 				}
 				
-				// If there are still unreached verticies, pick one and connect
+				// If there are still unreached verticies, pick the first and connect
 				if( num_unknown > 0 )
 				{
+                    Vertex end = null;
 					// TODO:
+                    for (int i = 0; i < network.VertexCount; i++)
+                    {
+                        if (network.GetVertex(i).Visited) continue;
+                        end = network.GetVertex(i);
+                        break;
+                    }
+
+                    network.AddEdge(v, end);
+                    to_check.AddLast(end);
 				}
 			}
 		}
