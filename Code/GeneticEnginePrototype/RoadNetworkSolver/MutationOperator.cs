@@ -33,9 +33,9 @@ namespace RoadNetworkSolver
         /// Fraction of the population to mutate
         /// </summary>
         double fraction_to_mutate = 0.25;
-        
-		
-		public MutationOperator()
+
+
+        public MutationOperator(object config)
 		{
 		}
 		
@@ -65,32 +65,27 @@ namespace RoadNetworkSolver
 
 		private void AddVertex(RoadNetwork network)
 		{
+            Vertex prev = null;
+            Vertex next = null;
 			int x = (int)( random.NextDouble() * network.Map.Width );
 			int y = (int)( random.NextDouble() * network.Map.Height );
-			Vertex v = network.AddVertex( new Coordinates(x, y) );
+
+            if (network.VertexCount >= 2)
+            {
+                // Create new links
+                int prev_idx = (int)(random.NextDouble() * (network.VertexCount));
+                int next_idx = (int)(random.NextDouble() * (network.VertexCount - 1));
+                prev = network.GetVertex(prev_idx);
+                // Get the next vertex, and make sure it's not the previous
+                if (next_idx == prev_idx)
+                    next_idx = (next_idx + 1) % network.VertexCount;
+                next = network.GetVertex(next_idx);
+            }
+
+            Vertex v = network.AddVertex(new Coordinates(x, y));
 
 			if(network.VertexCount >= 2)
-			{			
-				// Create new links
-				int prev_idx = (int)(random.NextDouble() * (network.VertexCount-1));
-				int next_idx = (int)(random.NextDouble() * (network.VertexCount-2));
-				// Get previous vertex and ensure it's not the newly created one
-				Vertex prev = network.GetVertex(prev_idx);
-				if(prev == v)
-				{
-					prev_idx = (prev_idx + 1) % network.VertexCount;
-					prev = network.GetVertex(prev_idx);
-				}
-				// Get the next vertex, and make sure it's not either the previous or new
-				if(next_idx == prev_idx)
-					next_idx = (next_idx + 1) % network.VertexCount;
-				Vertex next = network.GetVertex(next_idx);
-				if(next == v)
-				{
-					next_idx = (next_idx + 1) % network.VertexCount;
-					next = network.GetVertex(next_idx);
-				}
-				
+			{
 				// Create two edges for it
                 network.AddEdge(prev, v);
 				network.AddEdge(v, next);
