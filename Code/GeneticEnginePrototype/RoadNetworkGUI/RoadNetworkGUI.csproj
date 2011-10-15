@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisplayOutputter.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Finder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoadNetworkFinder.cs">
       <SubType>Form</SubType>

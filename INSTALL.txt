@@ -3,6 +3,8 @@
 
 1. The contents are contained in a zip file called DelC_GroupJ.zip
 2. Use 7-zip or WinRAR or the Windows Explorer or any other Zip program to unzip the above file.
+   The user will need the two directories within the zip file. They are GeneticEnginePrototype and examplexml which 
+   contains a group of xml files that are used for the acceptance tests. 
 3. The user will need Visual Studio 2010 or Visual Studio 2010 C# Express to view the Libraries and 
    the User Interfaces as the code has been written with these IDEs
 4. Under the 'GeneticEnginePrototype' directory, open the Microsoft Visual Studio Solution file, GeneticEngine.sln
@@ -17,7 +19,9 @@
 7. Select F5 to debug the solution (which will build the entire solution as well) and run the unit tests. 
    The tests are run from TestClass.cs
 8. Once the unit tests are completed, right click on the project RoadNetworkGUI and select 'Set as StartUp Project'
-9. Select F5 to debug and build the entire solution. Upon successfully building the project, the RoadNetworkFinder Interface loads.
+9. Select F5 to debug and build the entire solution. Upon successfully building the project, the RoadNetworkFinder 
+   Interface loads.
 10. Once the RoadNetworkFinder interface is closed, the RoadNetworkVisualiser Interface begins to load. 
+11. For a guide on how to use the two interfaces, please refer to the GUI User Manual
 
 -----------------------------------------------------------------------------------------------------------------------------------------
