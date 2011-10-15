@@ -103,7 +103,7 @@ namespace RoadNetworkSolver
             writer.Close();
         }
 
-        static void Main(string[] args)
+        static void testclosestpoint()
         {
             Random random = new Random();
 
@@ -127,7 +127,7 @@ namespace RoadNetworkSolver
             DateTime dt2 = DateTime.Now;
 
             //Console.WriteLine(minDistanceSquared);
-            Console.WriteLine(dt2.Subtract(dt1).Milliseconds);
+            Console.WriteLine(dt2.Subtract(dt1));
 
             DateTime dt3 = DateTime.Now;
 
@@ -135,7 +135,7 @@ namespace RoadNetworkSolver
 
             DateTime dt4 = DateTime.Now;
 
-            Console.WriteLine(dt4.Subtract(dt3).Milliseconds);
+            Console.WriteLine(dt4.Subtract(dt3));
 
             DateTime dt5 = DateTime.Now;
 
@@ -144,7 +144,12 @@ namespace RoadNetworkSolver
             DateTime dt6 = DateTime.Now;
 
             //Console.WriteLine(minDistanceSquared);
-            Console.WriteLine(dt6.Subtract(dt5).Milliseconds);
+            Console.WriteLine(dt6.Subtract(dt5));
+        }
+
+        static void Main(string[] args)
+        {
+            mutate();
 
             Console.ReadLine();
         }
