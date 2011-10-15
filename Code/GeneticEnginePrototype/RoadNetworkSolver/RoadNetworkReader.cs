@@ -7,7 +7,7 @@ using GeneticAlgorithm.Plugin.Xml;
 
 namespace RoadNetworkSolver
 {
-    class RoadNetworkReader : IIndividualReader
+    public class RoadNetworkReader : IIndividualReader
     {
         public bool HandleTag(string name)
         {
