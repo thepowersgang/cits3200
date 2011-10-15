@@ -154,8 +154,17 @@ namespace RoadNetworkSolver
                 else if (random.NextDouble() < chance_move_vertex)
                     v.Copy = MoveVertex(ret, v);
                 else
-                    v.Copy = ret.AddVertex(ent.GetVertex(ii).Coordinates);
+                    v.Copy = ret.AddVertex(v.Coordinates);
 			}
+
+			// Create some new verticies
+            int num_new_verts = (int)(ent.VertexCount * max_new_verticies * random.NextDouble());
+			for( int ii = 0; ii < num_new_verts; ii ++ )
+			{
+				AddVertex(ret);
+            }
+
+            ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
 
             // Copy over edges
             for (int ii = 0; ii < ent.EdgeCount; ii++)
@@ -169,21 +178,12 @@ namespace RoadNetworkSolver
                     ret.AddEdge(e.Start.Copy, e.End.Copy);
             }
 
-			// Create some new verticies
-			int num_new_verts = (int)(ret.VertexCount * max_new_verticies * random.NextDouble());
-			for( int ii = 0; ii < num_new_verts; ii ++ )
-			{
-				AddVertex(ret);
-			}
-
 			// Create some new edges
-			int num_new_edges = (int)(ret.EdgeCount * max_new_edges * random.NextDouble());
+			int num_new_edges = (int)(ent.EdgeCount * max_new_edges * random.NextDouble());
 			for( int ii = 0; ii < num_new_edges; ii ++ )
 			{
 				AddEdge(ret);
 			}
-
-			ent.End.Copy = ret.AddVertex(ent.End.Coordinates);
 
             RepairMesh(ret);
 
