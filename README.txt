@@ -17,3 +17,7 @@ More about this later.
 Project Source Directory Layout
 All of the Code is going to be in the GeneticEnginePrototype Folder. There is another folder which is the examplexml
 folder which stores all of the XML files that are used for loading by the Interface programs in the code directory. 
+These are the main directories within DelC_GroupJ.zip folder.
+
+How to run the program - Please refer to INSTALL.txt for the full guide of the contents and the steps on how to run 
+the program
