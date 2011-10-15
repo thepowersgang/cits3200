@@ -9,8 +9,9 @@ namespace RoadNetworkSolver
 {
     class Populator : IPopulator
     {
+        int populationSize = 1000;
         Map map;
-
+        
         public Populator(object config)
         {
             map = Map.FromFile((string)config);
@@ -22,7 +23,18 @@ namespace RoadNetworkSolver
         /// <param name="individuals">An empty list to populate with the individuals</param>
         public void Populate(ArrayList individuals)
         {
+            Random random = new Random();
 
+            MutationOperator mutationOperator = new MutationOperator();
+
+            RoadNetwork original = new RoadNetwork(map);
+            original.AddEdge(original.AddVertex(map.Start), original.AddVertex(map.End));
+            individuals.Add(original);
+
+            while (individuals.Count < populationSize)
+            {
+                individuals.Add(mutationOperator.Mutate(individuals[random.Next(individuals.Count)]));
+            }
         }
     }
 }

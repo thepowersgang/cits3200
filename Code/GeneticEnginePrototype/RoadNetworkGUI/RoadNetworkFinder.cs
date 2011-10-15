@@ -114,8 +114,8 @@ namespace RoadNetworkGUI
             else
             {
                 string choice = getChoice(terminators, cbTerminator);
-                if(targetFitnessScroller.SelectedIndex == 0 || targetFitnessScroller.SelectedItem == null) MessageBox.Show("Provide a target fitness value greater than 1 for the terminator plug-in\n");
-                else terminator = (ITerminator) loader.GetInstance(choice, (object) targetFitnessScroller.SelectedIndex);
+                if((int) targetFitness.Value == 0) MessageBox.Show("Provide a target fitness value greater than 1 for the terminator plug-in\n");
+                else terminator = (ITerminator) loader.GetInstance(choice, (object) targetFitness.Value);
             }
             if (cbOutputter.SelectedItem != null)
             {
@@ -213,14 +213,13 @@ namespace RoadNetworkGUI
          */
         private void runGenerationButton_Click(object sender, EventArgs e)
         {
-            if (nScroller.SelectedItem == null) MessageBox.Show("Select a n value\n");
-            else if (nScroller.SelectedIndex == 0) MessageBox.Show("Select a n value which is at least 1\n");
+            if ((int) n.Value == 0) MessageBox.Show("Select a n value which is at least 1\n");
             else
             {
                 if (hasInitialised)
                 {
                     displayOutputter.OpenOutput();
-                    engine.Repeat(nScroller.SelectedIndex);
+                    engine.Repeat((int) n.Value);
                     setFitnessValues();
                     displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
@@ -363,16 +362,6 @@ namespace RoadNetworkGUI
          */ 
         private void initComponents()
         {
-            int MAXFITNESS = 900;
-            for (int i = 1; i <= MAXFITNESS; i++)
-            {
-                targetFitnessScroller.Items.Add(i.ToString());
-            }
-            int N = 900;
-            for (int i = 1; i <= N; i++)
-            {
-               nScroller.Items.Add(i.ToString());
-            }
             initEngineButton.Enabled = false;
             runButton.Enabled = false;
             runGenerationButton.Enabled = false;

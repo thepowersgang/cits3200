@@ -18,18 +18,12 @@ namespace RoadNetworkGUI
     public partial class Road_Network_Visualiser : Form
     {
         OpenFileDialog openDialog;
-        RoadNetwork network;
         int IndividualIndex = -1, GenerationIndex = -1;
-        IOutputter outputter;
         GenerationIndex results; 
         public Road_Network_Visualiser(bool isFileLoaded, string filename )
         {
             InitializeComponent();
             openDialog = new OpenFileDialog();
-            for (int i = 0; i <= 200; i++)
-            {
-                generationScroller.Items.Add(i.ToString());
-            }
             getFile(isFileLoaded, filename);
         }
 
@@ -80,10 +74,6 @@ namespace RoadNetworkGUI
                 }
                 results = new GenerationIndex(filename,reader);
                 
-                for (int i = 0; i < results.Count; i++)
-                {
-                    generationScroller.Items.Add(i.ToString());
-                }
             }
         }
         private void Road_Network_Visualiser_Load(object sender, EventArgs e)
@@ -98,22 +88,14 @@ namespace RoadNetworkGUI
          */ 
         private void generationScroller_SelectedItemChanged(object sender, EventArgs e)
         {
-            if (generationScroller.SelectedIndex == 0 || generationScroller.SelectedItem == null)
+            if ((int) generation.Value == results.Count)
             {
-                MessageBox.Show("Select a proper generation index from 1 to 200\n");
+                MessageBox.Show("Select a proper generation index from 0 to "+ (results.Count-1)+" \n");
             }
             else
             {
-                GenerationIndex = generationScroller.SelectedIndex;
-                if (results[GenerationIndex].Count > 0)
-                {
-                    individualScroller.Items.Clear();
-                    for (int i = 0; i < results[GenerationIndex].Count; i++)
-                    {
-                        individualScroller.Items.Add(i.ToString());
-                    }
-                }
-                else
+                GenerationIndex = (int)generation.Value;
+                if (results[GenerationIndex].Count <= 0)
                 {
                     string errorMsg = "There are no individuals for this Generation\n";
                     errorMsg += "Therefore please select another generation with at least one individual\n";
@@ -129,13 +111,13 @@ namespace RoadNetworkGUI
          */ 
         private void individualScroller_SelectedItemChanged(object sender, EventArgs e)
         {
-            if (individualScroller.SelectedIndex == 0 || individualScroller.SelectedItem == null)
+            if ((int)individual.Value == results[GenerationIndex].Count)
             {
-                MessageBox.Show("Select an individual index from 1 to 200 for this generation\n");
+                MessageBox.Show("Select an individual index from 0 to "+(results[GenerationIndex].Count-1) +" for this generation\n");
             }
             else
             {
-                IndividualIndex = individualScroller.SelectedIndex - 1;
+                IndividualIndex = (int)(individual.Value);
                 IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(),null);
                 IndividualWithFitness iwf = generation[IndividualIndex];
                 uint fitness = iwf.Fitness;
