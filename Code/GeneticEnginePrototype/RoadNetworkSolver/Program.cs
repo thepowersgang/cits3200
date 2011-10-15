@@ -47,8 +47,8 @@ namespace RoadNetworkSolver
 
             outputter.CloseOutput();
         }
-        
-        static void Main(string[] args)
+
+        static void evaluate()
         {
             XmlTextReader reader = new XmlTextReader("network.xml");
 
@@ -56,7 +56,7 @@ namespace RoadNetworkSolver
 
             RoadNetwork network = new RoadNetwork(reader);
 
-            Console.WriteLine("Dimensions: " + network.Map.Width+ " x " + network.Map.Height);
+            Console.WriteLine("Dimensions: " + network.Map.Width + " x " + network.Map.Height);
             Console.WriteLine("Start:" + network.Map.Start.X + ", " + network.Map.Start.Y);
             Console.WriteLine("End:" + network.Map.End.X + ", " + network.Map.End.Y);
 
@@ -76,9 +76,31 @@ namespace RoadNetworkSolver
 
             uint fitness = evaluator.Evaluate(network);
             float v = FitnessConverter.ToFloat(fitness);
-            
+
             Console.WriteLine("Fitness: " + fitness);
-            Console.WriteLine("Floating Point Fitness: " + v + " " + 1/v);
+            Console.WriteLine("Floating Point Fitness: " + v + " " + 1 / v);
+        }
+
+        static void Main(string[] args)
+        {
+            XmlTextReader reader = new XmlTextReader("network.xml");
+
+            reader.MoveToContent();
+
+            RoadNetwork network = new RoadNetwork(reader);
+
+            MutationOperator mutator = new MutationOperator();
+
+            RoadNetwork mutated = mutator.Mutate(network);
+
+            XmlTextWriter writer = new XmlTextWriter("mutant.xml", Encoding.ASCII);
+
+            writer.Formatting = Formatting.Indented;
+
+            mutated.WriteXml(writer);
+
+            writer.Flush();
+            writer.Close();
 
             Console.ReadLine();
         }

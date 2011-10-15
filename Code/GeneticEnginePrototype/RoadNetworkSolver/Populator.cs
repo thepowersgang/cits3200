@@ -33,7 +33,7 @@ namespace RoadNetworkSolver
 
             while (individuals.Count < populationSize)
             {
-                individuals.Add(mutationOperator.Mutate(individuals[random.Next(individuals.Count)]));
+                individuals.Add(mutationOperator.Mutate((RoadNetwork)individuals[random.Next(individuals.Count)]));
             }
         }
     }
