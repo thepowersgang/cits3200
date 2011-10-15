@@ -48,8 +48,8 @@ namespace RoadNetworkGUI
             this.gbPlugins = new System.Windows.Forms.GroupBox();
             this.libraryLoaderButton = new System.Windows.Forms.Button();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.cleanupButton = new System.Windows.Forms.Button();
             this.viewOutputFileButton = new System.Windows.Forms.Button();
-            this.nScroller = new System.Windows.Forms.DomainUpDown();
             this.nlabel = new System.Windows.Forms.Label();
             this.runGenerationButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
@@ -58,7 +58,6 @@ namespace RoadNetworkGUI
             this.outputFileSelectButton = new System.Windows.Forms.Button();
             this.tbOutputFile = new System.Windows.Forms.TextBox();
             this.outputFileButton = new System.Windows.Forms.Label();
-            this.targetFitnessScroller = new System.Windows.Forms.DomainUpDown();
             this.TargetFitnessLabel = new System.Windows.Forms.Label();
             this.MapFileSelectButton = new System.Windows.Forms.Button();
             this.tbMapFile = new System.Windows.Forms.TextBox();
@@ -68,11 +67,14 @@ namespace RoadNetworkGUI
             this.label2 = new System.Windows.Forms.Label();
             this.maxFitnessValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.cleanupButton = new System.Windows.Forms.Button();
+            this.targetFitness = new System.Windows.Forms.NumericUpDown();
+            this.n = new System.Windows.Forms.NumericUpDown();
             this.gbMap.SuspendLayout();
             this.gbPlugins.SuspendLayout();
             this.gbSettings.SuspendLayout();
             this.gbGeneration.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.n)).BeginInit();
             this.SuspendLayout();
             // 
             // populatorLabel
@@ -246,9 +248,10 @@ namespace RoadNetworkGUI
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.n);
+            this.gbSettings.Controls.Add(this.targetFitness);
             this.gbSettings.Controls.Add(this.cleanupButton);
             this.gbSettings.Controls.Add(this.viewOutputFileButton);
-            this.gbSettings.Controls.Add(this.nScroller);
             this.gbSettings.Controls.Add(this.nlabel);
             this.gbSettings.Controls.Add(this.runGenerationButton);
             this.gbSettings.Controls.Add(this.runButton);
@@ -257,7 +260,6 @@ namespace RoadNetworkGUI
             this.gbSettings.Controls.Add(this.outputFileSelectButton);
             this.gbSettings.Controls.Add(this.tbOutputFile);
             this.gbSettings.Controls.Add(this.outputFileButton);
-            this.gbSettings.Controls.Add(this.targetFitnessScroller);
             this.gbSettings.Controls.Add(this.TargetFitnessLabel);
             this.gbSettings.Controls.Add(this.MapFileSelectButton);
             this.gbSettings.Controls.Add(this.tbMapFile);
@@ -269,6 +271,16 @@ namespace RoadNetworkGUI
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
             // 
+            // cleanupButton
+            // 
+            this.cleanupButton.Location = new System.Drawing.Point(267, 148);
+            this.cleanupButton.Name = "cleanupButton";
+            this.cleanupButton.Size = new System.Drawing.Size(88, 23);
+            this.cleanupButton.TabIndex = 15;
+            this.cleanupButton.Text = "Clean up";
+            this.cleanupButton.UseVisualStyleBackColor = true;
+            this.cleanupButton.Click += new System.EventHandler(this.cleanupButton_Click);
+            // 
             // viewOutputFileButton
             // 
             this.viewOutputFileButton.Location = new System.Drawing.Point(371, 119);
@@ -278,14 +290,6 @@ namespace RoadNetworkGUI
             this.viewOutputFileButton.Text = "View Output File";
             this.viewOutputFileButton.UseVisualStyleBackColor = true;
             this.viewOutputFileButton.Click += new System.EventHandler(this.viewOutputFileButton_Click);
-            // 
-            // nScroller
-            // 
-            this.nScroller.Location = new System.Drawing.Point(169, 150);
-            this.nScroller.Name = "nScroller";
-            this.nScroller.ReadOnly = true;
-            this.nScroller.Size = new System.Drawing.Size(75, 20);
-            this.nScroller.TabIndex = 13;
             // 
             // nlabel
             // 
@@ -362,14 +366,6 @@ namespace RoadNetworkGUI
             this.outputFileButton.Size = new System.Drawing.Size(77, 17);
             this.outputFileButton.TabIndex = 5;
             this.outputFileButton.Text = "Output File";
-            // 
-            // targetFitnessScroller
-            // 
-            this.targetFitnessScroller.Location = new System.Drawing.Point(116, 52);
-            this.targetFitnessScroller.Name = "targetFitnessScroller";
-            this.targetFitnessScroller.ReadOnly = true;
-            this.targetFitnessScroller.Size = new System.Drawing.Size(120, 20);
-            this.targetFitnessScroller.TabIndex = 4;
             // 
             // TargetFitnessLabel
             // 
@@ -457,15 +453,19 @@ namespace RoadNetworkGUI
             this.label1.TabIndex = 0;
             this.label1.Text = "Max Fitness:";
             // 
-            // cleanupButton
+            // targetFitness
             // 
-            this.cleanupButton.Location = new System.Drawing.Point(267, 148);
-            this.cleanupButton.Name = "cleanupButton";
-            this.cleanupButton.Size = new System.Drawing.Size(88, 23);
-            this.cleanupButton.TabIndex = 15;
-            this.cleanupButton.Text = "Clean up";
-            this.cleanupButton.UseVisualStyleBackColor = true;
-            this.cleanupButton.Click += new System.EventHandler(this.cleanupButton_Click);
+            this.targetFitness.Location = new System.Drawing.Point(124, 52);
+            this.targetFitness.Name = "targetFitness";
+            this.targetFitness.Size = new System.Drawing.Size(120, 20);
+            this.targetFitness.TabIndex = 16;
+            // 
+            // n
+            // 
+            this.n.Location = new System.Drawing.Point(169, 150);
+            this.n.Name = "n";
+            this.n.Size = new System.Drawing.Size(75, 20);
+            this.n.TabIndex = 17;
             // 
             // RoadNetworkFinder
             // 
@@ -486,6 +486,8 @@ namespace RoadNetworkGUI
             this.gbSettings.PerformLayout();
             this.gbGeneration.ResumeLayout(false);
             this.gbGeneration.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.n)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -512,7 +514,6 @@ namespace RoadNetworkGUI
         private System.Windows.Forms.Button MapFileSelectButton;
         private System.Windows.Forms.TextBox tbMapFile;
         private System.Windows.Forms.Label MapFileLabel;
-        private System.Windows.Forms.DomainUpDown targetFitnessScroller;
         private System.Windows.Forms.Button libraryLoaderButton;
         private System.Windows.Forms.Label outputFileButton;
         private System.Windows.Forms.TextBox tbOutputFile;
@@ -520,7 +521,6 @@ namespace RoadNetworkGUI
         private System.Windows.Forms.Button initEngineButton;
         private System.Windows.Forms.Button runButton;
         private System.Windows.Forms.Button stepButton;
-        private System.Windows.Forms.DomainUpDown nScroller;
         private System.Windows.Forms.Label nlabel;
         private System.Windows.Forms.Button runGenerationButton;
         private System.Windows.Forms.GroupBox gbGeneration;
@@ -531,6 +531,8 @@ namespace RoadNetworkGUI
         private RoadNetworkDisplay.RoadNetworkPanel visualiser1;
         private Button viewOutputFileButton;
         private Button cleanupButton;
+        private NumericUpDown n;
+        private NumericUpDown targetFitness;
     }
 }
 

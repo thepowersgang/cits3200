@@ -30,13 +30,15 @@
         {
             this.gbFile = new System.Windows.Forms.GroupBox();
             this.visualiser2 = new RoadNetworkDisplay.RoadNetworkPanel();
-            this.generationScroller = new System.Windows.Forms.DomainUpDown();
-            this.individualScroller = new System.Windows.Forms.DomainUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.fitnessLabel = new System.Windows.Forms.Label();
+            this.generation = new System.Windows.Forms.NumericUpDown();
+            this.individual = new System.Windows.Forms.NumericUpDown();
             this.gbFile.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.generation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.individual)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFile
@@ -58,24 +60,6 @@
             this.visualiser2.Network = null;
             this.visualiser2.Size = new System.Drawing.Size(470, 440);
             this.visualiser2.TabIndex = 7;
-            // 
-            // generationScroller
-            // 
-            this.generationScroller.Location = new System.Drawing.Point(647, 25);
-            this.generationScroller.Name = "generationScroller";
-            this.generationScroller.ReadOnly = true;
-            this.generationScroller.Size = new System.Drawing.Size(83, 20);
-            this.generationScroller.TabIndex = 1;
-            this.generationScroller.SelectedItemChanged += new System.EventHandler(this.generationScroller_SelectedItemChanged);
-            // 
-            // individualScroller
-            // 
-            this.individualScroller.Location = new System.Drawing.Point(647, 51);
-            this.individualScroller.Name = "individualScroller";
-            this.individualScroller.ReadOnly = true;
-            this.individualScroller.Size = new System.Drawing.Size(83, 20);
-            this.individualScroller.TabIndex = 2;
-            this.individualScroller.SelectedItemChanged += new System.EventHandler(this.individualScroller_SelectedItemChanged);
             // 
             // label1
             // 
@@ -113,22 +97,38 @@
             this.fitnessLabel.TabIndex = 6;
             this.fitnessLabel.Text = "0";
             // 
+            // generation
+            // 
+            this.generation.Location = new System.Drawing.Point(664, 25);
+            this.generation.Name = "generation";
+            this.generation.Size = new System.Drawing.Size(73, 20);
+            this.generation.TabIndex = 7;
+            // 
+            // individual
+            // 
+            this.individual.Location = new System.Drawing.Point(664, 52);
+            this.individual.Name = "individual";
+            this.individual.Size = new System.Drawing.Size(73, 20);
+            this.individual.TabIndex = 8;
+            // 
             // Road_Network_Visualiser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(738, 494);
+            this.Controls.Add(this.individual);
+            this.Controls.Add(this.generation);
             this.Controls.Add(this.fitnessLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.individualScroller);
-            this.Controls.Add(this.generationScroller);
             this.Controls.Add(this.gbFile);
             this.Name = "Road_Network_Visualiser";
             this.Text = "Road Network Visualiser";
             this.Load += new System.EventHandler(this.Road_Network_Visualiser_Load);
             this.gbFile.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.generation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.individual)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,32 +136,14 @@
 
         #endregion
 
-        #region pageLoad
-        private void initComponents()
-        {
-            int MAXGENERATION = 1;
-            int MAXINDIVIDUALS = 1;
-            for (int i = 0; i <= MAXGENERATION; i++)
-            {
-                generationScroller.Items.Add(i.ToString());
-            }
-            for (int i = 0; i <= MAXINDIVIDUALS; i++)
-            {
-                individualScroller.Items.Add(i.ToString());
-            }
-        }
-        private void drawMap()
-        {
-        }
-        #endregion
 
         private System.Windows.Forms.GroupBox gbFile;
-        private System.Windows.Forms.DomainUpDown generationScroller;
-        private System.Windows.Forms.DomainUpDown individualScroller;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label fitnessLabel;
         private RoadNetworkDisplay.RoadNetworkPanel visualiser2;
+        private System.Windows.Forms.NumericUpDown generation;
+        private System.Windows.Forms.NumericUpDown individual;
     }
 }
