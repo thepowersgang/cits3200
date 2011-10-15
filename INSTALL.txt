@@ -6,14 +6,13 @@
 3. The user will need Visual Studio 2010 or Visual Studio 2010 C# Express to view the Libraries and 
    the User Interfaces as the code has been written with these IDEs
 4. Under the 'GeneticEnginePrototype' directory, open the Microsoft Visual Studio Solution file, GeneticEngine.sln
-5. There should be 7 projects in the solution file, there are
+5. There should be 6 projects in the solution file, there are
 	i. GeneticEngineCore
 	ii. GeneticEnginePlugin
-        iii. GeneticEnginePrototpe
-	iv. RoadNetworkDisplay
-	v. RoadNetworkGUI
-	vii. RoadNetworkSolver
-	viii. GeneticEngineTesting
+	iii. RoadNetworkDisplay
+	iv. RoadNetworkGUI
+	v. RoadNetworkSolver
+	vi. GeneticEngineTesting
 6. Right click on the Project GeneticEngineTesting and select 'Set as StartUp Project'
 7. Select F5 to debug the solution (which will build the entire solution as well) and run the unit tests. 
    The tests are run from TestClass.cs

@@ -308,6 +308,7 @@ namespace RoadNetworkGUI
          */
         private void initPluginDropDowns()
         {
+            String errorMsg = "";
             if (populators.Count > 0)
             {
                 for (int i = 0; i < populators.Count; i++)
@@ -315,7 +316,7 @@ namespace RoadNetworkGUI
                     cbPopulator.Items.Add(populators[i]);
                 }
             }
-            else MessageBox.Show("No known populators can be loaded. Load another dll file\n");
+            else errorMsg += ("No known populators can be loaded. Load another dll file\n");
             if (evaluators.Count > 0)
             {
                 for (int i = 0; i < evaluators.Count; i++)
@@ -323,7 +324,7 @@ namespace RoadNetworkGUI
                     cbEvaluator.Items.Add(evaluators[i]);
                 }
             }
-            else MessageBox.Show("No known evaluators can be loaded. Load another dll file\n");
+            else errorMsg += ("No known evaluators can be loaded. Load another dll file\n");
             if (geneticOperators.Count > 0)
             {
                 for (int i = 0; i < geneticOperators.Count; i++)
@@ -331,7 +332,7 @@ namespace RoadNetworkGUI
                     cbGeneticOperator.Items.Add(geneticOperators[i]);
                 }
             }
-            else MessageBox.Show("No known genetic operators can be loaded. Load another dll file\n");
+            else errorMsg += ("No known genetic operators can be loaded. Load another dll file\n");
             if (terminators.Count > 0)
             {
                 for (int i = 0; i < terminators.Count; i++)
@@ -339,7 +340,7 @@ namespace RoadNetworkGUI
                     cbTerminator.Items.Add(terminators[i]);
                 }
             }
-            else MessageBox.Show("No known terminators can be loaded. \n");
+            else errorMsg += ("No known terminators can be loaded. \n");
             if (outputters.Count > 0)
             {
                 for (int i = 0; i < outputters.Count; i++)
@@ -354,7 +355,7 @@ namespace RoadNetworkGUI
                     cbGenerationFactory.Items.Add(generationFactories[i]);
                 }
             }
-
+            if (errorMsg != "") MessageBox.Show(errorMsg);
         }
         /**
          * Populate the 'n'scroller and the target fitness scroller with values from 1 up to the maximum values
