@@ -33,6 +33,14 @@ namespace RoadNetworkSolver
         /// Fraction of the population to mutate
         /// </summary>
         double fraction_to_mutate = 0.25;
+        /// <summary>
+        /// Minimum number of edges to use when adding edges
+        /// </summary>
+        int min_edge_base = 100;
+        /// <summary>
+        /// Minimum number of verticies to use when adding verticies
+        /// </summary>
+        int min_vertex_base = 100;
 
 
         public MutationOperator(object config)
@@ -153,7 +161,9 @@ namespace RoadNetworkSolver
 			}
 
 			// Create some new verticies
-            int num_new_verts = (int)(ent.VertexCount * max_new_verticies * random.NextDouble());
+            int num_new_verts = ent.EdgeCount;
+            if (num_new_verts < min_vertex_base) num_new_verts = min_vertex_base;
+            num_new_verts = (int)(num_new_verts * max_new_verticies * random.NextDouble());
 			for( int ii = 0; ii < num_new_verts; ii ++ )
 			{
 				AddVertex(ret);
@@ -174,7 +184,9 @@ namespace RoadNetworkSolver
             }
 
 			// Create some new edges
-			int num_new_edges = (int)(ent.EdgeCount * max_new_edges * random.NextDouble());
+            int num_new_edges = ent.EdgeCount;
+            if(num_new_edges < min_edge_base) num_new_edges = min_edge_base;
+			num_new_edges = (int)(num_new_edges * max_new_edges * random.NextDouble());
 			for( int ii = 0; ii < num_new_edges; ii ++ )
 			{
 				AddEdge(ret);
@@ -217,14 +229,18 @@ namespace RoadNetworkSolver
 				if( num_unknown > 0 )
 				{
                     Vertex end = null;
-					// TODO:
+                    
+					// Find the first non-visited vertex
                     for (int i = 0; i < network.VertexCount; i++)
                     {
-                        if (network.GetVertex(i).Visited) continue;
-                        end = network.GetVertex(i);
-                        break;
+                        if (!network.GetVertex(i).Visited)
+                        {
+                            end = network.GetVertex(i);
+                            break;
+                        }
                     }
 
+                    // Make an edge from this vertex to the last checked
                     network.AddEdge(v, end);
                     to_check.AddLast(end);
 				}
