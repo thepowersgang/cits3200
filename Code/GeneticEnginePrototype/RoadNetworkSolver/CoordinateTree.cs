@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
-    class CoordinateTree
+    public class CoordinateTree
     {
 
         private Coordinates point;

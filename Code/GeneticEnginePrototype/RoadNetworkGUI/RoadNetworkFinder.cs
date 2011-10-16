@@ -10,7 +10,7 @@ using System.IO;
 using GeneticAlgorithm;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Util;
-using RoadNetworkSolver;
+using RoadNetworkDefinition;
 using RoadNetworkDisplay;
 using GeneticAlgorithm.Plugin.Generic;
 using System.Xml;
@@ -55,11 +55,11 @@ namespace RoadNetworkGUI
          */ 
         private void libraryLoaderButton_Click(object sender, EventArgs e)
         {
-            if (isOK())
+            if (isOK(LoadLibrary))
             {
                 loader = new PluginLoader();
-                loader.LoadDll(openDialog.FileName);
-                libraryLabel.Text = Path.GetFileName(openDialog.FileName);
+                loader.LoadDll(LoadLibrary.FileName);
+                libraryLabel.Text = Path.GetFileName(LoadLibrary.FileName);
                 initEngineButton.Enabled = true;
                 populators = loader.GetPluginNames(typeof(IPopulator));
                 evaluators = loader.GetPluginNames(typeof(IEvaluator));
@@ -114,8 +114,8 @@ namespace RoadNetworkGUI
             else
             {
                 string choice = getChoice(terminators, cbTerminator);
-                if((int) targetFitness.Value == 0) MessageBox.Show("Provide a target fitness value greater than 1 for the terminator plug-in\n");
-                else terminator = (ITerminator) loader.GetInstance(choice, (object) targetFitness.Value);
+                if((int) targetFitness.Value == 0) errorMsg += "Provide a target fitness value greater than 1 for the terminator plug-in\n";
+                else terminator = (ITerminator) loader.GetInstance(choice, (object) (uint)targetFitness.Value);
             }
             if (cbOutputter.SelectedItem != null)
             {
@@ -246,11 +246,13 @@ namespace RoadNetworkGUI
         #region File Loading
 
 
-        OpenFileDialog openDialog = new OpenFileDialog();
+        OpenFileDialog OpenOutput = new OpenFileDialog();
+        OpenFileDialog LoadLibrary = new OpenFileDialog();
+        OpenFileDialog OpenMap = new OpenFileDialog();
         /**
          * Check if the file is successfully chosen and opened. 
          */ 
-        private bool isOK()
+        private bool isOK(OpenFileDialog openDialog)
         {
             return (openDialog.ShowDialog() == DialogResult.OK);
         }
@@ -260,16 +262,17 @@ namespace RoadNetworkGUI
          */
         private void loadMapFile()
         {
-            if (isOK())
+            if (isOK(OpenMap))
             {
-                tbMapFile.Text = openDialog.FileName;
+                tbMapFile.Text = OpenMap.FileName;
                 string e = Path.GetExtension(tbMapFile.Text);
                 if (String.Equals(e, ".xml"))
                 {
-                    XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
-                    map = new Map(reader);
+                    //XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
+                    //map = new Map(reader);
+                    map = Map.FromFile(tbMapFile.Text);
                     visualiser1.Network = new RoadNetwork(map);
-                    displayOutputter = new DisplayOutputter(visualiser1, outputter);
+                    displayOutputter = new DisplayOutputter(visualiser1, outputter);                    
                 }
                 else
                 {
@@ -284,26 +287,38 @@ namespace RoadNetworkGUI
 
         /**
          * Load output file, if the file was successfully loaded by the OpenFileDialog object 
+         * otherwise select a new directory to create an output file
          */
         private void loadOutputFile()
         {
-            if (isOK())
+            if (isOK(OpenOutput))
             {
-                tbOutputFile.Text = openDialog.FileName;
+                tbOutputFile.Text = OpenOutput.FileName;
                 string e = Path.GetExtension(tbOutputFile.Text);
                 if (!String.Equals(e, ".xml"))
                 {
                     MessageBox.Show("Output file should be in xml form. Please reload another file\n");
                 }
-                
+
             }
-            else MessageBox.Show("Select a file so information can be written to an output file\n");
+            else
+            {
+                XmlDocument outputFile = new XmlDocument();
+                System.Windows.Forms.FolderBrowserDialog directory = new System.Windows.Forms.FolderBrowserDialog();
+                MessageBox.Show("No output file was chosen. Select a new directory to create an XML file\n");
+                if (!String.IsNullOrEmpty(directory.SelectedPath))
+                {
+                    string fileDirectory = directory.SelectedPath + "output.xml";
+                    outputFile.Save(fileDirectory);
+                    tbOutputFile.Text = fileDirectory;
+                }
+            }
         }
 
         /**
          * Populate the drop down list if each string list has at least one member. 
          * Display an error msg, if the populator, evaluator, geneticOperator and Terminator, string lists are empty. 
-         * The reason here is, that no populator, evaluator, genetic Operator or Terminator should be null when we 
+         * The reason here is, that no populator, evaluator, geneticOperator or Terminator should be null when we 
          * create the engine object
          */
         private void initPluginDropDowns()

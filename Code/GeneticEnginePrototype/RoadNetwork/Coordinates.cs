@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace RoadNetworkSolver
+namespace RoadNetworkDefinition
 {
     /// <summary>
     /// Represents a location in 2D (x,y) space

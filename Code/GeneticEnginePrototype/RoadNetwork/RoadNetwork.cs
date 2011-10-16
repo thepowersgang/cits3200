@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace RoadNetworkSolver
+namespace RoadNetworkDefinition
 {
     /// <summary>
     /// Describes a network of roads with a start and end vertex

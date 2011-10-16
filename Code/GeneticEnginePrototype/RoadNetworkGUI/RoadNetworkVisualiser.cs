@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using RoadNetworkSolver;
+using RoadNetworkDefinition;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;
@@ -85,47 +85,50 @@ namespace RoadNetworkGUI
          * If the index is 0 or the generation is not selected, display an error message to select a proper generation index.
          * For a specific generation, if the individual count is at least 1, dynamically fill up the 'individual' scroll bar from 1 up to the number of individuals. 
          * Otherwise, request user to select another generation through an displayed error message.
-         */ 
-        private void generationScroller_SelectedItemChanged(object sender, EventArgs e)
+         */
+        private void generation_ValueChanged(object sender, EventArgs e)
         {
-            if ((int) generation.Value == results.Count)
+            if ((int)generation.Value == results.Count)
             {
-                MessageBox.Show("Select a proper generation index from 0 to "+ (results.Count-1)+" \n");
+                MessageBox.Show("Select a proper generation index from 0 to " + (results.Count - 1) + " \n");
             }
             else
             {
                 GenerationIndex = (int)generation.Value;
-                if (results[GenerationIndex].Count <= 0)
+                if (results[GenerationIndex].Count == 0)
                 {
                     string errorMsg = "There are no individuals for this Generation\n";
                     errorMsg += "Therefore please select another generation with at least one individual\n";
                     MessageBox.Show(errorMsg);
                 }
+                else
+                {
+                    individual.Value = 0;
+                }
             }
         }
 
         /**
-         * If an individual index is selected by the user, then check if the individual is valid,
-         * if so, redraw the individual on the visualiser. 
-         * If not, display an error message to select a proper individual index. 
-         */ 
-        private void individualScroller_SelectedItemChanged(object sender, EventArgs e)
+          * If an individual index is selected by the user, then check if the individual is valid,
+          * if so, redraw the individual on the visualiser. 
+          * If not, display an error message to select a proper individual index. 
+          */ 
+        private void individual_ValueChanged(object sender, EventArgs e)
         {
             if ((int)individual.Value == results[GenerationIndex].Count)
             {
-                MessageBox.Show("Select an individual index from 0 to "+(results[GenerationIndex].Count-1) +" for this generation\n");
+                MessageBox.Show("Select an individual index from 0 to " + (results[GenerationIndex].Count - 1) + " for this generation\n");
             }
             else
             {
                 IndividualIndex = (int)(individual.Value);
-                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(),null);
+                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(), null);
                 IndividualWithFitness iwf = generation[IndividualIndex];
                 uint fitness = iwf.Fitness;
                 fitnessLabel.Text = fitness.ToString();
                 visualiser2.Network = (RoadNetwork)iwf.Individual;
             }
         }
-
 
     }
 }
