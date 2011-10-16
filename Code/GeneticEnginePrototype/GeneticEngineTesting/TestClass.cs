@@ -93,7 +93,7 @@ namespace GeneticEngineTesting
             Console.WriteLine("Test A2 Successful");
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void TestA3()
         {
             Boolean passed = true;
@@ -114,7 +114,7 @@ namespace GeneticEngineTesting
             Console.WriteLine("Test A3 Successful");
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void TestA4()
         {
             initialiseA();
@@ -132,7 +132,7 @@ namespace GeneticEngineTesting
             Assert.AreEqual(107, AOutputter.fitnesses[4]);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void TestA5()
         {
             initialiseA();
@@ -339,7 +339,7 @@ namespace GeneticEngineTesting
         public void TestE1()
         {
             Evaluator RoadEvaluator = new Evaluator(null);            
-            GenerationIndex results = GenerationIndex.Load(@".\small\index.xml");            
+            GenerationIndex results = GenerationIndex.Load("./small/index.xml");            
             AATreeGeneration temp = new AATreeGeneration();
             for (int i = 0; i < results.Count; i++)
             {
@@ -369,13 +369,13 @@ namespace GeneticEngineTesting
             generation.Insert(RN1, 1);
             generation.Insert(RN2, 2);
 
-            //Output individuals/generation somehow.
-            XmlWriter theWriter = new XmlWriter();
-            RNO.writeIndividual(RN1, theWriter);
-            RNO.writeIndividual(RN2, theWriter);
+            XmlWriter writer = XmlWriter.Create("testxml.xml");
+            //Output individuals/generation somehow.            
+            RN1.WriteXml(writer);
+            RN2.WriteXml(writer);
 
             //Insert some load function and load into generationLoaded.
-            AATreeGeneration generationLoaded = new AATreeGeneration();
+            AATreeGeneration generationLoaded = new AATreeGeneration();           
             IndividualWithFitness RNL1 = generationLoaded.Remove(0);
             IndividualWithFitness RNL2 = generationLoaded.Remove(1);
             Assert.AreSame(RNL1.Fitness, 1);
