@@ -98,8 +98,8 @@ namespace RoadNetworkSolver
                 Vertex start2;
                 Vertex end2;
 
-                GetStartAndEnd(brokenEdgePartition1, i, startVertexPartition1, endVertexPartition1, out start1, out end1);
-                GetStartAndEnd(brokenEdgePartition2, i, startVertexPartition2, endVertexPartition2, out start2, out end2);
+                GetStartAndEnd(brokenEdgePartition1, i, endVertexPartition1, startVertexPartition1, out start1, out end1);
+                GetStartAndEnd(brokenEdgePartition2, i, endVertexPartition2, startVertexPartition2, out start2, out end2);
 
                 if (start1 != null && start2 != null)
                 {
