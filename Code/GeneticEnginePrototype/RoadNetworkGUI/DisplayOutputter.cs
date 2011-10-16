@@ -29,7 +29,7 @@ namespace RoadNetworkGUI
 
         public void OpenOutput()
         {
-            if (wrappedOutputter.Status == OutputterStatus.Closed)
+            if (wrappedOutputter!=null && wrappedOutputter.Status == OutputterStatus.Closed)
             {
                 wrappedOutputter.OpenOutput();
             }
@@ -39,20 +39,23 @@ namespace RoadNetworkGUI
         {
             visualiser.Network = (RoadNetwork)generation[0].Individual;
 
-            if (wrappedOutputter.Status == OutputterStatus.Closed)
+            if (wrappedOutputter != null)
             {
-                wrappedOutputter.OpenOutput();
-            }
+                if (wrappedOutputter.Status == OutputterStatus.Closed)
+                {
+                    wrappedOutputter.OpenOutput();
+                }
 
-            if (wrappedOutputter.Status == OutputterStatus.Open)
-            {
-                wrappedOutputter.OutputGeneration(generation, generationCount);
+                if (wrappedOutputter.Status == OutputterStatus.Open)
+                {
+                    wrappedOutputter.OutputGeneration(generation, generationCount);
+                }
             }
         }
 
         public void CloseOutput()
         {
-            if (wrappedOutputter.Status == OutputterStatus.Open)
+            if (wrappedOutputter != null && wrappedOutputter.Status == OutputterStatus.Open)
             {
                 wrappedOutputter.CloseOutput();
             }            
