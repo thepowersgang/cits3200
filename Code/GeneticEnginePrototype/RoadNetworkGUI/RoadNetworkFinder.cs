@@ -14,6 +14,7 @@ using RoadNetworkDefinition;
 using RoadNetworkDisplay;
 using GeneticAlgorithm.Plugin.Generic;
 using System.Xml;
+using System.Threading;
 
 namespace RoadNetworkGUI
 {
@@ -82,6 +83,7 @@ namespace RoadNetworkGUI
         {
             loadOutputFile();
         }
+
         /*
          * Check if the plugins have been selected by the user, if not the revelant exceptions are thrown 
          * asking the user to make a choice.
@@ -136,15 +138,16 @@ namespace RoadNetworkGUI
             if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n" );
             else
             {
-                displayOutputter = new DisplayOutputter(visualiser1, outputter);
+                displayOutputter = new DisplayOutputter(this, outputter);
                 engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
                 stepButton.Enabled = true;
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
                 hasInitialised = true;
-                setFitnessValues();
+                //setFitnessValues();
             }
         }
+
         private void cleanupButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised)
@@ -154,6 +157,12 @@ namespace RoadNetworkGUI
                 cleanupButton.Enabled = false;
             }
         }
+
+        public void StepEngine()
+        {
+            engine.Step();
+        }
+
         /*
          * calls Step() of the engine only if it initialised. After the step method, the fitness values are updated
          * if the engine is not initialised, a message is displayed to initialise the engine.
@@ -164,8 +173,11 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 //displayOutputter.OpenOutput();
-                engine.Step();
-                setFitnessValues();
+
+                Thread stepThead = new Thread(new ThreadStart(StepEngine));
+                stepThead.Start();
+
+                //setFitnessValues();
                 //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -181,6 +193,11 @@ namespace RoadNetworkGUI
             }
         }
 
+        public void RunEngine()
+        {            
+            engine.Run();
+        }
+
         /**
          * By clicking on the run button, Run() is executed from the engine if it was initialised. Afterwards, the fitness values
          * are updated on the interface. If the engine wasn't initialised, then a message is shown to the user to initialise the engine
@@ -192,8 +209,11 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 //displayOutputter.OpenOutput();
-                engine.Run();
-                setFitnessValues();
+
+                Thread runThead = new Thread(new ThreadStart(RunEngine));
+                runThead.Start();
+
+                //setFitnessValues();
                 //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
@@ -204,6 +224,12 @@ namespace RoadNetworkGUI
                 viewOutputFileButton.Enabled = true;
                 //writeToXmlFile();
             }
+        }
+
+        public void RepeatEngine(object obj)
+        {
+            int n = (int)obj;
+            engine.Repeat(n);
         }
 
         /**
@@ -223,8 +249,11 @@ namespace RoadNetworkGUI
                 if (hasInitialised)
                 {
                     //displayOutputter.OpenOutput();
-                    engine.Repeat((int) n.Value);
-                    setFitnessValues();
+                    //engine.Repeat((int) n.Value);
+                    Thread repeatThread = new Thread(RepeatEngine);
+                    repeatThread.Start((int)n.Value);
+
+                    //setFitnessValues();
                     //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
@@ -240,12 +269,13 @@ namespace RoadNetworkGUI
 
         /**
          * these values are obtained from the generation of the engine and are displayed on the interface. 
-         */ 
+          
         private void setFitnessValues()
         {
             maxFitnessValue.Text = engine.Generation.MaxFitness.ToString();
             averageFitnessValue.Text = engine.Generation.AverageFitness.ToString();
         }
+         */
         #endregion
         #region File Loading
 
@@ -447,6 +477,24 @@ namespace RoadNetworkGUI
         private void tbOutputFile_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private delegate void ShowStatsCallback(uint maxFitness, float averageFitness);
+
+        private void ShowStats(uint maxFitness, float averageFitness)
+        {
+            maxFitnessValue.Text = maxFitness.ToString();
+            averageFitnessValue.Text = averageFitness.ToString();
+        }
+
+        public void DisplayGeneration(IGeneration generation)
+        {
+            if (generation.Count > 0)
+            {
+                visualiser1.Network = (RoadNetwork)generation[0].Individual;                
+            }
+
+            this.Invoke(new ShowStatsCallback(this.ShowStats),new object[]{generation.MaxFitness,generation.AverageFitness});
         }
 
     }

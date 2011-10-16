@@ -11,7 +11,7 @@ namespace RoadNetworkGUI
     class DisplayOutputter : IOutputter //Implement IOutputter
     {
         IOutputter wrappedOutputter;
-        RoadNetworkPanel visualiser;
+        RoadNetworkFinder mainWindow;
 
         public OutputterStatus Status
         {
@@ -21,9 +21,9 @@ namespace RoadNetworkGUI
             }
         }
 
-        public DisplayOutputter(RoadNetworkPanel visualiser, IOutputter wrappedOutputter)
+        public DisplayOutputter(RoadNetworkFinder mainWindow, IOutputter wrappedOutputter)
         {
-            this.visualiser = visualiser;
+            this.mainWindow = mainWindow;
             this.wrappedOutputter = wrappedOutputter; //Set wrappedOutputter
         }
 
@@ -37,8 +37,8 @@ namespace RoadNetworkGUI
 
         public void OutputGeneration(IGeneration generation, int generationCount)//Renamed from output
         {
-            visualiser.Network = (RoadNetwork)generation[0].Individual;
-
+            mainWindow.DisplayGeneration(generation);
+            
             if (wrappedOutputter != null)
             {
                 if (wrappedOutputter.Status == OutputterStatus.Closed)
