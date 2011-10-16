@@ -2,9 +2,9 @@
   <map width="128" height="128">
     <start x="64" y="32" />
     <end x="32" y="96" />
-    <town x="32" y="96" />
-    <town x="32" y="96" />
-    <town x="32" y="96" />
+    <town x="64" y="96" />
+    <town x="96" y="32" />
+    <town x="96" y="96" />
   </map>
   <vertex id="0" x="50" y="38" />
   <vertex id="1" x="70" y="43" />
