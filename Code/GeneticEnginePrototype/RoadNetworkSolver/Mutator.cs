@@ -11,14 +11,29 @@ namespace RoadNetworkSolver
     {
         Random random = new Random();
 
+        public Mutator(object config)
+        {
+        }
+
         /// <summary>
         /// Process a generation to produce the individuals which will make up the next generation
         /// </summary>
         /// <param name="source">The current generation</param>
         /// <param name="destination">An empty collection of individuals to be populated</param>
         public void Operate(IGeneration source, ArrayList destination)
-        {
-                        
+        {            
+            int i = 0;
+            while (destination.Count < source.Count)
+            {
+                int j = 0;
+                while (destination.Count < source.Count && j <= i)
+                {
+                    destination.Add(Mutate((RoadNetwork)source[j].Individual));
+                    j++;
+                }
+
+                i++;
+            }
         }
 
         public RoadNetwork Mutate(RoadNetwork source)
@@ -99,7 +114,7 @@ namespace RoadNetworkSolver
 
             for (int i = 0; i < verticesToAdd; i++)
             {
-                Vertex startVertex = destination.GetVertex(random.Next(source.VertexCount));
+                Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
                 Vertex endVertex = destination.AddVertex(random.Next(mapWidth), random.Next(mapHeight));
                 destination.AddEdge(startVertex, endVertex);
             }
@@ -108,9 +123,12 @@ namespace RoadNetworkSolver
 
             for (int i = 0; i < edgesToAdd; i++)
             {
-                Vertex startVertex = destination.GetVertex(random.Next(source.VertexCount));
-                Vertex endVertex = destination.GetVertex(random.Next(source.VertexCount));
-                destination.AddEdge(startVertex, endVertex);
+                Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
+                Vertex endVertex = destination.GetVertex(random.Next(destination.VertexCount));
+                if (startVertex != endVertex)
+                {
+                    destination.AddEdge(startVertex, endVertex);
+                }
             }
 
             if (endVertexIndex == -1)

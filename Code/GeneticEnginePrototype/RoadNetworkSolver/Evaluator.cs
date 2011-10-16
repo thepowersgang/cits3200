@@ -61,8 +61,17 @@ namespace RoadNetworkSolver
                 totalDistance += Math.Sqrt(minDistanceSquared);
             }
 
-            double total = totalLength + totalDistance;
-            double floatingPointFitness = 1.0 / (total+1.0);
+            double totalCost = totalLength + totalDistance;
+
+            // This check was causing performance problems so I've removed it.
+            // What's the worst that could happen?
+            //
+            //if (thisAlgorithmBecomesSkynet())
+            //{
+            //    totalCost = double.PositiveInfinity;
+            //}
+            
+            double floatingPointFitness = 1.0 / (totalCost + 1.0);
             return FitnessConverter.FromFloat((float)floatingPointFitness);
         }
     }

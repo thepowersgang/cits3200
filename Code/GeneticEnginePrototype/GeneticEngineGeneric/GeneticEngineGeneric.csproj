@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</ProjectGuid>
+    <ProjectGuid>{C960A6E8-68DC-40FE-9E01-7FA20DF68A7B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneticAlgorithm.Plugin</RootNamespace>
-    <AssemblyName>GeneticEnginePlugin</AssemblyName>
+    <RootNamespace>GeneticAlgorithm.GenericPlugins</RootNamespace>
+    <AssemblyName>GeneticEngineGeneric</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,11 +17,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\GeneticEngine\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\GeneticEngine\bin\Debug\GeneticEnginePlugin.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,23 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generic\AATreeGeneration.cs" />
-    <Compile Include="Generic\AATreeGenerationFactory.cs" />
-    <Compile Include="Generic\FitnessThresholdTerminator.cs" />
-    <Compile Include="Generic\XmlOutputter.cs" />
-    <Compile Include="Util\FitnessConverter.cs" />
-    <Compile Include="OutputterStatus.cs" />
-    <Compile Include="Xml\IIndividualReader.cs" />
-    <Compile Include="Xml\GenerationIndex.cs" />
-    <Compile Include="IPopulator.cs" />
-    <Compile Include="IEvaluator.cs" />
-    <Compile Include="IGeneration.cs" />
-    <Compile Include="IGenerationFactory.cs" />
-    <Compile Include="IGeneticOperator.cs" />
-    <Compile Include="IndividualWithFitness.cs" />
-    <Compile Include="IOutputter.cs" />
+    <Compile Include="AATreeGeneration.cs" />
+    <Compile Include="AATreeGenerationFactory.cs" />
+    <Compile Include="FitnessThresholdTerminator.cs" />
+    <Compile Include="XmlOutputter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ITerminator.cs" />
+    <Compile Include="Xml\GenerationIndex.cs" />
+    <Compile Include="Xml\IIndividualReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

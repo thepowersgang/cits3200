@@ -25,7 +25,7 @@ namespace RoadNetworkSolver
         {
             Random random = new Random();
 
-            MutationOperator mutationOperator = new MutationOperator(null);
+            Mutator mutator = new Mutator(null);
 
             RoadNetwork original = new RoadNetwork(map);
             original.AddEdge(original.AddVertex(map.Start), original.AddVertex(map.End));
@@ -33,7 +33,7 @@ namespace RoadNetworkSolver
 
             while (individuals.Count < populationSize)
             {
-                individuals.Add(mutationOperator.Mutate((RoadNetwork)individuals[random.Next(individuals.Count)]));
+                individuals.Add(mutator.Mutate((RoadNetwork)individuals[random.Next(individuals.Count)]));
             }
         }
     }
