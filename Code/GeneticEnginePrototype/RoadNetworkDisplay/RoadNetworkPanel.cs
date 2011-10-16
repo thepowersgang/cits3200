@@ -48,9 +48,9 @@ namespace RoadNetworkDisplay
         {
             if (networkBeenGiven)
             {
+                drawVerticesEdges(e);
                 drawTowns(e);
                 drawStartEndCoords(e);
-                drawVerticesEdges(e);
             }
         }
         private void drawStartEndCoords(PaintEventArgs e)
