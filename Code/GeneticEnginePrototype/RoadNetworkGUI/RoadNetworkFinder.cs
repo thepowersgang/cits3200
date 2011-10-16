@@ -177,7 +177,7 @@ namespace RoadNetworkGUI
             {
                 hasCompleted = true;
                 viewOutputFileButton.Enabled = true;
-                writeToXmlFile();
+                //writeToXmlFile();
             }
         }
 
@@ -202,7 +202,7 @@ namespace RoadNetworkGUI
             {
                 hasCompleted = true;
                 viewOutputFileButton.Enabled = true;
-                writeToXmlFile();
+                //writeToXmlFile();
             }
         }
 
@@ -233,7 +233,7 @@ namespace RoadNetworkGUI
                 {
                     hasCompleted = true;
                     viewOutputFileButton.Enabled = true;
-                    writeToXmlFile();
+                    //writeToXmlFile();
                 }
             }
         }
@@ -310,7 +310,6 @@ namespace RoadNetworkGUI
          */
         private void loadOutputFile()
         {
-            OpenOutput.CheckFileExists = false;
             if (isOK(OpenOutput,"output"))
             {
                     tbOutputFile.Text = OpenOutput.FileName;
@@ -415,13 +414,15 @@ namespace RoadNetworkGUI
                 form.Visible = true;
             }
         }
+
+        
         /**
         * Check if a file has been opened
         * If not, display an error message
         * otherwise check if the file is an xml one.
         * If not, display a different error message
         * otherwise, create instance of an XmlWriter and write xml stuff to it.  
-        */
+        
         private void writeToXmlFile()
         {
             RoadNetwork network = new RoadNetwork(visualiser1.Network);
@@ -440,6 +441,8 @@ namespace RoadNetworkGUI
                 network.WriteXml(writer);
             }
         }
+
+        */
 
         private void tbOutputFile_TextChanged(object sender, EventArgs e)
         {
