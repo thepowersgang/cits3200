@@ -151,7 +151,7 @@ namespace RoadNetworkDefinition
             foreach (Coordinates town in towns)
             {
                 writer.WriteStartElement("town");
-                end.WriteXml(writer);
+                town.WriteXml(writer);
                 writer.WriteEndElement();
             }
 
