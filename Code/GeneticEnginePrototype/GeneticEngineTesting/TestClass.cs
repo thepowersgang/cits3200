@@ -339,7 +339,7 @@ namespace GeneticEngineTesting
         public void TestE1()
         {
             Evaluator RoadEvaluator = new Evaluator(null);            
-            GenerationIndex results = GenerationIndex.Load(".\small\index.xml");            
+            GenerationIndex results = GenerationIndex.Load(@".\small\index.xml");            
             AATreeGeneration temp = new AATreeGeneration();
             for (int i = 0; i < results.Count; i++)
             {

@@ -8,7 +8,7 @@ using GeneticAlgorithm.Plugin.Util;
 
 namespace RoadNetworkSolver
 {
-    class Evaluator : IEvaluator
+    public class Evaluator : IEvaluator
     {
         public Evaluator(object config)
         {

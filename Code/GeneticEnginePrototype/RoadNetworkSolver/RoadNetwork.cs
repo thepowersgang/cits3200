@@ -102,7 +102,23 @@ namespace RoadNetworkSolver
             CopyVertices(network.vertices);
             CopyEdges(network.edges);
         }
-                
+
+        public void SetStart(int index)
+        {
+            Vertex temp = vertices[0];
+            vertices[0] = vertices[index];
+            vertices[index] = temp;
+        }
+
+        public void SetEnd(int index)
+        {
+            int endIndex = vertices.Count - 1;
+
+            Vertex temp = vertices[endIndex];
+            vertices[endIndex] = vertices[index];
+            vertices[index] = temp;
+        }
+
 		/// <summary>
 		/// Fetch a vertex by its index
 		/// </summary>

@@ -7,7 +7,7 @@ using GeneticAlgorithm.Plugin.Generic;
 
 namespace RoadNetworkSolver
 {
-    class RoadNetworkXmlOutputter : XmlOutputter
+    public class RoadNetworkXmlOutputter : XmlOutputter
     {
         public RoadNetworkXmlOutputter(object config)
             : base((string)config)

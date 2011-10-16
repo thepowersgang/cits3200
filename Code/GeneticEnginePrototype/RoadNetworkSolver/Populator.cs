@@ -7,7 +7,7 @@ using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    class Populator : IPopulator
+    public class Populator : IPopulator
     {
         int populationSize = 1000;
         Map map;
