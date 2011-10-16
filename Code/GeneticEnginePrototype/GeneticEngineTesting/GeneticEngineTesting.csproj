@@ -68,10 +68,6 @@
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>
       <Name>RoadNetworkDisplay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadNetworkOperatorTest\RoadNetworkOperatorTest.csproj">
-      <Project>{1B62E571-AD6B-4713-B774-357C9FA45743}</Project>
-      <Name>RoadNetworkOperatorTest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RoadNetworkSolver\RoadNetworkSolver.csproj">
       <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>
       <Name>RoadNetworkSolver</Name>
