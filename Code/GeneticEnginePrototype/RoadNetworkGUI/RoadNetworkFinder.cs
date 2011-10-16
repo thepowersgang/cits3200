@@ -308,6 +308,7 @@ namespace RoadNetworkGUI
          */
         private void loadOutputFile()
         {
+            OpenOutput.CheckFileExists = false;
             if (isOK(OpenOutput,"output"))
             {
                     tbOutputFile.Text = OpenOutput.FileName;
