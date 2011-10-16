@@ -268,10 +268,11 @@ namespace RoadNetworkGUI
                 string e = Path.GetExtension(tbMapFile.Text);
                 if (String.Equals(e, ".xml"))
                 {
-                    XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
-                    map = new Map(reader);
+                    //XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
+                    //map = new Map(reader);
+                    map = Map.FromFile(tbMapFile.Text);
                     visualiser1.Network = new RoadNetwork(map);
-                    displayOutputter = new DisplayOutputter(visualiser1, outputter);
+                    displayOutputter = new DisplayOutputter(visualiser1, outputter);                    
                 }
                 else
                 {
