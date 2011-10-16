@@ -438,10 +438,5 @@ namespace RoadNetworkGUI
             }
         }
 
-        private void tbOutputFile_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
     }
  }
