@@ -120,13 +120,13 @@ namespace RoadNetworkGUI
                 else terminator = (ITerminator) loader.GetInstance(choice, (object) (uint)targetFitness.Value);
             }
             if (cbOutputter.SelectedItem != null)
-            {
+            {                
                 string choice = getChoice(outputters, cbOutputter);
                 if (tbOutputFile.Text == "")
                 {
                     MessageBox.Show("Select an output file for the outputter\n");
                 }
-                else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);                
             }
             if (cbGenerationFactory.SelectedItem != null)
             {
@@ -136,7 +136,8 @@ namespace RoadNetworkGUI
             if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n" );
             else
             {
-                engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, outputter, generationFactory);
+                displayOutputter = new DisplayOutputter(visualiser1, outputter);
+                engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
                 stepButton.Enabled = true;
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
@@ -148,7 +149,8 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.CloseOutput();
+                //displayOutputter.CloseOutput();
+                engine.FinishOutput();
                 cleanupButton.Enabled = false;
             }
         }
@@ -161,10 +163,10 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.OpenOutput();
+                //displayOutputter.OpenOutput();
                 engine.Step();
                 setFitnessValues();
-                displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
+                //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
             else
@@ -189,10 +191,10 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                displayOutputter.OpenOutput();
+                //displayOutputter.OpenOutput();
                 engine.Run();
                 setFitnessValues();
-                displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
+                //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                 cleanupButton.Enabled = true;
             }
             else MessageBox.Show("Initialise Generation First\n");
@@ -220,10 +222,10 @@ namespace RoadNetworkGUI
             {
                 if (hasInitialised)
                 {
-                    displayOutputter.OpenOutput();
+                    //displayOutputter.OpenOutput();
                     engine.Repeat((int) n.Value);
                     setFitnessValues();
-                    displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
+                    //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
@@ -289,7 +291,7 @@ namespace RoadNetworkGUI
                     //map = new Map(reader);
                     map = Map.FromFile(tbMapFile.Text);
                     visualiser1.Network = new RoadNetwork(map);
-                    displayOutputter = new DisplayOutputter(visualiser1, outputter);                    
+                    //displayOutputter = new DisplayOutputter(visualiser1, outputter);                    
                 }
                 else
                 {
@@ -436,6 +438,11 @@ namespace RoadNetworkGUI
                 XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
                 network.WriteXml(writer);
             }
+        }
+
+        private void tbOutputFile_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
