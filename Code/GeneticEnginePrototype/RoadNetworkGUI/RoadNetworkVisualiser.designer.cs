@@ -103,6 +103,7 @@
             this.generation.Name = "generation";
             this.generation.Size = new System.Drawing.Size(73, 20);
             this.generation.TabIndex = 7;
+            this.generation.ValueChanged += new System.EventHandler(this.generation_ValueChanged);
             // 
             // individual
             // 
@@ -110,6 +111,7 @@
             this.individual.Name = "individual";
             this.individual.Size = new System.Drawing.Size(73, 20);
             this.individual.TabIndex = 8;
+            this.individual.ValueChanged += new System.EventHandler(this.individual_ValueChanged);
             // 
             // Road_Network_Visualiser
             // 
