@@ -48,6 +48,8 @@ namespace RoadNetworkGUI
             this.gbPlugins = new System.Windows.Forms.GroupBox();
             this.libraryLoaderButton = new System.Windows.Forms.Button();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.n = new System.Windows.Forms.NumericUpDown();
+            this.targetFitness = new System.Windows.Forms.NumericUpDown();
             this.cleanupButton = new System.Windows.Forms.Button();
             this.viewOutputFileButton = new System.Windows.Forms.Button();
             this.nlabel = new System.Windows.Forms.Label();
@@ -67,14 +69,12 @@ namespace RoadNetworkGUI
             this.label2 = new System.Windows.Forms.Label();
             this.maxFitnessValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.targetFitness = new System.Windows.Forms.NumericUpDown();
-            this.n = new System.Windows.Forms.NumericUpDown();
             this.gbMap.SuspendLayout();
             this.gbPlugins.SuspendLayout();
             this.gbSettings.SuspendLayout();
-            this.gbGeneration.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.n)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).BeginInit();
+            this.gbGeneration.SuspendLayout();
             this.SuspendLayout();
             // 
             // populatorLabel
@@ -271,6 +271,20 @@ namespace RoadNetworkGUI
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
             // 
+            // n
+            // 
+            this.n.Location = new System.Drawing.Point(169, 150);
+            this.n.Name = "n";
+            this.n.Size = new System.Drawing.Size(75, 20);
+            this.n.TabIndex = 17;
+            // 
+            // targetFitness
+            // 
+            this.targetFitness.Location = new System.Drawing.Point(124, 52);
+            this.targetFitness.Name = "targetFitness";
+            this.targetFitness.Size = new System.Drawing.Size(120, 20);
+            this.targetFitness.TabIndex = 16;
+            // 
             // cleanupButton
             // 
             this.cleanupButton.Location = new System.Drawing.Point(267, 148);
@@ -342,7 +356,7 @@ namespace RoadNetworkGUI
             // 
             // outputFileSelectButton
             // 
-            this.outputFileSelectButton.Location = new System.Drawing.Point(269, 84);
+            this.outputFileSelectButton.Location = new System.Drawing.Point(371, 81);
             this.outputFileSelectButton.Name = "outputFileSelectButton";
             this.outputFileSelectButton.Size = new System.Drawing.Size(86, 20);
             this.outputFileSelectButton.TabIndex = 7;
@@ -354,8 +368,9 @@ namespace RoadNetworkGUI
             // 
             this.tbOutputFile.Location = new System.Drawing.Point(86, 84);
             this.tbOutputFile.Name = "tbOutputFile";
-            this.tbOutputFile.Size = new System.Drawing.Size(158, 20);
+            this.tbOutputFile.Size = new System.Drawing.Size(269, 20);
             this.tbOutputFile.TabIndex = 6;
+            this.tbOutputFile.TextChanged += new System.EventHandler(this.tbOutputFile_TextChanged);
             // 
             // outputFileButton
             // 
@@ -379,7 +394,7 @@ namespace RoadNetworkGUI
             // 
             // MapFileSelectButton
             // 
-            this.MapFileSelectButton.Location = new System.Drawing.Point(269, 17);
+            this.MapFileSelectButton.Location = new System.Drawing.Point(371, 20);
             this.MapFileSelectButton.Name = "MapFileSelectButton";
             this.MapFileSelectButton.Size = new System.Drawing.Size(86, 23);
             this.MapFileSelectButton.TabIndex = 2;
@@ -391,7 +406,7 @@ namespace RoadNetworkGUI
             // 
             this.tbMapFile.Location = new System.Drawing.Point(86, 20);
             this.tbMapFile.Name = "tbMapFile";
-            this.tbMapFile.Size = new System.Drawing.Size(158, 20);
+            this.tbMapFile.Size = new System.Drawing.Size(269, 20);
             this.tbMapFile.TabIndex = 1;
             // 
             // MapFileLabel
@@ -453,20 +468,6 @@ namespace RoadNetworkGUI
             this.label1.TabIndex = 0;
             this.label1.Text = "Max Fitness:";
             // 
-            // targetFitness
-            // 
-            this.targetFitness.Location = new System.Drawing.Point(124, 52);
-            this.targetFitness.Name = "targetFitness";
-            this.targetFitness.Size = new System.Drawing.Size(120, 20);
-            this.targetFitness.TabIndex = 16;
-            // 
-            // n
-            // 
-            this.n.Location = new System.Drawing.Point(169, 150);
-            this.n.Name = "n";
-            this.n.Size = new System.Drawing.Size(75, 20);
-            this.n.TabIndex = 17;
-            // 
             // RoadNetworkFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,10 +485,10 @@ namespace RoadNetworkGUI
             this.gbPlugins.PerformLayout();
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.n)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).EndInit();
             this.gbGeneration.ResumeLayout(false);
             this.gbGeneration.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.targetFitness)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.n)).EndInit();
             this.ResumeLayout(false);
 
         }

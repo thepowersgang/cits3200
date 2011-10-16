@@ -20,6 +20,7 @@ namespace RoadNetworkGUI
     public partial class RoadNetworkFinder : Form
     {
         bool hasInitialised, hasCompleted;
+        string fullDLLPath = "";
         IPopulator populator;
         IEvaluator evaluator;
         IGeneticOperator geneticOperator;
@@ -55,10 +56,11 @@ namespace RoadNetworkGUI
          */ 
         private void libraryLoaderButton_Click(object sender, EventArgs e)
         {
-            if (isOK(LoadLibrary))
+            if (isOK(LoadLibrary,"library"))
             {
                 loader = new PluginLoader();
                 loader.LoadDll(LoadLibrary.FileName);
+                fullDLLPath = LoadLibrary.FileName;
                 libraryLabel.Text = Path.GetFileName(LoadLibrary.FileName);
                 initEngineButton.Enabled = true;
                 populators = loader.GetPluginNames(typeof(IPopulator));
@@ -252,8 +254,23 @@ namespace RoadNetworkGUI
         /**
          * Check if the file is successfully chosen and opened. 
          */ 
-        private bool isOK(OpenFileDialog openDialog)
+        private bool isOK(OpenFileDialog openDialog, string type)
         {
+            switch (type)
+            {
+                case "map":
+                    if (!String.IsNullOrEmpty(tbMapFile.Text))
+                        openDialog.InitialDirectory = Path.GetDirectoryName(tbMapFile.Text);
+                    break;
+                case "library":
+                    if (!String.IsNullOrEmpty(fullDLLPath))
+                        openDialog.InitialDirectory = Path.GetDirectoryName(fullDLLPath);
+                    break;
+                case "output":
+                    if (!String.IsNullOrEmpty(tbOutputFile.Text))
+                        openDialog.InitialDirectory = Path.GetDirectoryName(tbOutputFile.Text);
+                    break;
+            }
             return (openDialog.ShowDialog() == DialogResult.OK);
         }
 
@@ -262,7 +279,7 @@ namespace RoadNetworkGUI
          */
         private void loadMapFile()
         {
-            if (isOK(OpenMap))
+            if (isOK(OpenMap,"map"))
             {
                 tbMapFile.Text = OpenMap.FileName;
                 string e = Path.GetExtension(tbMapFile.Text);
@@ -279,7 +296,7 @@ namespace RoadNetworkGUI
                     MessageBox.Show("Map file should be in xml form. Please reload another file.\n");
                 }
             }
-            else
+            else if (!isOK(OpenMap,"map") && String.IsNullOrEmpty(tbMapFile.Text))
             {
                 MessageBox.Show("Select a file so a map can be created on the visualiser\n");
             }
@@ -291,27 +308,14 @@ namespace RoadNetworkGUI
          */
         private void loadOutputFile()
         {
-            if (isOK(OpenOutput))
+            if (isOK(OpenOutput,"output"))
             {
-                tbOutputFile.Text = OpenOutput.FileName;
-                string e = Path.GetExtension(tbOutputFile.Text);
-                if (!String.Equals(e, ".xml"))
-                {
-                    MessageBox.Show("Output file should be in xml form. Please reload another file\n");
-                }
-
-            }
-            else
-            {
-                XmlDocument outputFile = new XmlDocument();
-                System.Windows.Forms.FolderBrowserDialog directory = new System.Windows.Forms.FolderBrowserDialog();
-                MessageBox.Show("No output file was chosen. Select a new directory to create an XML file\n");
-                if (!String.IsNullOrEmpty(directory.SelectedPath))
-                {
-                    string fileDirectory = directory.SelectedPath + "output.xml";
-                    outputFile.Save(fileDirectory);
-                    tbOutputFile.Text = fileDirectory;
-                }
+                    tbOutputFile.Text = OpenOutput.FileName;
+                    string e = Path.GetExtension(tbOutputFile.Text);
+                    if (!String.Equals(e, ".xml"))
+                    {
+                        MessageBox.Show("Output file should be in xml form. Please reload another file\n");
+                    }
             }
         }
 
@@ -432,6 +436,11 @@ namespace RoadNetworkGUI
                 XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
                 network.WriteXml(writer);
             }
+        }
+
+        private void tbOutputFile_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
