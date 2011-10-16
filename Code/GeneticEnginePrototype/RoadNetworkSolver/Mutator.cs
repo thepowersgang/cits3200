@@ -10,7 +10,7 @@ namespace RoadNetworkSolver
 {
     public class Mutator : IGeneticOperator
     {
-        Random random = new Random();
+        private Random random = new Random();
 
         public Mutator(object config)
         {
@@ -42,7 +42,10 @@ namespace RoadNetworkSolver
             Map map = source.Map;
             int mapWidth = map.Width;
             int mapHeight = map.Height;
-                        
+
+            int maxXChange = 1 + mapWidth / 10;
+            int maxYChange = 1 + mapHeight / 10;
+
             source.ClearCopies();
             source.SetVisited(false);
             source.SetBroken(true);
@@ -82,7 +85,20 @@ namespace RoadNetworkSolver
                         endVertexIndex = destination.VertexCount;
                     }
 
-                    destination.CopyVertex(vertex);
+                    if (vertex == source.Start || vertex == source.End || random.Next(10) > 0)
+                    {
+                        destination.CopyVertex(vertex);
+                    }
+                    else
+                    {
+                        int x = vertex.Coordinates.X + random.Next(2 * maxXChange+1) - maxXChange;
+                        int y = vertex.Coordinates.Y + random.Next(2 * maxYChange + 1) - maxYChange;
+
+                        x = Math.Max(0, Math.Min(x, map.Width - 1));
+                        y = Math.Max(0, Math.Min(y, map.Height - 1));
+
+                        vertex.Copy = destination.AddVertex(x, y);
+                    }
                 }
 
                 //Shuffle Vertices
@@ -120,7 +136,7 @@ namespace RoadNetworkSolver
                 destination.AddEdge(startVertex, endVertex);
             }
 
-            int edgesToAdd = random.Next(destination.VertexCount);
+            int edgesToAdd = random.Next(destination.VertexCount/2);
 
             for (int i = 0; i < edgesToAdd; i++)
             {
