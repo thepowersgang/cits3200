@@ -25,7 +25,7 @@ namespace RoadNetworkSolver
         {
             Random random = new Random();
 
-            MutationOperator mutationOperator = new MutationOperator();
+            MutationOperator mutationOperator = new MutationOperator(null);
 
             RoadNetwork original = new RoadNetwork(map);
             original.AddEdge(original.AddVertex(map.Start), original.AddVertex(map.End));

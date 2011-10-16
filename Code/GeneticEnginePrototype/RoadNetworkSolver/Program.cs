@@ -89,7 +89,7 @@ namespace RoadNetworkSolver
 
             RoadNetwork network = new RoadNetwork(reader);
 
-            MutationOperator mutator = new MutationOperator();
+            MutationOperator mutator = new MutationOperator(null);
 
             RoadNetwork mutated = mutator.Mutate(network);
 
@@ -151,7 +151,7 @@ namespace RoadNetworkSolver
         {
             mutate();
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }

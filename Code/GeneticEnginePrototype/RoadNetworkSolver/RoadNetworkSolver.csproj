@@ -48,6 +48,7 @@
     <Compile Include="Edge.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Mutator.cs" />
     <Compile Include="Populator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
