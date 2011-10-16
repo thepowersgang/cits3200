@@ -17,15 +17,13 @@ namespace RoadNetworkSolver
 
         public void Operate(IGeneration source, ArrayList destination)
         {
-            int count = 0;
-
             int index1 = 1;
 
-            while (count < source.Count)
+            while (destination.Count < source.Count)
             {
                 int index2 = 0;
 
-                while (index2<index1 && count<source.Count)
+                while (index2 < index1 && destination.Count < source.Count)
                 {
                     RoadNetwork parent1 = (RoadNetwork)source[index1].Individual;
                     RoadNetwork parent2 = (RoadNetwork)source[index2].Individual;
@@ -36,12 +34,10 @@ namespace RoadNetworkSolver
                     Conjugate(parent1, parent2, out child1, out child2);
 
                     destination.Add(child1);
-                    count++;
 
-                    if (count < source.Count)
+                    if (destination.Count < source.Count)
                     {
                         destination.Add(child2);
-                        count++;
                     }
 
                     index2++;                    

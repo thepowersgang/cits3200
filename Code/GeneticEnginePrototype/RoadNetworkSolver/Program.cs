@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using GeneticAlgorithm;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;
@@ -103,6 +104,28 @@ namespace RoadNetworkSolver
             writer.Close();
         }
 
+        static void mutate2()
+        {
+            XmlTextReader reader = new XmlTextReader("network.xml");
+
+            reader.MoveToContent();
+
+            RoadNetwork network = new RoadNetwork(reader);
+
+            Mutator mutator = new Mutator(null);
+
+            RoadNetwork mutated = mutator.Mutate(network);
+
+            XmlTextWriter writer = new XmlTextWriter("mutant.xml", Encoding.ASCII);
+
+            writer.Formatting = Formatting.Indented;
+
+            mutated.WriteXml(writer);
+
+            writer.Flush();
+            writer.Close();
+        }
+
         static void testclosestpoint()
         {
             Random random = new Random();
@@ -149,7 +172,15 @@ namespace RoadNetworkSolver
 
         static void Main(string[] args)
         {
-            mutate();
+            IPopulator populator = new Populator("map.xml");
+            IEvaluator evaluator = new Evaluator(null);
+            IGeneticOperator mutator = new Mutator(null);
+            ITerminator terminator = new FitnessThresholdTerminator(FitnessConverter.FromFloat(1.0f / 1024.0f));
+            IOutputter outputter = new RoadNetworkXmlOutputter(@"c:\roadnetworktest\index.xml");
+
+            GeneticEngine engine = new GeneticEngine(populator, evaluator, mutator, terminator, outputter);
+            engine.Repeat(100);
+            engine.FinishOutput();
 
             //Console.ReadLine();
         }
