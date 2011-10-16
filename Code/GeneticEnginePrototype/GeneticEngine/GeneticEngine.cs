@@ -129,7 +129,7 @@ namespace GeneticAlgorithm
                 
         private void Setup()
         {
-            generationNumber = 0;
+            generationNumber = -1;
             ArrayList individuals = new ArrayList();
             populator.Populate(individuals);
             processIndividuals(individuals);                  

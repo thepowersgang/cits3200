@@ -127,51 +127,7 @@ namespace RoadNetworkSolver
             writer.Flush();
             writer.Close();
         }
-
-        static void testclosestpoint()
-        {
-            Random random = new Random();
-
-            List<Coordinates> points = new List<Coordinates>();
-
-            for (int i = 0; i < 1000000; i++)
-            {
-                points.Add(new Coordinates(random.Next(1000), random.Next(1000)));
-            }
-
-            Coordinates queryPoint = new Coordinates(random.Next(1000), random.Next(1000));
-
-            DateTime dt1 = DateTime.Now;
-
-            int minDistanceSquared = int.MaxValue;
-            for (int i = 0; i < 1000000; i++)
-            {
-                minDistanceSquared = Math.Min(points[i].GetDistanceSquared(queryPoint), minDistanceSquared);
-            }
-
-            DateTime dt2 = DateTime.Now;
-
-            //Console.WriteLine(minDistanceSquared);
-            Console.WriteLine(dt2.Subtract(dt1));
-
-            DateTime dt3 = DateTime.Now;
-
-            CoordinateTree tree = new CoordinateTree(points);
-
-            DateTime dt4 = DateTime.Now;
-
-            Console.WriteLine(dt4.Subtract(dt3));
-
-            DateTime dt5 = DateTime.Now;
-
-            minDistanceSquared = tree.minDistanceSquared(queryPoint);
-
-            DateTime dt6 = DateTime.Now;
-
-            //Console.WriteLine(minDistanceSquared);
-            Console.WriteLine(dt6.Subtract(dt5));
-        }
-
+                
         static void run()
         {
             IPopulator populator = new Populator("map.xml");
@@ -187,15 +143,15 @@ namespace RoadNetworkSolver
 
         static void Main(string[] args)
         {
-            PluginLoader loader = new PluginLoader();
-            loader.LoadDll(@"D:\GitCITS3200\Code\GeneticEnginePrototype\GeneticEngine\bin\Debug\RoadNetworkSolver.xml");
+            IPopulator populator = new Populator("map.xml");
+            IEvaluator evaluator = new Evaluator(null);
+            IGeneticOperator op = new ConjugationOperator(null);
+            ITerminator terminator = new FitnessThresholdTerminator(FitnessConverter.FromFloat(1.0f / 1024.0f));
+            IOutputter outputter = new RoadNetworkXmlOutputter(@"c:\roadnetworktest\index.xml");
 
-            List<string> plugins = loader.GetPluginNames(typeof(ITerminator));
-
-            foreach (string plugin in plugins)
-            {
-                Console.WriteLine(plugin);                                
-            }
+            GeneticEngine engine = new GeneticEngine(populator, evaluator, op, terminator, outputter);
+            engine.Repeat(100);
+            engine.FinishOutput();
 
             Console.ReadLine();
         }
