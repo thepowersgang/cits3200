@@ -4,6 +4,7 @@ using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticEngineTesting;
 using RoadNetworkDisplay;
+using RoadNetworkDefinition;
 using RoadNetworkSolver;
 using System.Collections;
 using System.Collections.Generic;

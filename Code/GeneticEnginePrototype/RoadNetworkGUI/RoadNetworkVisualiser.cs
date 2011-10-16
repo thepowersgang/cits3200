@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using RoadNetworkSolver;
+using RoadNetworkDefinition;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;

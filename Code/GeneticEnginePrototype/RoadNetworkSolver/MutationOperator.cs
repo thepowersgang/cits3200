@@ -3,6 +3,7 @@ using RoadNetworkSolver;
 using GeneticAlgorithm.Plugin;
 using System.Collections;
 using System.Collections.Generic;
+using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {

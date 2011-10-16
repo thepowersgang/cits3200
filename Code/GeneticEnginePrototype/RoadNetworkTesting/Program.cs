@@ -9,6 +9,7 @@ using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;
 using GeneticAlgorithm.Plugin.Util;
+using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {

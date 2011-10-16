@@ -47,26 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates.cs" />
     <Compile Include="CoordinateTree.cs" />
-    <Compile Include="Edge.cs" />
     <Compile Include="Evaluator.cs" />
-    <Compile Include="Map.cs" />
     <Compile Include="Mutator.cs" />
     <Compile Include="Populator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConjugationOperator.cs" />
-    <Compile Include="RoadNetwork.cs" />
-    <Compile Include="RoadNetworkReader.cs" />
     <Compile Include="RoadNetworkXmlOutputter.cs" />
     <Compile Include="Terminator.cs" />
-    <Compile Include="Vertex.cs" />
     <Compile Include="MutationOperator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
       <Name>GeneticEnginePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RoadNetwork\RoadNetwork.csproj">
+      <Project>{C4068805-3271-40DE-9707-8A83478F2D8C}</Project>
+      <Name>RoadNetwork</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

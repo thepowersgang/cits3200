@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RoadNetworkSolver
+namespace RoadNetworkDefinition
 {
     /// <summary>
     /// Represents a vertex in a RoadNetwork

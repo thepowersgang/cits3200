@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using GeneticAlgorithm.Plugin.Generic;
+using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {

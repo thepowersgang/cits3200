@@ -10,7 +10,7 @@ using System.IO;
 using GeneticAlgorithm;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Util;
-using RoadNetworkSolver;
+using RoadNetworkDefinition;
 using RoadNetworkDisplay;
 using GeneticAlgorithm.Plugin.Generic;
 using System.Xml;

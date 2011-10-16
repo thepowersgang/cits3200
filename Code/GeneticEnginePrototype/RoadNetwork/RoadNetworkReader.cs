@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using GeneticAlgorithm.Plugin.Xml;
 
-namespace RoadNetworkSolver
+namespace RoadNetworkDefinition
 {
     public class RoadNetworkReader : IIndividualReader
     {

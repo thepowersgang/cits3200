@@ -99,9 +99,9 @@
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>
       <Name>RoadNetworkDisplay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RoadNetworkSolver\RoadNetworkSolver.csproj">
-      <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>
-      <Name>RoadNetworkSolver</Name>
+    <ProjectReference Include="..\RoadNetwork\RoadNetwork.csproj">
+      <Project>{C4068805-3271-40DE-9707-8A83478F2D8C}</Project>
+      <Name>RoadNetwork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -71,6 +71,10 @@
       <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>
       <Name>RoadNetworkSolver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RoadNetwork\RoadNetwork.csproj">
+      <Project>{C4068805-3271-40DE-9707-8A83478F2D8C}</Project>
+      <Name>RoadNetwork</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

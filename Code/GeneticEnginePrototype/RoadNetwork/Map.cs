@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace RoadNetworkSolver
+namespace RoadNetworkDefinition
 {
     /// <summary>
     /// Describes a Map in which a RoadNetwork exists.

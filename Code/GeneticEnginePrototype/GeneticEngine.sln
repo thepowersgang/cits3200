@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkGUI", "RoadNetwo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetworkTesting", "RoadNetworkTesting\RoadNetworkTesting.csproj", "{A839B920-DD1F-46AC-AD58-9578F165004D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadNetwork", "RoadNetwork\RoadNetwork.csproj", "{C4068805-3271-40DE-9707-8A83478F2D8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,16 @@ Global
 		{A839B920-DD1F-46AC-AD58-9578F165004D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A839B920-DD1F-46AC-AD58-9578F165004D}.Release|x86.ActiveCfg = Release|x86
 		{A839B920-DD1F-46AC-AD58-9578F165004D}.Release|x86.Build.0 = Release|x86
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C4068805-3271-40DE-9707-8A83478F2D8C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
