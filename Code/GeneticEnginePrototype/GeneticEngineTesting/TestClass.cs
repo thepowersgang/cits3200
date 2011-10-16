@@ -94,7 +94,7 @@ namespace GeneticEngineTesting
             Console.WriteLine("Test A2 Successful");
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestA3()
         {
             Boolean passed = true;
@@ -115,7 +115,7 @@ namespace GeneticEngineTesting
             Console.WriteLine("Test A3 Successful");
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestA4()
         {
             initialiseA();
@@ -133,7 +133,7 @@ namespace GeneticEngineTesting
             Assert.AreEqual(107, AOutputter.fitnesses[4]);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestA5()
         {
             initialiseA();
@@ -197,14 +197,14 @@ namespace GeneticEngineTesting
         }
           */
         
+        [TestMethod]
         public void TestC1()
         {
             ArrayList individuals = new ArrayList();
             //Argument for ery vertex can be reached from every other vertexRoadNetworkPopulator?
-            Populator thePopulator = new Populator(null);
+            Populator thePopulator = new Populator("C:/map.xml");
             thePopulator.Populate(individuals);
-            Map theMap;
-            theMap = Map.FromFile("map.xml");
+            Map theMap = Map.FromFile("C:/map.xml");
             //Assert.AreSame(theMap.Start, -1);
             //Assert.AreSame(theMap.End, -1);
 
@@ -213,23 +213,23 @@ namespace GeneticEngineTesting
             //Ensure population is made up of valid roadnetworks.
             //Ensure all are not the same.
             Boolean passed = false;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < individuals.Count; i++)
             {
-                for (int j = 0; j < 10; j++)
-                {
-                    //Cross check each of the 5 vertices
-                    for (int k = 0; k < 5; k++)
+                    for (int k = 0; k < ((RoadNetwork)individuals[i]).VertexCount; k++)
                     {
-                        if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(k).Coordinates.X)
+                        for (int l = 0; l < ((RoadNetwork)individuals[i]).VertexCount; l++)
                         {
-                            passed = true;
+                            if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[i]).GetVertex(l).Coordinates.X)
+                            {
+                                passed = true;
+                            }
                         }
                     }
-                }
             }
             Assert.IsTrue(passed);
         }
         
+        [TestMethod]
         public void TestD1()
         {
             MutationOperator RNCO = new MutationOperator(null);
@@ -239,7 +239,7 @@ namespace GeneticEngineTesting
             Vertex[] theVertices = new Vertex[5];
             RoadNetwork theRoad;
             Map theMap;
-            theMap = Map.FromFile("map.xml");
+            theMap = Map.FromFile("C:/map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -266,20 +266,25 @@ namespace GeneticEngineTesting
             //Ensure population is made up of valid roadnetworks.
             //Ensure all are not the same.
             Boolean passed = false;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < individuals.Count; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < individuals.Count; j++)
                 {
                     //Cross check each of the 5 vertices
-                    for (int k = 0; k < 5; k++)
+                    for (int k = 0; k < ((RoadNetwork)individuals[i]).VertexCount; k++)
                     {
-                        if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(k).Coordinates.X)
+                        for (int l = 0; l < ((RoadNetwork)individuals[j]).VertexCount; l++)
                         {
-                            passed = true;
+
+                            if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(l).Coordinates.X)
+                            {
+                                passed = true;
+                            }
                         }
                     }
                 }
             }
+            
             Assert.IsTrue(passed); 
         }
         
@@ -319,16 +324,20 @@ namespace GeneticEngineTesting
             //Ensure population is made up of valid roadnetworks.
             //Ensure all are not the same.
             Boolean passed = false;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < individuals.Count; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < individuals.Count; j++)
                 {
                     //Cross check each of the 5 vertices
-                    for (int k = 0; k < 5; k++)
+                    for (int k = 0; k < ((RoadNetwork)individuals[i]).VertexCount; k++)
                     {
-                        if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(k).Coordinates.X)
+                        for (int l = 0; l < ((RoadNetwork)individuals[j]).VertexCount; l++)
                         {
-                            passed = true;
+
+                            if (((RoadNetwork)individuals[i]).GetVertex(k).Coordinates.X != ((RoadNetwork)individuals[j]).GetVertex(l).Coordinates.X)
+                            {
+                                passed = true;
+                            }
                         }
                     }
                 }
@@ -340,13 +349,13 @@ namespace GeneticEngineTesting
         public void TestE1()
         {
             Evaluator RoadEvaluator = new Evaluator(null);            
-            GenerationIndex results = GenerationIndex.Load("./small/index.xml");            
+            GenerationIndex results = GenerationIndex.Load("C:/index.xml");            
             AATreeGeneration temp = new AATreeGeneration();
             for (int i = 0; i < results.Count; i++)
             {
                 IGeneration generation = results[i].LoadGeneration(new RoadNetworkReader());
                 for (int j = 0; j < results[i].Count; j++) {
-                    Assert.AreSame(RoadEvaluator.Evaluate(generation.Get(j)), generation.Get(j).Fitness);
+                    Assert.AreEqual(RoadEvaluator.Evaluate(((IndividualWithFitness)generation.Get(j)).Individual), generation.Get(j).Fitness);
                 }
             }
         }
@@ -354,9 +363,8 @@ namespace GeneticEngineTesting
         [TestMethod]
         public void TestF1() {
             RoadNetworkXmlOutputter RNO = new RoadNetworkXmlOutputter(null);
-            String path = ".\testXML.xml";
             Map theMap;
-            theMap = Map.FromFile("map.xml");
+            theMap = Map.FromFile("C:/map.xml");
             Vertex[] theVertices = new Vertex[4];
             RoadNetwork RN1 = new RoadNetwork(theMap);
                 theVertices[0] = ((RoadNetwork)RN1).AddVertex(0, 0);
@@ -365,38 +373,41 @@ namespace GeneticEngineTesting
             RoadNetwork RN2 = new RoadNetwork(theMap);
                 theVertices[2] = ((RoadNetwork)RN2).AddVertex(5, 5);
                 theVertices[3] = ((RoadNetwork)RN2).AddVertex(10, 10);
-                ((RoadNetwork)RN1).AddEdge(theVertices[0], theVertices[1]);
+                ((RoadNetwork)RN2).AddEdge(theVertices[2], theVertices[3]);
             AATreeGeneration generation = new AATreeGeneration();
             generation.Insert(RN1, 1);
             generation.Insert(RN2, 2);
 
-            XmlWriter writer = XmlWriter.Create("testxml.xml");
+            XmlWriter writer1 = XmlWriter.Create("test1xml.xml");
+            XmlWriter writer2 = XmlWriter.Create("test2xml.xml");
             //Output individuals/generation somehow.            
-            RN1.WriteXml(writer);
-            RN2.WriteXml(writer);
+            RN1.WriteXml(writer1);
+            writer1.Close();
+            RN2.WriteXml(writer2);
+            writer2.Close();
 
-            //Insert some load function and load into generationLoaded.
-            AATreeGeneration generationLoaded = new AATreeGeneration();           
-            IndividualWithFitness RNL1 = generationLoaded.Remove(0);
-            IndividualWithFitness RNL2 = generationLoaded.Remove(1);
-            Assert.AreSame(RNL1.Fitness, 1);
-            Assert.AreSame(RNL2.Fitness, 2);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetVertex(0).Coordinates.X, 0);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetVertex(0).Coordinates.Y, 0);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetVertex(1).Coordinates.X, 10);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetVertex(1).Coordinates.Y, 0);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetVertex(0).Coordinates.X, 5);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetVertex(0).Coordinates.Y, 5);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetVertex(1).Coordinates.X, 10);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetVertex(1).Coordinates.Y, 10);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetEdge(0).Start.Coordinates.X, 0);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetEdge(0).Start.Coordinates.Y, 0);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetEdge(0).End.Coordinates.X, 10);
-            Assert.AreSame(((RoadNetwork)(RNL1.Individual)).GetEdge(0).End.Coordinates.Y, 0);            
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetEdge(0).Start.Coordinates.X, 5);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetEdge(0).Start.Coordinates.Y, 5);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetEdge(0).End.Coordinates.X, 10);
-            Assert.AreSame(((RoadNetwork)(RNL2.Individual)).GetEdge(0).End.Coordinates.Y, 10);            
+            XmlTextReader reader1 = new XmlTextReader("test1xml.xml");
+            XmlTextReader reader2= new XmlTextReader("test2xml.xml");
+            RoadNetworkReader rnr = new RoadNetworkReader();
+
+            RoadNetwork RNL1 = (RoadNetwork)rnr.ReadIndividual(reader1);
+            RoadNetwork RNL2 = (RoadNetwork)rnr.ReadIndividual(reader2);
+            Assert.AreEqual(RNL1.GetVertex(0).Coordinates.X, 0);
+            Assert.AreEqual(RNL1.GetVertex(0).Coordinates.Y, 0);
+            Assert.AreEqual(RNL1.GetVertex(1).Coordinates.X, 10);
+            Assert.AreEqual(RNL1.GetVertex(1).Coordinates.Y, 0);
+            Assert.AreEqual(RNL2.GetVertex(0).Coordinates.X, 5);
+            Assert.AreEqual(RNL2.GetVertex(0).Coordinates.Y, 5);
+            Assert.AreEqual(RNL2.GetVertex(1).Coordinates.X, 10);
+            Assert.AreEqual(RNL2.GetVertex(1).Coordinates.Y, 10);
+            Assert.AreEqual(RNL1.GetEdge(0).Start.Coordinates.X, 0);
+            Assert.AreEqual(RNL1.GetEdge(0).Start.Coordinates.Y, 0);
+            Assert.AreEqual(RNL1.GetEdge(0).End.Coordinates.X, 10);
+            Assert.AreEqual(RNL1.GetEdge(0).End.Coordinates.Y, 0);            
+            Assert.AreEqual(RNL2.GetEdge(0).Start.Coordinates.X, 5);
+            Assert.AreEqual(RNL2.GetEdge(0).Start.Coordinates.Y, 5);
+            Assert.AreEqual(RNL2.GetEdge(0).End.Coordinates.X, 10);
+            Assert.AreEqual(RNL2.GetEdge(0).End.Coordinates.Y, 10); 
         }
         
         public void initialiseA()
