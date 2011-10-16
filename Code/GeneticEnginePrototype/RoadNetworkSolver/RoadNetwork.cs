@@ -188,29 +188,46 @@ namespace RoadNetworkSolver
             edges.Add(edge);
             return edge;
         }
-
-		/// <summary>
-		/// Clear the "visited" flag on all verticies
-		/// </summary>
-        public void ClearVisited()
+        		
+        /// <summary>
+        /// Set the "visited" flag on all verticies
+        /// </summary>
+        /// <param name="state">
+        /// The state to set the flag to.
+        /// </param>
+        public void SetVisited(bool state)
         {
             foreach (Vertex vertex in vertices)
             {
-                vertex.Visited = false;
-            }
-        }
-
-		/// <summary>
-		/// Clear the "broken" flag on all edges
-		/// </summary>
-        public void ClearBroken()
-        {
-            foreach (Edge edge in edges)
-            {
-                edge.IsBroken = false;
+                vertex.Visited = state;
             }
         }
         
+        /// <summary>
+        /// Set the "broken" flag on all edges
+        /// </summary>
+        /// <param name="state">
+        /// The state to set the flag to.
+        /// </param>
+        public void SetBroken(bool state)
+        {
+            foreach (Edge edge in edges)
+            {
+                edge.Broken = state;
+            }
+        }
+
+        /// <summary>
+        /// Clear the "Copy" field on all vertices
+        /// </summary>        
+        public void ClearCopies()
+        {
+            foreach (Vertex vertex in vertices)
+            {
+                vertex.Copy = null;
+            }
+        }
+
 		/// <summary>
 		/// Represents a segement of a path
 		/// </summary>
@@ -262,7 +279,7 @@ namespace RoadNetworkSolver
             for (int i = 0; i < vertex.EdgeCount; i++)
             {
                 Edge edge = vertex.GetEdge(i);
-                if (!edge.IsBroken)
+                if (!edge.Broken)
                 {
                     pathQueue.AddLast(new Path(edge, path));
                 }
@@ -278,7 +295,7 @@ namespace RoadNetworkSolver
 		/// </returns>
         public List<Edge> FindPath()
         {
-            ClearVisited();
+            SetVisited(false);
             LinkedList<Path> pathQueue = new LinkedList<Path>();
 			
 			// Initialise from the end of the path
@@ -319,6 +336,17 @@ namespace RoadNetworkSolver
             return null;
         }
 
+        /// <summary>
+        /// Add a copy of a vertex to the network.
+        /// </summary>
+        /// <param name="vertex">
+        /// The vertex to copy
+        /// </param>
+        public void CopyVertex(Vertex vertex)
+        {
+            vertex.Copy = AddVertex(vertex.Coordinates);
+        }
+
 		/// <summary>
 		/// Add a copy of each vertex in a list to the network.
 		/// </summary>
@@ -332,7 +360,19 @@ namespace RoadNetworkSolver
                 vertex.Copy = AddVertex(vertex.Coordinates);
             }
         }
-        
+
+        /// <summary>
+        /// Add a copy of an edge to the network.
+        /// the "Copy" property of each vertex in the edge should already point to a vertex in this RoadNetwork.
+        /// </summary>
+        /// <param name="edge">
+        /// The edge to copy
+        /// </param>
+        public void CopyEdge(Edge edge)
+        {
+            AddEdge(edge.Start.Copy, edge.End.Copy);
+        }
+
 		/// <summary>
 		/// Add a copy of each edge in a list to the network.
         /// the "Copy" property of each vertex in the source should already point to a vertex in this RoadNetwork.

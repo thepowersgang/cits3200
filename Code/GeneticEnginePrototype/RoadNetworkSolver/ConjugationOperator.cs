@@ -154,12 +154,12 @@ namespace RoadNetworkSolver
                 
         public void Cut(RoadNetwork network)
         {
-            network.ClearBroken();
+            network.SetBroken(false);
 
             List<Edge> edges;
             while ((edges = network.FindPath()) != null)
             {
-                edges[random.Next(edges.Count)].IsBroken = true;
+                edges[random.Next(edges.Count)].Broken = true;
             }
         }
         

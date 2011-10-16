@@ -16,7 +16,7 @@ namespace RoadNetworkSolver
         /// </summary>
         /// <param name="source">The current generation</param>
         /// <param name="destination">An empty collection of individuals to be populated</param>
-        void Operate(IGeneration source, ArrayList destination)
+        public void Operate(IGeneration source, ArrayList destination)
         {
         }
 
@@ -25,11 +25,14 @@ namespace RoadNetworkSolver
             return original;
         }
 
-        private void RandomDepthFirstTraversal(RoadNetwork network)
+        private void RandomDepthFirstTraversal(RoadNetwork source, RoadNetwork destination)
         {
+            source.ClearCopies();
+            source.SetVisited(false);
+            source.SetBroken(true);
             LinkedList<Vertex> vertexStack = new LinkedList<Vertex>();
-            network.Start.Visited = true;
-            vertexStack.AddFirst(network.Start);
+            source.Start.Visited = true;
+            vertexStack.AddFirst(source.Start);
 
             while (vertexStack.Count > 0)
             {
@@ -39,13 +42,22 @@ namespace RoadNetworkSolver
                 List<Vertex> nextVertices = new List<Vertex>();
                 for (int i = 0; i < vertex.EdgeCount; i++)
                 {
-                    Vertex nextVertex = vertex.GetEdge(i).End;
+                    Edge edge = vertex.GetEdge(i);
+                    Vertex nextVertex = edge.End;
 
                     if (!nextVertex.Visited)
                     {
+                        edge.Broken = false;
                         nextVertex.Visited = true;
                         nextVertices.Add(nextVertex);
                     }                    
+                }
+
+                //If this vertex is a leaf of the tree and not the end vertex it has a 25% chance of
+                //begin removed.
+                if (nextVertices.Count > 0 || vertex==source.End || random.Next(4)>0)
+                {
+                    destination.CopyVertex(vertex);
                 }
 
                 //Shuffle Vertices
@@ -63,8 +75,12 @@ namespace RoadNetworkSolver
                     vertexStack.AddFirst(nextVertex);
                 } 
             }
-        }
 
-        
+            for (int i = 0; i < source.EdgeCount; i++)
+            {
+
+            }
+
+        }        
     }
 }

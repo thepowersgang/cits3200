@@ -62,7 +62,7 @@ namespace RoadNetworkSolver
         /// <summary>
         /// Get or set a flag indicating that the edge is broken.
         /// </summary>
-        public bool IsBroken
+        public bool Broken
         {
             get
             {

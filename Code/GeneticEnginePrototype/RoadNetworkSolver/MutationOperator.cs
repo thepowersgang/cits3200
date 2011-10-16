@@ -188,7 +188,7 @@ namespace RoadNetworkSolver
 		
 		private void RepairMesh(RoadNetwork network)
 		{
-			network.ClearVisited();
+			network.SetVisited(false);
 			int num_unknown = network.VertexCount;
 			LinkedList<Vertex> to_check = new LinkedList<Vertex>();
 			to_check.AddLast( network.Start );
