@@ -115,7 +115,7 @@ namespace RoadNetworkGUI
             {
                 string choice = getChoice(terminators, cbTerminator);
                 if((int) targetFitness.Value == 0) MessageBox.Show("Provide a target fitness value greater than 1 for the terminator plug-in\n");
-                else terminator = (ITerminator) loader.GetInstance(choice, (object) targetFitness.Value);
+                else terminator = (ITerminator) loader.GetInstance(choice, (object) (uint)targetFitness.Value);
             }
             if (cbOutputter.SelectedItem != null)
             {
