@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RoadNetworkSolver
 {
-    class CoordinateTree
+    public class CoordinateTree
     {
 
         private Coordinates point;

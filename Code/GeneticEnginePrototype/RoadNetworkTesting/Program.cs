@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using GeneticAlgorithm;
+using GeneticAlgorithm.Util;
 using GeneticAlgorithm.Plugin;
 using GeneticAlgorithm.Plugin.Generic;
 using GeneticAlgorithm.Plugin.Xml;
@@ -170,7 +171,7 @@ namespace RoadNetworkSolver
             Console.WriteLine(dt6.Subtract(dt5));
         }
 
-        static void Main(string[] args)
+        static void run()
         {
             IPopulator populator = new Populator("map.xml");
             IEvaluator evaluator = new Evaluator(null);
@@ -181,8 +182,21 @@ namespace RoadNetworkSolver
             GeneticEngine engine = new GeneticEngine(populator, evaluator, mutator, terminator, outputter);
             engine.Repeat(100);
             engine.FinishOutput();
+        }
 
-            //Console.ReadLine();
+        static void Main(string[] args)
+        {
+            PluginLoader loader = new PluginLoader();
+            loader.LoadDll(@"D:\GitCITS3200\Code\GeneticEnginePrototype\GeneticEngine\bin\Debug\RoadNetworkSolver.xml");
+
+            List<string> plugins = loader.GetPluginNames(typeof(ITerminator));
+
+            foreach (string plugin in plugins)
+            {
+                Console.WriteLine(plugin);                                
+            }
+
+            Console.ReadLine();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace GeneticAlgorithm.Util
 {
@@ -27,8 +28,21 @@ namespace GeneticAlgorithm.Util
         /// <param name="path">The path to the DLL file</param>
         public void LoadDll(string path)
         {
-            Assembly assembly = Assembly.LoadFrom(path);
+            Assembly assembly;
 
+            try
+            {
+                assembly = Assembly.LoadFrom(path);
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new Exception("Plugin file does not exist: " + path, ex);
+            }
+            catch (BadImageFormatException ex)
+            {
+                throw new Exception("Plugin file is not a .Net DLL: " + path, ex);
+            }
+            
             Type[] types = assembly.GetTypes();
 
             foreach (Type t in types)
@@ -37,7 +51,10 @@ namespace GeneticAlgorithm.Util
 
                 if (constructor != null)
                 {
-                    constructors.Add(t.Name, constructor);
+                    if (!constructors.ContainsKey(t.FullName))
+                    {
+                        constructors.Add(t.FullName, constructor);
+                    }
                 }
             }
         }
