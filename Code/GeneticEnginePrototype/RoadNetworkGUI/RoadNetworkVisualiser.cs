@@ -95,11 +95,15 @@ namespace RoadNetworkGUI
             else
             {
                 GenerationIndex = (int)generation.Value;
-                if (results[GenerationIndex].Count <= 0)
+                if (results[GenerationIndex].Count == 0)
                 {
                     string errorMsg = "There are no individuals for this Generation\n";
                     errorMsg += "Therefore please select another generation with at least one individual\n";
                     MessageBox.Show(errorMsg);
+                }
+                else
+                {
+                    individual.Value = 0;
                 }
             }
         }
