@@ -73,6 +73,7 @@ namespace RoadNetworkGUI
                     throw new Exception("Results XML file must have <results> element as root.");
                 }
                 results = new GenerationIndex(filename,reader);
+                maxGeneration.Text = "Max : " + (results.Count-1);
                 
             }
         }
@@ -90,7 +91,7 @@ namespace RoadNetworkGUI
         {
             if ((int)generation.Value == results.Count)
             {
-                MessageBox.Show("Select a proper generation index from 0 to " + (results.Count - 1) + " \n");
+                generation.Value = 0;
             }
             else
             {
@@ -103,6 +104,7 @@ namespace RoadNetworkGUI
                 }
                 else
                 {
+                    maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count-1);
                     individual.Value = 0;
                 }
             }
@@ -117,7 +119,7 @@ namespace RoadNetworkGUI
         {
             if ((int)individual.Value == results[GenerationIndex].Count)
             {
-                MessageBox.Show("Select an individual index from 0 to " + (results[GenerationIndex].Count - 1) + " for this generation\n");
+                individual.Value = 0;
             }
             else
             {

@@ -34,7 +34,6 @@ namespace RoadNetworkGUI
         Map map;
         DisplayOutputter displayOutputter;
         IOutputter outputter;
-        XmlOutputter xmlOutputter;
 
         public RoadNetworkFinder()
         {
@@ -57,7 +56,7 @@ namespace RoadNetworkGUI
          */ 
         private void libraryLoaderButton_Click(object sender, EventArgs e)
         {
-            if (isOK(LoadLibrary,"library"))
+            if (LoadLibrary.ShowDialog() == DialogResult.OK)
             {
                 loader = new PluginLoader();
                 loader.LoadDll(LoadLibrary.FileName);
@@ -144,6 +143,7 @@ namespace RoadNetworkGUI
                 runButton.Enabled = true;
                 runGenerationButton.Enabled = true;
                 hasInitialised = true;
+                initEngineButton.Enabled = false;
                 //setFitnessValues();
             }
         }
@@ -153,8 +153,14 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 //displayOutputter.CloseOutput();
+                viewOutputFileButton.Enabled = false;
+                runButton.Enabled = false;
+                runGenerationButton.Enabled = false;
+                stepButton.Enabled = false;
                 engine.FinishOutput();
                 cleanupButton.Enabled = false;
+                
+
             }
         }
 
@@ -173,7 +179,12 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 //displayOutputter.OpenOutput();
-
+                runGenerationButton.Enabled = false;
+                runButton.Enabled = false;
+                viewOutputFileButton.Enabled = false;
+                cleanupButton.Enabled = false;
+                initEngineButton.Enabled = false;
+                stopProcessButton.Enabled = true;
                 Thread stepThead = new Thread(new ThreadStart(StepEngine));
                 stepThead.Start();
 
@@ -209,7 +220,11 @@ namespace RoadNetworkGUI
             if (hasInitialised)
             {
                 //displayOutputter.OpenOutput();
-
+                runGenerationButton.Enabled = false;
+                stepButton.Enabled = false;
+                cleanupButton.Enabled = false;
+                viewOutputFileButton.Enabled = false;
+                stopProcessButton.Enabled = true;
                 Thread runThead = new Thread(new ThreadStart(RunEngine));
                 runThead.Start();
 
@@ -250,6 +265,12 @@ namespace RoadNetworkGUI
                 {
                     //displayOutputter.OpenOutput();
                     //engine.Repeat((int) n.Value);
+                    runButton.Enabled = false;
+                    stepButton.Enabled = false;
+                    cleanupButton.Enabled = false;
+                    stopProcessButton.Enabled = true;
+                    viewOutputFileButton.Enabled = false;
+
                     Thread repeatThread = new Thread(RepeatEngine);
                     repeatThread.Start((int)n.Value);
 
@@ -283,35 +304,13 @@ namespace RoadNetworkGUI
         OpenFileDialog OpenOutput = new OpenFileDialog();
         OpenFileDialog LoadLibrary = new OpenFileDialog();
         OpenFileDialog OpenMap = new OpenFileDialog();
-        /**
-         * Check if the file is successfully chosen and opened. 
-         */ 
-        private bool isOK(OpenFileDialog openDialog, string type)
-        {
-            switch (type)
-            {
-                case "map":
-                    if (!String.IsNullOrEmpty(tbMapFile.Text))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(tbMapFile.Text);
-                    break;
-                case "library":
-                    if (!String.IsNullOrEmpty(fullDLLPath))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(fullDLLPath);
-                    break;
-                case "output":
-                    if (!String.IsNullOrEmpty(tbOutputFile.Text))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(tbOutputFile.Text);
-                    break;
-            }
-            return (openDialog.ShowDialog() == DialogResult.OK);
-        }
 
         /**
          * Load map file, if the file was successfully loaded by the OpenFileDialog Object 
          */
         private void loadMapFile()
         {
-            if (isOK(OpenMap,"map"))
+            if (OpenMap.ShowDialog() == DialogResult.OK)
             {
                 tbMapFile.Text = OpenMap.FileName;
                 string e = Path.GetExtension(tbMapFile.Text);
@@ -328,7 +327,7 @@ namespace RoadNetworkGUI
                     MessageBox.Show("Map file should be in xml form. Please reload another file.\n");
                 }
             }
-            else if (!isOK(OpenMap,"map") && String.IsNullOrEmpty(tbMapFile.Text))
+            else if (OpenMap.ShowDialog() != DialogResult.OK && String.IsNullOrEmpty(tbMapFile.Text))
             {
                 MessageBox.Show("Select a file so a map can be created on the visualiser\n");
             }
@@ -340,7 +339,7 @@ namespace RoadNetworkGUI
          */
         private void loadOutputFile()
         {
-            if (isOK(OpenOutput,"output"))
+            if (OpenOutput.ShowDialog() == DialogResult.OK)
             {
                     tbOutputFile.Text = OpenOutput.FileName;
                     string e = Path.GetExtension(tbOutputFile.Text);
@@ -366,6 +365,7 @@ namespace RoadNetworkGUI
                 {
                     cbPopulator.Items.Add(populators[i]);
                 }
+                cbPopulator.SelectedIndex = cbPopulator.FindString(populators[0]);
             }
             else errorMsg += ("No known populators can be loaded. Load another dll file\n");
             if (evaluators.Count > 0)
@@ -374,6 +374,7 @@ namespace RoadNetworkGUI
                 {
                     cbEvaluator.Items.Add(evaluators[i]);
                 }
+                cbEvaluator.SelectedIndex = cbEvaluator.FindString(evaluators[0]);
             }
             else errorMsg += ("No known evaluators can be loaded. Load another dll file\n");
             if (geneticOperators.Count > 0)
@@ -382,6 +383,7 @@ namespace RoadNetworkGUI
                 {
                     cbGeneticOperator.Items.Add(geneticOperators[i]);
                 }
+                cbGeneticOperator.SelectedIndex = cbGeneticOperator.FindString(geneticOperators[0]);
             }
             else errorMsg += ("No known genetic operators can be loaded. Load another dll file\n");
             if (terminators.Count > 0)
@@ -390,6 +392,7 @@ namespace RoadNetworkGUI
                 {
                     cbTerminator.Items.Add(terminators[i]);
                 }
+                cbTerminator.SelectedIndex = cbTerminator.FindString(terminators[0]);
             }
             else errorMsg += ("No known terminators can be loaded. \n");
             if (outputters.Count > 0)
@@ -398,6 +401,7 @@ namespace RoadNetworkGUI
                 {
                     cbOutputter.Items.Add(outputters[i]);
                 }
+                cbOutputter.SelectedIndex = cbOutputter.FindString(outputters[0]);
             }
             if (generationFactories.Count > 0)
             {
@@ -405,6 +409,7 @@ namespace RoadNetworkGUI
                 {
                     cbGenerationFactory.Items.Add(generationFactories[i]);
                 }
+                cbGenerationFactory.SelectedIndex = cbGenerationFactory.FindString(generationFactories[0]);
             }
             if (errorMsg != "") MessageBox.Show(errorMsg);
         }
@@ -440,45 +445,17 @@ namespace RoadNetworkGUI
             if (hasCompleted)
             {
                 this.Dispose(false);
+                runButton.Enabled = false;
+                cleanupButton.Enabled = false;
+                runGenerationButton.Enabled = false;
+                stopProcessButton.Enabled = false;
+                stepButton.Enabled = false;
                 Road_Network_Visualiser form = new Road_Network_Visualiser(true,tbOutputFile.Text);
                 form.Visible = true;
             }
         }
 
         
-        /**
-        * Check if a file has been opened
-        * If not, display an error message
-        * otherwise check if the file is an xml one.
-        * If not, display a different error message
-        * otherwise, create instance of an XmlWriter and write xml stuff to it.  
-        
-        private void writeToXmlFile()
-        {
-            RoadNetwork network = new RoadNetwork(visualiser1.Network);
-            if (tbOutputFile.Text == "")
-            {
-                MessageBox.Show("Should have opened up an XML file by now\n");
-            }
-            string e = Path.GetExtension(tbOutputFile.Text);
-            if (e != ".xml")
-            {
-                MessageBox.Show("File is not a XML File\n");
-            }
-            else
-            {
-                XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
-                network.WriteXml(writer);
-            }
-        }
-
-        */
-
-        private void tbOutputFile_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private delegate void ShowStatsCallback(uint maxFitness, float averageFitness);
 
         private void ShowStats(uint maxFitness, float averageFitness)

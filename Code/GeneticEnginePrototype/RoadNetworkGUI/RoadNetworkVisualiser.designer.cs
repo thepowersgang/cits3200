@@ -36,6 +36,8 @@
             this.fitnessLabel = new System.Windows.Forms.Label();
             this.generation = new System.Windows.Forms.NumericUpDown();
             this.individual = new System.Windows.Forms.NumericUpDown();
+            this.maxGeneration = new System.Windows.Forms.Label();
+            this.maxIndividuals = new System.Windows.Forms.Label();
             this.gbFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.generation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.individual)).BeginInit();
@@ -113,11 +115,31 @@
             this.individual.TabIndex = 8;
             this.individual.ValueChanged += new System.EventHandler(this.individual_ValueChanged);
             // 
+            // maxGeneration
+            // 
+            this.maxGeneration.AutoSize = true;
+            this.maxGeneration.Location = new System.Drawing.Point(743, 27);
+            this.maxGeneration.Name = "maxGeneration";
+            this.maxGeneration.Size = new System.Drawing.Size(42, 13);
+            this.maxGeneration.TabIndex = 9;
+            this.maxGeneration.Text = "Max : 0";
+            // 
+            // maxIndividuals
+            // 
+            this.maxIndividuals.AutoSize = true;
+            this.maxIndividuals.Location = new System.Drawing.Point(744, 52);
+            this.maxIndividuals.Name = "maxIndividuals";
+            this.maxIndividuals.Size = new System.Drawing.Size(42, 13);
+            this.maxIndividuals.TabIndex = 10;
+            this.maxIndividuals.Text = "Max : 0";
+            // 
             // Road_Network_Visualiser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 494);
+            this.ClientSize = new System.Drawing.Size(808, 494);
+            this.Controls.Add(this.maxIndividuals);
+            this.Controls.Add(this.maxGeneration);
             this.Controls.Add(this.individual);
             this.Controls.Add(this.generation);
             this.Controls.Add(this.fitnessLabel);
@@ -147,5 +169,7 @@
         private RoadNetworkDisplay.RoadNetworkPanel visualiser2;
         private System.Windows.Forms.NumericUpDown generation;
         private System.Windows.Forms.NumericUpDown individual;
+        private System.Windows.Forms.Label maxGeneration;
+        private System.Windows.Forms.Label maxIndividuals;
     }
 }
