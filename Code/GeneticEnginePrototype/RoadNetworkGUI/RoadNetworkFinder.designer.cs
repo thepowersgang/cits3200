@@ -69,6 +69,7 @@ namespace RoadNetworkGUI
             this.label2 = new System.Windows.Forms.Label();
             this.maxFitnessValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.stopProcessButton = new System.Windows.Forms.Button();
             this.gbMap.SuspendLayout();
             this.gbPlugins.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -88,50 +89,62 @@ namespace RoadNetworkGUI
             // 
             // cbPopulator
             // 
+            this.cbPopulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbPopulator.FormattingEnabled = true;
             this.cbPopulator.Location = new System.Drawing.Point(245, 63);
             this.cbPopulator.Name = "cbPopulator";
-            this.cbPopulator.Size = new System.Drawing.Size(144, 21);
+            this.cbPopulator.Size = new System.Drawing.Size(276, 21);
             this.cbPopulator.TabIndex = 3;
             // 
             // cbEvaluator
             // 
+            this.cbEvaluator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbEvaluator.FormattingEnabled = true;
             this.cbEvaluator.Location = new System.Drawing.Point(245, 90);
             this.cbEvaluator.Name = "cbEvaluator";
-            this.cbEvaluator.Size = new System.Drawing.Size(144, 21);
+            this.cbEvaluator.Size = new System.Drawing.Size(276, 21);
             this.cbEvaluator.TabIndex = 4;
             // 
             // cbGeneticOperator
             // 
+            this.cbGeneticOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbGeneticOperator.FormattingEnabled = true;
             this.cbGeneticOperator.Location = new System.Drawing.Point(245, 121);
             this.cbGeneticOperator.Name = "cbGeneticOperator";
-            this.cbGeneticOperator.Size = new System.Drawing.Size(145, 21);
+            this.cbGeneticOperator.Size = new System.Drawing.Size(276, 21);
             this.cbGeneticOperator.TabIndex = 5;
             // 
             // cbTerminator
             // 
+            this.cbTerminator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbTerminator.FormattingEnabled = true;
             this.cbTerminator.Location = new System.Drawing.Point(245, 147);
             this.cbTerminator.Name = "cbTerminator";
-            this.cbTerminator.Size = new System.Drawing.Size(144, 21);
+            this.cbTerminator.Size = new System.Drawing.Size(276, 21);
             this.cbTerminator.TabIndex = 6;
             // 
             // cbOutputter
             // 
+            this.cbOutputter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbOutputter.FormattingEnabled = true;
             this.cbOutputter.Location = new System.Drawing.Point(245, 178);
             this.cbOutputter.Name = "cbOutputter";
-            this.cbOutputter.Size = new System.Drawing.Size(145, 21);
+            this.cbOutputter.Size = new System.Drawing.Size(276, 21);
             this.cbOutputter.TabIndex = 7;
             // 
             // cbGenerationFactory
             // 
+            this.cbGenerationFactory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbGenerationFactory.FormattingEnabled = true;
             this.cbGenerationFactory.Location = new System.Drawing.Point(246, 205);
             this.cbGenerationFactory.Name = "cbGenerationFactory";
-            this.cbGenerationFactory.Size = new System.Drawing.Size(144, 21);
+            this.cbGenerationFactory.Size = new System.Drawing.Size(275, 21);
             this.cbGenerationFactory.TabIndex = 8;
             // 
             // evaluatorLabel
@@ -196,9 +209,10 @@ namespace RoadNetworkGUI
             // gbMap
             // 
             this.gbMap.Controls.Add(this.visualiser1);
-            this.gbMap.Location = new System.Drawing.Point(524, 12);
+            this.gbMap.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMap.Location = new System.Drawing.Point(536, 0);
             this.gbMap.Name = "gbMap";
-            this.gbMap.Size = new System.Drawing.Size(592, 472);
+            this.gbMap.Size = new System.Drawing.Size(592, 499);
             this.gbMap.TabIndex = 16;
             this.gbMap.TabStop = false;
             this.gbMap.Text = "Current Best";
@@ -229,9 +243,10 @@ namespace RoadNetworkGUI
             this.gbPlugins.Controls.Add(this.cbGeneticOperator);
             this.gbPlugins.Controls.Add(this.cbOutputter);
             this.gbPlugins.Controls.Add(this.cbTerminator);
-            this.gbPlugins.Location = new System.Drawing.Point(12, 14);
+            this.gbPlugins.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbPlugins.Location = new System.Drawing.Point(0, 0);
             this.gbPlugins.Name = "gbPlugins";
-            this.gbPlugins.Size = new System.Drawing.Size(506, 243);
+            this.gbPlugins.Size = new System.Drawing.Size(536, 243);
             this.gbPlugins.TabIndex = 17;
             this.gbPlugins.TabStop = false;
             this.gbPlugins.Text = "Plug-ins";
@@ -248,6 +263,7 @@ namespace RoadNetworkGUI
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.stopProcessButton);
             this.gbSettings.Controls.Add(this.n);
             this.gbSettings.Controls.Add(this.targetFitness);
             this.gbSettings.Controls.Add(this.cleanupButton);
@@ -264,9 +280,10 @@ namespace RoadNetworkGUI
             this.gbSettings.Controls.Add(this.MapFileSelectButton);
             this.gbSettings.Controls.Add(this.tbMapFile);
             this.gbSettings.Controls.Add(this.MapFileLabel);
-            this.gbSettings.Location = new System.Drawing.Point(13, 263);
+            this.gbSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbSettings.Location = new System.Drawing.Point(0, 243);
             this.gbSettings.Name = "gbSettings";
-            this.gbSettings.Size = new System.Drawing.Size(505, 179);
+            this.gbSettings.Size = new System.Drawing.Size(536, 179);
             this.gbSettings.TabIndex = 18;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
@@ -297,7 +314,7 @@ namespace RoadNetworkGUI
             // 
             // viewOutputFileButton
             // 
-            this.viewOutputFileButton.Location = new System.Drawing.Point(371, 119);
+            this.viewOutputFileButton.Location = new System.Drawing.Point(371, 147);
             this.viewOutputFileButton.Name = "viewOutputFileButton";
             this.viewOutputFileButton.Size = new System.Drawing.Size(119, 23);
             this.viewOutputFileButton.TabIndex = 14;
@@ -425,9 +442,10 @@ namespace RoadNetworkGUI
             this.gbGeneration.Controls.Add(this.label2);
             this.gbGeneration.Controls.Add(this.maxFitnessValue);
             this.gbGeneration.Controls.Add(this.label1);
-            this.gbGeneration.Location = new System.Drawing.Point(13, 444);
+            this.gbGeneration.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbGeneration.Location = new System.Drawing.Point(0, 422);
             this.gbGeneration.Name = "gbGeneration";
-            this.gbGeneration.Size = new System.Drawing.Size(505, 41);
+            this.gbGeneration.Size = new System.Drawing.Size(536, 41);
             this.gbGeneration.TabIndex = 19;
             this.gbGeneration.TabStop = false;
             this.gbGeneration.Text = "Current Generation";
@@ -467,6 +485,15 @@ namespace RoadNetworkGUI
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Max Fitness:";
+            // 
+            // stopProcessButton
+            // 
+            this.stopProcessButton.Location = new System.Drawing.Point(371, 119);
+            this.stopProcessButton.Name = "stopProcessButton";
+            this.stopProcessButton.Size = new System.Drawing.Size(119, 23);
+            this.stopProcessButton.TabIndex = 18;
+            this.stopProcessButton.Text = "Stop ";
+            this.stopProcessButton.UseVisualStyleBackColor = true;
             // 
             // RoadNetworkFinder
             // 
@@ -534,6 +561,7 @@ namespace RoadNetworkGUI
         private Button cleanupButton;
         private NumericUpDown n;
         private NumericUpDown targetFitness;
+        private Button stopProcessButton;
     }
 }
 
