@@ -61,7 +61,7 @@ namespace RoadNetworkSolver
             {
                 Vertex vertex = vertexStack.First();
 
-                Console.WriteLine(vertex.Coordinates.X + ", " + vertex.Coordinates.Y + ": " + (vertex==source.End));
+                //Console.WriteLine(vertex.Coordinates.X + ", " + vertex.Coordinates.Y + ": " + (vertex==source.End));
 
                 vertexStack.RemoveFirst();
 
