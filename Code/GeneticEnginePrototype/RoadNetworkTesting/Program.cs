@@ -203,7 +203,7 @@ namespace RoadNetworkSolver
             while (true)
             {
                 network = RandomNetwork(map);
-                network = sm.MakeSteps(network);
+                //network = sm.MakeSteps(network);
                 if (network.FindPath() == null)
                 {
                     Console.WriteLine("Bad Network");
