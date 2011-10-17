@@ -38,7 +38,6 @@
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Name = "RoadNetworkPanel";
             this.Size = new System.Drawing.Size(148, 148);
-            this.Load += new System.EventHandler(this.RoadNetworkPanel_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoadNetworkPanel_Paint);
             this.ResumeLayout(false);
 

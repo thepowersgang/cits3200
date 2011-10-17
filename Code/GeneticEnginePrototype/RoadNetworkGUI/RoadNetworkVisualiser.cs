@@ -73,7 +73,7 @@ namespace RoadNetworkGUI
                     throw new Exception("Results XML file must have <results> element as root.");
                 }
                 results = new GenerationIndex(filename,reader);
-                maxGeneration.Text = "Max : " + results.Count;
+                maxGeneration.Text = "Max : " + (results.Count-1);
                 
             }
         }
@@ -104,7 +104,7 @@ namespace RoadNetworkGUI
                 }
                 else
                 {
-                    maxIndividuals.Text = "Max : " + results[GenerationIndex].Count;
+                    maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count-1);
                     individual.Value = 0;
                 }
             }

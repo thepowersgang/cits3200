@@ -397,7 +397,6 @@ namespace RoadNetworkGUI
             this.tbOutputFile.Name = "tbOutputFile";
             this.tbOutputFile.Size = new System.Drawing.Size(269, 20);
             this.tbOutputFile.TabIndex = 6;
-            this.tbOutputFile.TextChanged += new System.EventHandler(this.tbOutputFile_TextChanged);
             // 
             // outputFileButton
             // 
