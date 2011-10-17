@@ -102,15 +102,25 @@ namespace RoadNetworkDefinition
         {
             return Math.Sqrt((double)GetDistanceSquared(c));
         }
-        
-        /// <summary>
-        /// Determine if another set of coordinates is equivalent to this one.
-        /// </summary>
-        /// <param name="c">The other set of coordinates</param>
-        /// <returns>True iff the other set of coordinates are equivalent</returns>
-        public bool Equals(Coordinates c)
-        {
-            return values[0] == c.values[0] && values[1] == c.values[1];
-        }
+
+        ///// <summary>
+        ///// Determine if another set of coordinates is equivalent to this one.
+        ///// </summary>
+        ///// <param name="c">The other set of coordinates</param>
+        ///// <returns>True iff the other set of coordinates are equivalent</returns>
+        //public bool Equals(Coordinates c)
+        //{
+        //    return values[0] == c.values[0] && values[1] == c.values[1];
+        //}
+
+        //public override bool Equals(object obj)
+        //{
+        //    return Equals((Coordinates)obj);
+        //}
+
+        //public override int GetHashCode()
+        //{
+        //    return ((values[0] & 0xFFFF) << 16) | (values[1] & 0xFFFF);
+        //}
     }
 }

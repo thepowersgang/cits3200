@@ -105,5 +105,10 @@ namespace RoadNetworkDisplay
 
         }
 
+        private void RoadNetworkPanel_Resize(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

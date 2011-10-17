@@ -54,6 +54,7 @@
     <Compile Include="ConjugationOperator.cs" />
     <Compile Include="RoadNetworkXmlOutputter.cs" />
     <Compile Include="StepMutator.cs" />
+    <Compile Include="StepPopulator.cs" />
     <Compile Include="Terminator.cs" />
     <Compile Include="MutationOperator.cs" />
   </ItemGroup>

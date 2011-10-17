@@ -8,84 +8,81 @@ using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    public class StepMutator
+    public class StepMutator : IGeneticOperator
     {
-        Random random = new Random();
+        private static Random random = new Random();
 
-        public RoadNetwork MakeSteps(RoadNetwork network)
+        public StepMutator(object config)
         {
-            RoadNetwork result = new RoadNetwork(network, false, true);
-            int endVertexIndex = result.VertexCount-1;
-
-            for (int i = 0; i < network.EdgeCount; i++)
-            {
-                Edge edge = network.GetEdge(i);
-                Vertex start = edge.Start.Copy;
-                Vertex end = edge.End.Copy;
-                Coordinates startCoordinates = start.Coordinates;
-                Coordinates endCoordinates = end.Coordinates;
-
-                int dX = endCoordinates.X - startCoordinates.X;
-                int dY = endCoordinates.Y - startCoordinates.Y;
-
-                int xStep = 1;
-                if (dX < 0)
-                {
-                    dX = -dX;
-                    xStep = -1;
-                }
-
-                int yStep = 1;
-                if (dY < 0)
-                {
-                    dY = -dY;
-                    yStep = -1;
-                }
-
-                int x=startCoordinates.X;
-                int y=startCoordinates.Y;
-
-                Vertex startPoint = start;
-
-                while (dX != 0 && dY != 0)
-                {
-                    if (dX > dY)
-                    {
-                        x += xStep;
-                        dX--;
-                    }
-                    else if (dY > dX)
-                    {
-                        y += yStep;
-                        dY--;
-                    }
-                    else
-                    {
-                        x += xStep;
-                        dX--;
-                        y += yStep;
-                        dY--;
-                    }
-
-                    Vertex endPoint;
-                    if (dX == 0 && dY == 0)
-                    {
-                        endPoint = end;
-                    }
-                    else
-                    {
-                        endPoint = result.AddVertex(x, y);
-                    }
-
-                    result.AddEdge(startPoint, endPoint);
-                    startPoint = endPoint;
-                } 
-            }
-
-            result.SetEnd(endVertexIndex);
-
-            return result;
         }
+
+        //public RoadNetwork MakeSteps(RoadNetwork network)
+        //{
+        //    RoadNetwork result = new RoadNetwork(network, false, true);
+        //    int endVertexIndex = result.VertexCount-1;
+
+        //    for (int i = 0; i < network.EdgeCount; i++)
+        //    {
+        //        Edge edge = network.GetEdge(i);
+        //        Vertex start = edge.Start.Copy;
+        //        Vertex end = edge.End.Copy;
+        //        Coordinates startCoordinates = start.Coordinates;
+        //        Coordinates endCoordinates = end.Coordinates;
+
+        //        int dX = endCoordinates.X - startCoordinates.X;
+        //        int dY = endCoordinates.Y - startCoordinates.Y;
+
+        //        int xStep = 1;
+        //        if (dX < 0)
+        //        {
+        //            dX = -dX;
+        //            xStep = -1;
+        //        }
+
+        //        int yStep = 1;
+        //        if (dY < 0)
+        //        {
+        //            dY = -dY;
+        //            yStep = -1;
+        //        }
+
+        //        int x=startCoordinates.X;
+        //        int y=startCoordinates.Y;
+
+        //        Vertex startPoint = start;
+
+        //        while (dX > 1 || dY > 1)
+        //        {
+        //            if (dX > dY)
+        //            {
+        //                x += xStep;
+        //                dX--;
+        //            }
+        //            else if (dY > dX)
+        //            {
+        //                y += yStep;
+        //                dY--;
+        //            }
+        //            else
+        //            {
+        //                x += xStep;
+        //                dX--;
+        //                y += yStep;
+        //                dY--;
+        //            }
+                                        
+        //            Vertex endPoint = result.AddVertex(x, y);
+        //            result.AddEdge(startPoint, endPoint);
+        //            startPoint = endPoint;
+        //        }
+
+        //        result.AddEdge(startPoint, end);
+        //    }
+
+        //    result.SetEnd(endVertexIndex);
+
+        //    return result;
+        //}
 
         /// <summary>
         /// Process a generation to produce the individuals which will make up the next generation
@@ -108,8 +105,10 @@ namespace RoadNetworkSolver
             }
         }
 
-        public RoadNetwork Mutate(RoadNetwork source)
+        public static RoadNetwork Mutate(RoadNetwork source)
         {
+            
+
             Map map = source.Map;
             int mapWidth = map.Width;
             int mapHeight = map.Height;
@@ -156,19 +155,13 @@ namespace RoadNetworkSolver
                         endVertexIndex = destination.VertexCount;
                     }
 
-                    if (vertex == source.Start || vertex == source.End || random.Next(10) > 0)
+                    if (vertex != source.End || random.Next(4) > 0)
                     {
                         destination.CopyVertex(vertex);
                     }
                     else
                     {
-                        int x = vertex.Coordinates.X + random.Next(2 * maxXChange + 1) - maxXChange;
-                        int y = vertex.Coordinates.Y + random.Next(2 * maxYChange + 1) - maxYChange;
-
-                        x = Math.Max(0, Math.Min(x, map.Width - 1));
-                        y = Math.Max(0, Math.Min(y, map.Height - 1));
-
-                        vertex.Copy = destination.AddVertex(x, y);
+                        vertex.Copy = destination.AddVertex(RandomMove(vertex.Coordinates));
                     }
                 }
 
@@ -194,29 +187,24 @@ namespace RoadNetworkSolver
 
                 if ((!edge.Broken || random.Next(4) > 0) && edge.Start.Copy != null && edge.End.Copy != null)
                 {
-                    destination.CopyEdge(edge);
+                    StepPath(destination, edge.Start.Copy, edge.End.Copy);                    
                 }
             }
 
-            int verticesToAdd = random.Next(10);
-
-            for (int i = 0; i < verticesToAdd; i++)
+            int newVertices = random.Next(10);
+            for (int i = 0; i < newVertices; i++)
             {
                 Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
-                Vertex endVertex = destination.AddVertex(random.Next(mapWidth), random.Next(mapHeight));
+                Vertex endVertex = destination.AddVertex(RandomMove(startVertex.Coordinates));
                 destination.AddEdge(startVertex, endVertex);
             }
 
-            int edgesToAdd = random.Next(destination.VertexCount / 2);
-
-            for (int i = 0; i < edgesToAdd; i++)
+            int newCycles = random.Next(3);
+            for (int i = 0; i < newCycles; i++)
             {
                 Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
                 Vertex endVertex = destination.GetVertex(random.Next(destination.VertexCount));
-                if (startVertex != endVertex)
-                {
-                    destination.AddEdge(startVertex, endVertex);
-                }
+                StepPath(destination, startVertex, endVertex);
             }
 
             if (endVertexIndex == -1)
@@ -229,6 +217,98 @@ namespace RoadNetworkSolver
             }
 
             return destination;
-        }        
+        }
+
+        private static Coordinates RandomMove(Coordinates coordinates)
+        {
+            int x = coordinates.X;
+            int y = coordinates.Y;
+
+            switch (random.Next(8))
+            {
+                case 0:
+                    x++;
+                    break;
+                case 1:
+                    x++;
+                    y++;
+                    break;
+                case 2:
+                    y++;
+                    break;
+                case 3:
+                    x--;
+                    y++;
+                    break;
+                case 4:
+                    x--;
+                    break;
+                case 5:
+                    x--;
+                    y--;
+                    break;
+                case 6:
+                    y--;
+                    break;
+                case 7:
+                    x++;
+                    y--;
+                    break;
+            }
+
+            return new Coordinates(x, y);
+        }
+
+        public static void StepPath(RoadNetwork network, Vertex start, Vertex end)
+        {
+            int dX = end.Coordinates.X - start.Coordinates.X;
+            int dY = end.Coordinates.Y - start.Coordinates.Y;
+
+            int xStep = 1;
+            if (dX < 0)
+            {
+                dX = -dX;
+                xStep = -1;
+            }
+
+            int yStep = 1;
+            if (dY < 0)
+            {
+                dY = -dY;
+                yStep = -1;
+            }
+            
+            int x = start.Coordinates.X;
+            int y = start.Coordinates.Y;
+
+            Vertex startVertex = start;
+            
+            while (dX > 1 || dY > 1)
+            {
+                if (dX > dY)
+                {
+                    x += xStep;
+                    dX--;
+                }
+                else if (dY > dX)
+                {
+                    y += yStep;
+                    dY--;
+                }
+                else
+                {
+                    x += xStep;
+                    dX--;
+                    y += yStep;
+                    dY--;
+                }
+
+                Vertex endVertex = network.AddVertex(x, y);
+                network.AddEdge(startVertex, endVertex);
+                startVertex = endVertex;
+            }
+
+            network.AddEdge(startVertex, end);
+        }
     }
 }

@@ -154,7 +154,7 @@ namespace RoadNetworkDefinition
         {
             Vertex vertex = new Vertex(this, coordinates);
             vertices.Add(vertex);
-            return vertex;
+            return vertex;            
         }
 
 		/// <summary>

@@ -187,42 +187,16 @@ namespace RoadNetworkSolver
 
         static void Main(string[] args)
         {
+            Coordinates c = new Coordinates(123, 456);
+            Coordinates d = new Coordinates(321, 654);
 
-            Mutator mutator = new Mutator(null);
-            
-            Map map = Map.FromFile("map.xml");
-            RoadNetwork network = new RoadNetwork(map);
+            Dictionary<Coordinates, int> indices = new Dictionary<Coordinates, int>();
 
-            network.AddVertex(map.Start);
-            network.AddVertex(map.End);
-            network.AddEdge(network.Start, network.End);
+            indices.Add(new Coordinates(123, 456), 1);
+            indices.Add(new Coordinates(321, 654), 2);
 
-            StepMutator sm = new StepMutator();
-
-            int i = 0;
-            while (true)
-            {
-                network = RandomNetwork(map);
-                //network = sm.MakeSteps(network);
-                if (network.FindPath() == null)
-                {
-                    Console.WriteLine("Bad Network");
-
-                    XmlTextWriter writer = new XmlTextWriter("network.xml", Encoding.ASCII);
-                    writer.Formatting = Formatting.Indented;
-                    network.WriteXml(writer);
-                    writer.Flush();
-                    writer.Close();
-
-                    break;
-                }
-            }
-           
-            //XmlTextWriter writer = new XmlTextWriter("network.xml", Encoding.ASCII);
-            //writer.Formatting = Formatting.Indented;
-            //network.WriteXml(writer);
-            //writer.Flush();
-            //writer.Close();
+            Console.WriteLine(indices[c]);
+            Console.WriteLine(indices[d]);
 
             Console.ReadLine();
         }
