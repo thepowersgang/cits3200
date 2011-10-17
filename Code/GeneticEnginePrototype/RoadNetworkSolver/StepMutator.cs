@@ -3,17 +3,88 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticAlgorithm.Plugin;
 using RoadNetworkDefinition;
+using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    public class Mutator : IGeneticOperator
+    public class StepMutator
     {
-        private Random random = new Random();
+        Random random = new Random();
 
-        public Mutator(object config)
+        public RoadNetwork MakeSteps(RoadNetwork network)
         {
+            RoadNetwork result = new RoadNetwork(network, false, true);
+            int endVertexIndex = result.VertexCount-1;
+
+            for (int i = 0; i < network.EdgeCount; i++)
+            {
+                Edge edge = network.GetEdge(i);
+                Vertex start = edge.Start.Copy;
+                Vertex end = edge.End.Copy;
+                Coordinates startCoordinates = start.Coordinates;
+                Coordinates endCoordinates = end.Coordinates;
+
+                int dX = endCoordinates.X - startCoordinates.X;
+                int dY = endCoordinates.Y - startCoordinates.Y;
+
+                int xStep = 1;
+                if (dX < 0)
+                {
+                    dX = -dX;
+                    xStep = -1;
+                }
+
+                int yStep = 1;
+                if (dY < 0)
+                {
+                    dY = -dY;
+                    yStep = -1;
+                }
+
+                int x=startCoordinates.X;
+                int y=startCoordinates.Y;
+
+                Vertex startPoint = start;
+
+                while (dX != 0 && dY != 0)
+                {
+                    if (dX > dY)
+                    {
+                        x += xStep;
+                        dX--;
+                    }
+                    else if (dY > dX)
+                    {
+                        y += yStep;
+                        dY--;
+                    }
+                    else
+                    {
+                        x += xStep;
+                        dX--;
+                        y += yStep;
+                        dY--;
+                    }
+
+                    Vertex endPoint;
+                    if (dX == 0 && dY == 0)
+                    {
+                        endPoint = end;
+                    }
+                    else
+                    {
+                        endPoint = result.AddVertex(x, y);
+                    }
+
+                    result.AddEdge(startPoint, endPoint);
+                    startPoint = endPoint;
+                } 
+            }
+
+            result.SetEnd(endVertexIndex);
+
+            return result;
         }
 
         /// <summary>
@@ -22,7 +93,7 @@ namespace RoadNetworkSolver
         /// <param name="source">The current generation</param>
         /// <param name="destination">An empty collection of individuals to be populated</param>
         public void Operate(IGeneration source, ArrayList destination)
-        {            
+        {
             int i = 0;
             while (destination.Count < source.Count)
             {
@@ -60,9 +131,6 @@ namespace RoadNetworkSolver
             while (vertexStack.Count > 0)
             {
                 Vertex vertex = vertexStack.First();
-
-                Console.WriteLine(vertex.Coordinates.X + ", " + vertex.Coordinates.Y + ": " + (vertex==source.End));
-
                 vertexStack.RemoveFirst();
 
                 List<Vertex> nextVertices = new List<Vertex>();
@@ -76,7 +144,7 @@ namespace RoadNetworkSolver
                         edge.Broken = false;
                         nextVertex.Visited = true;
                         nextVertices.Add(nextVertex);
-                    }                    
+                    }
                 }
 
                 //If this vertex is a leaf of the tree and not the end vertex it has a 25% chance of
@@ -94,7 +162,7 @@ namespace RoadNetworkSolver
                     }
                     else
                     {
-                        int x = vertex.Coordinates.X + random.Next(2 * maxXChange+1) - maxXChange;
+                        int x = vertex.Coordinates.X + random.Next(2 * maxXChange + 1) - maxXChange;
                         int y = vertex.Coordinates.Y + random.Next(2 * maxYChange + 1) - maxYChange;
 
                         x = Math.Max(0, Math.Min(x, map.Width - 1));
@@ -117,7 +185,7 @@ namespace RoadNetworkSolver
                 foreach (Vertex nextVertex in nextVertices)
                 {
                     vertexStack.AddFirst(nextVertex);
-                } 
+                }
             }
 
             for (int i = 0; i < source.EdgeCount; i++)
@@ -139,7 +207,7 @@ namespace RoadNetworkSolver
                 destination.AddEdge(startVertex, endVertex);
             }
 
-            int edgesToAdd = random.Next(destination.VertexCount/2);
+            int edgesToAdd = random.Next(destination.VertexCount / 2);
 
             for (int i = 0; i < edgesToAdd; i++)
             {
@@ -161,10 +229,6 @@ namespace RoadNetworkSolver
             }
 
             return destination;
-
-            //StepMutator sm = new StepMutator();
-
-            //return sm.MakeSteps(destination);
         }        
     }
 }

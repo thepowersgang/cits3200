@@ -102,7 +102,7 @@ namespace RoadNetworkDefinition
         {
             return Math.Sqrt((double)GetDistanceSquared(c));
         }
-
+        
         /// <summary>
         /// Determine if another set of coordinates is equivalent to this one.
         /// </summary>

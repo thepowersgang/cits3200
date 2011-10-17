@@ -143,15 +143,39 @@ namespace RoadNetworkSolver
 
         static void Main(string[] args)
         {
-            IPopulator populator = new Populator("map.xml");
-            IEvaluator evaluator = new Evaluator(null);
-            IGeneticOperator op = new ConjugationOperator(null);
-            ITerminator terminator = new FitnessThresholdTerminator(FitnessConverter.FromFloat(1.0f / 1024.0f));
-            IOutputter outputter = new RoadNetworkXmlOutputter(@"c:\roadnetworktest\index.xml");
 
-            GeneticEngine engine = new GeneticEngine(populator, evaluator, op, terminator, outputter);
-            engine.Repeat(100);
-            engine.FinishOutput();
+            Mutator mutator = new Mutator(null);
+            
+            Map map = Map.FromFile("map.xml");
+            RoadNetwork network = new RoadNetwork(map);
+
+            network.AddVertex(map.Start);
+            network.AddVertex(map.End);
+            network.AddEdge(network.Start, network.End);
+
+            StepMutator sm = new StepMutator();
+
+            network = sm.MakeSteps(network);
+
+            network = mutator.Mutate(network);
+
+            network = sm.MakeSteps(network);
+
+            network = mutator.Mutate(network);
+
+            network = sm.MakeSteps(network);
+
+            network = mutator.Mutate(network);
+
+            network = sm.MakeSteps(network);
+
+            network = mutator.Mutate(network);
+
+            //XmlTextWriter writer = new XmlTextWriter("network.xml", Encoding.ASCII);
+            //writer.Formatting = Formatting.Indented;
+            //network.WriteXml(writer);
+            //writer.Flush();
+            //writer.Close();
 
             Console.ReadLine();
         }
