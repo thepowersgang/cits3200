@@ -291,6 +291,11 @@ namespace RoadNetworkGUI
             // n
             // 
             this.n.Location = new System.Drawing.Point(169, 150);
+            this.n.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.n.Name = "n";
             this.n.Size = new System.Drawing.Size(75, 20);
             this.n.TabIndex = 17;
@@ -298,6 +303,11 @@ namespace RoadNetworkGUI
             // targetFitness
             // 
             this.targetFitness.Location = new System.Drawing.Point(124, 52);
+            this.targetFitness.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
             this.targetFitness.Name = "targetFitness";
             this.targetFitness.Size = new System.Drawing.Size(120, 20);
             this.targetFitness.TabIndex = 16;

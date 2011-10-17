@@ -96,11 +96,19 @@ namespace RoadNetworkDefinition
         /// Initialise an RoadNetwork with edges and vertices identical to another RoadNetwork
         /// </summary>
         /// <param name="map">The RoadNetwork to copy</param>
-        public RoadNetwork(RoadNetwork network)
+        public RoadNetwork(RoadNetwork network, bool keepEdges = true, bool keepVertices = true)
         {
             map = network.map;
-            CopyVertices(network.vertices);
-            CopyEdges(network.edges);
+
+            if (keepVertices)
+            {
+                CopyVertices(network.vertices);
+            }
+
+            if (keepEdges)
+            {
+                CopyEdges(network.edges);
+            }
         }
 
         public void SetStart(int index)

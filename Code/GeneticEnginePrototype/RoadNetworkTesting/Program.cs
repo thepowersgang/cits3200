@@ -141,17 +141,88 @@ namespace RoadNetworkSolver
             engine.FinishOutput();
         }
 
+        static RoadNetwork RandomNetwork(Map map)
+        {
+            Random random = new Random();
+
+            RoadNetwork network = new RoadNetwork(map);
+
+            network.AddVertex(map.Start);
+            network.AddVertex(map.End);
+
+            Vertex start = network.Start;
+            Vertex end = network.End;
+            
+            for (int i = 0; i < 2; i++)
+            {
+                Vertex startPoint = start;
+
+                for (int j = 0; j < 10; j++)
+                {
+                    Vertex endPoint = network.AddVertex(random.Next(map.Width), random.Next(map.Height));
+                    network.AddEdge(startPoint, endPoint);
+                    startPoint = endPoint;
+                }
+
+                network.AddEdge(startPoint, end);
+            }
+
+            for (int k = 0; k < 80; k++)
+            {
+                Vertex startPoint = network.GetVertex(random.Next(network.VertexCount));
+                Vertex endPoint = network.AddVertex(random.Next(map.Width), random.Next(map.Height));
+                network.AddEdge(startPoint, endPoint);
+            }
+
+            for (int l = 0; l < 20; l++)
+            {
+                Vertex startPoint = network.GetVertex(random.Next(network.VertexCount));
+                Vertex endPoint = network.GetVertex(random.Next(network.VertexCount));
+                network.AddEdge(startPoint, endPoint);
+            }
+
+            network.SetEnd(1);
+            return network;
+        }
+
         static void Main(string[] args)
         {
-            IPopulator populator = new Populator("map.xml");
-            IEvaluator evaluator = new Evaluator(null);
-            IGeneticOperator op = new ConjugationOperator(null);
-            ITerminator terminator = new FitnessThresholdTerminator(FitnessConverter.FromFloat(1.0f / 1024.0f));
-            IOutputter outputter = new RoadNetworkXmlOutputter(@"c:\roadnetworktest\index.xml");
 
-            GeneticEngine engine = new GeneticEngine(populator, evaluator, op, terminator, outputter);
-            engine.Repeat(100);
-            engine.FinishOutput();
+            Mutator mutator = new Mutator(null);
+            
+            Map map = Map.FromFile("map.xml");
+            RoadNetwork network = new RoadNetwork(map);
+
+            network.AddVertex(map.Start);
+            network.AddVertex(map.End);
+            network.AddEdge(network.Start, network.End);
+
+            StepMutator sm = new StepMutator();
+
+            int i = 0;
+            while (true)
+            {
+                network = RandomNetwork(map);
+                network = sm.MakeSteps(network);
+                if (network.FindPath() == null)
+                {
+                    Console.WriteLine("Bad Network");
+
+                    XmlTextWriter writer = new XmlTextWriter("network.xml", Encoding.ASCII);
+                    writer.Formatting = Formatting.Indented;
+                    network.WriteXml(writer);
+                    writer.Flush();
+                    writer.Close();
+
+                    break;
+                }
+            }
+           
+            //XmlTextWriter writer = new XmlTextWriter("network.xml", Encoding.ASCII);
+            //writer.Formatting = Formatting.Indented;
+            //network.WriteXml(writer);
+            //writer.Flush();
+            //writer.Close();
 
             Console.ReadLine();
         }
