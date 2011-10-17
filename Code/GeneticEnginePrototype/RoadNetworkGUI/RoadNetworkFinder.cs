@@ -474,5 +474,9 @@ namespace RoadNetworkGUI
             this.Invoke(new ShowStatsCallback(this.ShowStats),new object[]{generation.MaxFitness,generation.AverageFitness});
         }
 
+        private void stopProcessButton_Click(object sender, EventArgs e)
+        {
+            engine.Stop();
+        }
     }
  }

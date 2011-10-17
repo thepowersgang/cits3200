@@ -44,10 +44,10 @@ namespace RoadNetworkGUI
             this.GenerationFactoryLabel = new System.Windows.Forms.Label();
             this.libraryLabel = new System.Windows.Forms.Label();
             this.gbMap = new System.Windows.Forms.GroupBox();
-            this.visualiser1 = new RoadNetworkDisplay.RoadNetworkPanel();
             this.gbPlugins = new System.Windows.Forms.GroupBox();
             this.libraryLoaderButton = new System.Windows.Forms.Button();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.stopProcessButton = new System.Windows.Forms.Button();
             this.n = new System.Windows.Forms.NumericUpDown();
             this.targetFitness = new System.Windows.Forms.NumericUpDown();
             this.cleanupButton = new System.Windows.Forms.Button();
@@ -69,7 +69,7 @@ namespace RoadNetworkGUI
             this.label2 = new System.Windows.Forms.Label();
             this.maxFitnessValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.stopProcessButton = new System.Windows.Forms.Button();
+            this.visualiser1 = new RoadNetworkDisplay.RoadNetworkPanel();
             this.gbMap.SuspendLayout();
             this.gbPlugins.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -217,16 +217,6 @@ namespace RoadNetworkGUI
             this.gbMap.TabStop = false;
             this.gbMap.Text = "Current Best";
             // 
-            // visualiser1
-            // 
-            this.visualiser1.BackColor = System.Drawing.Color.White;
-            this.visualiser1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.visualiser1.Location = new System.Drawing.Point(21, 19);
-            this.visualiser1.Name = "visualiser1";
-            this.visualiser1.Network = null;
-            this.visualiser1.Size = new System.Drawing.Size(550, 430);
-            this.visualiser1.TabIndex = 1;
-            // 
             // gbPlugins
             // 
             this.gbPlugins.Controls.Add(this.libraryLoaderButton);
@@ -287,6 +277,16 @@ namespace RoadNetworkGUI
             this.gbSettings.TabIndex = 18;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
+            // 
+            // stopProcessButton
+            // 
+            this.stopProcessButton.Location = new System.Drawing.Point(371, 119);
+            this.stopProcessButton.Name = "stopProcessButton";
+            this.stopProcessButton.Size = new System.Drawing.Size(119, 23);
+            this.stopProcessButton.TabIndex = 18;
+            this.stopProcessButton.Text = "Stop ";
+            this.stopProcessButton.UseVisualStyleBackColor = true;
+            this.stopProcessButton.Click += new System.EventHandler(this.stopProcessButton_Click);
             // 
             // n
             // 
@@ -495,14 +495,15 @@ namespace RoadNetworkGUI
             this.label1.TabIndex = 0;
             this.label1.Text = "Max Fitness:";
             // 
-            // stopProcessButton
+            // visualiser1
             // 
-            this.stopProcessButton.Location = new System.Drawing.Point(371, 119);
-            this.stopProcessButton.Name = "stopProcessButton";
-            this.stopProcessButton.Size = new System.Drawing.Size(119, 23);
-            this.stopProcessButton.TabIndex = 18;
-            this.stopProcessButton.Text = "Stop ";
-            this.stopProcessButton.UseVisualStyleBackColor = true;
+            this.visualiser1.BackColor = System.Drawing.Color.White;
+            this.visualiser1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.visualiser1.Location = new System.Drawing.Point(21, 19);
+            this.visualiser1.Name = "visualiser1";
+            this.visualiser1.Network = null;
+            this.visualiser1.Size = new System.Drawing.Size(550, 430);
+            this.visualiser1.TabIndex = 1;
             // 
             // RoadNetworkFinder
             // 
