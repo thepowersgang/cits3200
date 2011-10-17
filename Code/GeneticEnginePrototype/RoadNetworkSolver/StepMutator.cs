@@ -16,73 +16,73 @@ namespace RoadNetworkSolver
         {
         }
 
-        //public RoadNetwork MakeSteps(RoadNetwork network)
-        //{
-        //    RoadNetwork result = new RoadNetwork(network, false, true);
-        //    int endVertexIndex = result.VertexCount-1;
+        public static RoadNetwork MakeStepped(RoadNetwork network)
+        {
+            RoadNetwork result = new RoadNetwork(network, false, true);
+            int endVertexIndex = result.VertexCount - 1;
 
-        //    for (int i = 0; i < network.EdgeCount; i++)
-        //    {
-        //        Edge edge = network.GetEdge(i);
-        //        Vertex start = edge.Start.Copy;
-        //        Vertex end = edge.End.Copy;
-        //        Coordinates startCoordinates = start.Coordinates;
-        //        Coordinates endCoordinates = end.Coordinates;
+            for (int i = 0; i < network.EdgeCount; i++)
+            {
+                Edge edge = network.GetEdge(i);
+                Vertex start = edge.Start.Copy;
+                Vertex end = edge.End.Copy;
+                Coordinates startCoordinates = start.Coordinates;
+                Coordinates endCoordinates = end.Coordinates;
 
-        //        int dX = endCoordinates.X - startCoordinates.X;
-        //        int dY = endCoordinates.Y - startCoordinates.Y;
+                int dX = endCoordinates.X - startCoordinates.X;
+                int dY = endCoordinates.Y - startCoordinates.Y;
 
-        //        int xStep = 1;
-        //        if (dX < 0)
-        //        {
-        //            dX = -dX;
-        //            xStep = -1;
-        //        }
+                int xStep = 1;
+                if (dX < 0)
+                {
+                    dX = -dX;
+                    xStep = -1;
+                }
 
-        //        int yStep = 1;
-        //        if (dY < 0)
-        //        {
-        //            dY = -dY;
-        //            yStep = -1;
-        //        }
+                int yStep = 1;
+                if (dY < 0)
+                {
+                    dY = -dY;
+                    yStep = -1;
+                }
 
-        //        int x=startCoordinates.X;
-        //        int y=startCoordinates.Y;
+                int x = startCoordinates.X;
+                int y = startCoordinates.Y;
 
-        //        Vertex startPoint = start;
+                Vertex startPoint = start;
 
-        //        while (dX > 1 || dY > 1)
-        //        {
-        //            if (dX > dY)
-        //            {
-        //                x += xStep;
-        //                dX--;
-        //            }
-        //            else if (dY > dX)
-        //            {
-        //                y += yStep;
-        //                dY--;
-        //            }
-        //            else
-        //            {
-        //                x += xStep;
-        //                dX--;
-        //                y += yStep;
-        //                dY--;
-        //            }
-                                        
-        //            Vertex endPoint = result.AddVertex(x, y);
-        //            result.AddEdge(startPoint, endPoint);
-        //            startPoint = endPoint;
-        //        }
+                while (dX > 1 || dY > 1)
+                {
+                    if (dX > dY)
+                    {
+                        x += xStep;
+                        dX--;
+                    }
+                    else if (dY > dX)
+                    {
+                        y += yStep;
+                        dY--;
+                    }
+                    else
+                    {
+                        x += xStep;
+                        dX--;
+                        y += yStep;
+                        dY--;
+                    }
 
-        //        result.AddEdge(startPoint, end);
-        //    }
+                    Vertex endPoint = result.AddVertex(x, y);
+                    result.AddEdge(startPoint, endPoint);
+                    startPoint = endPoint;
+                }
 
-        //    result.SetEnd(endVertexIndex);
+                result.AddEdge(startPoint, end);
+            }
 
-        //    return result;
-        //}
+            result.SetEnd(endVertexIndex);
+
+            return result;
+        }
 
         /// <summary>
         /// Process a generation to produce the individuals which will make up the next generation
@@ -106,9 +106,7 @@ namespace RoadNetworkSolver
         }
 
         public static RoadNetwork Mutate(RoadNetwork source)
-        {
-            
-
+        {            
             Map map = source.Map;
             int mapWidth = map.Width;
             int mapHeight = map.Height;
@@ -149,19 +147,20 @@ namespace RoadNetworkSolver
                 //If this vertex is a leaf of the tree and not the end vertex it has a 25% chance of
                 //begin removed.
                 if (nextVertices.Count > 0 || vertex == source.End || random.Next(4) > 0)
-                {
-                    if (vertex == source.End)
+                {                    
+                    Coordinates coordinates = vertex.Coordinates;
+
+                    if (vertex != source.Start && vertex != source.End && random.Next(4) == 0)
                     {
-                        endVertexIndex = destination.VertexCount;
+                        coordinates = RandomMove(vertex.Coordinates);
                     }
 
-                    if (vertex != source.End || random.Next(4) > 0)
+                    int index = destination.AddVertexUnique(vertex.Coordinates);
+                    vertex.Copy = destination.GetVertex(index);
+
+                    if (vertex == source.End)
                     {
-                        destination.CopyVertex(vertex);
-                    }
-                    else
-                    {
-                        vertex.Copy = destination.AddVertex(RandomMove(vertex.Coordinates));
+                        endVertexIndex = index;
                     }
                 }
 
@@ -191,22 +190,15 @@ namespace RoadNetworkSolver
                 }
             }
 
-            int newVertices = random.Next(10);
+            int newVertices = random.Next(20);
             for (int i = 0; i < newVertices; i++)
             {
                 Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
-                Vertex endVertex = destination.AddVertex(RandomMove(startVertex.Coordinates));
+                int index = destination.AddVertexUnique(RandomMove(startVertex.Coordinates));
+                Vertex endVertex = destination.GetVertex(index);
                 destination.AddEdge(startVertex, endVertex);
             }
-
-            int newCycles = random.Next(3);
-            for (int i = 0; i < newCycles; i++)
-            {
-                Vertex startVertex = destination.GetVertex(random.Next(destination.VertexCount));
-                Vertex endVertex = destination.GetVertex(random.Next(destination.VertexCount));
-                StepPath(destination, startVertex, endVertex);
-            }
-
+            
             if (endVertexIndex == -1)
             {
                 throw new Exception("End vertex not found.");
@@ -303,7 +295,8 @@ namespace RoadNetworkSolver
                     dY--;
                 }
 
-                Vertex endVertex = network.AddVertex(x, y);
+                int index = network.AddVertexUnique(x, y);
+                Vertex endVertex = network.GetVertex(index);
                 network.AddEdge(startVertex, endVertex);
                 startVertex = endVertex;
             }

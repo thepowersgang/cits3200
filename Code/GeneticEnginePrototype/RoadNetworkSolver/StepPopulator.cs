@@ -12,7 +12,7 @@ namespace RoadNetworkSolver
     {
         Random random = new Random();
 
-        int populationSize = 100;
+        int populationSize = 200;
         Map map;
         
         public StepPopulator(object config)
@@ -28,12 +28,14 @@ namespace RoadNetworkSolver
         {            
             RoadNetwork original = new RoadNetwork(map);
 
-            Vertex start = original.AddVertex(map.Start);
-            Vertex end = original.AddVertex(map.End);
+            int startIndex = original.AddVertexUnique(map.Start);
+            int endIndex = original.AddVertexUnique(map.End);
+            Vertex start = original.GetVertex(startIndex);
+            Vertex end = original.GetVertex(endIndex);
 
             StepMutator.StepPath(original, start, end);
 
-            original.SetEnd(1);
+            original.SetEnd(endIndex);
 
             individuals.Add(original);
 

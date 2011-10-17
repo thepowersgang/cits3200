@@ -28,6 +28,8 @@ namespace RoadNetworkDefinition
         /// </summary>
         private List<Edge> edges = new List<Edge>();
 
+        Dictionary<Coordinates, int> vertexIndices = new Dictionary<Coordinates, int>();
+
         /// <summary>
         /// Get the map this RoadNetwork exists within.
         /// </summary>
@@ -169,7 +171,27 @@ namespace RoadNetworkDefinition
         {
             return AddVertex(new Coordinates(x, y));
         }
-        
+
+        public int AddVertexUnique(Coordinates coordinates)
+        {
+            if (vertexIndices.ContainsKey(coordinates))
+            {
+                return vertexIndices[coordinates];
+            }
+            else
+            {
+                int index = vertices.Count;
+                AddVertex(coordinates);
+                vertexIndices.Add(coordinates, index);
+                return index;
+            }
+        }
+
+        public int AddVertexUnique(int x, int y)
+        {
+            return AddVertexUnique(new Coordinates(x, y));
+        }
+
 		/// <summary>
 		/// Get an edge by index
 		/// </summary>
@@ -371,6 +393,13 @@ namespace RoadNetworkDefinition
             vertex.Copy = AddVertex(vertex.Coordinates);
         }
 
+        public int CopyVertexUnique(Vertex vertex)
+        {
+            int index = AddVertexUnique(vertex.Coordinates);
+            vertex.Copy = vertices[index];
+            return index;
+        }
+
 		/// <summary>
 		/// Add a copy of each vertex in a list to the network.
 		/// </summary>
@@ -383,6 +412,16 @@ namespace RoadNetworkDefinition
             {
                 vertex.Copy = AddVertex(vertex.Coordinates);
             }
+        }
+
+        public int CopyVerticesUnique(List<Vertex> sourceVertices)
+        {
+            int lastIndex = -1;
+            foreach (Vertex vertex in sourceVertices)
+            {
+                lastIndex = CopyVertexUnique(vertex);
+            }
+            return lastIndex;
         }
 
         /// <summary>

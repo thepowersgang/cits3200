@@ -10,7 +10,7 @@ namespace RoadNetworkSolver
 {
     public class Populator : IPopulator
     {
-        int populationSize = 100;
+        int populationSize = 200;
         Map map;
         
         public Populator(object config)

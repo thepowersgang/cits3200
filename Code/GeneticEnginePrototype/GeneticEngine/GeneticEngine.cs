@@ -16,42 +16,44 @@ namespace GeneticAlgorithm
         /// <summary>
         /// The populator plugin
         /// </summary>
-        IPopulator populator;
+        private IPopulator populator;
         
         /// <summary>
         /// The evaluator plugin
         /// </summary>
-        IEvaluator evaluator;
+        private IEvaluator evaluator;
 
         /// <summary>
         /// The gentic operator plugin
         /// </summary>
-        IGeneticOperator geneticOperator;
+        private IGeneticOperator geneticOperator;
 
         /// <summary>
         /// The termination condition plugin
         /// </summary>
-        ITerminator terminator;
+        private ITerminator terminator;
 
         /// <summary>
         /// The output plugin
         /// </summary>
-        IOutputter outputter;
+        private IOutputter outputter;
 
         /// <summary>
         /// The generation factory plugin
         /// </summary>
-        IGenerationFactory generationFactory;
+        private IGenerationFactory generationFactory;
 
         /// <summary>
         /// The number of generations which have been processed
         /// </summary>
-        int generationNumber;
+        private int generationNumber;
 
         /// <summary>
         /// The most recent generation
         /// </summary>
-        IGeneration generation = null;
+        private IGeneration generation = null;
+
+        private bool run;
 
         /// <summary>
         /// Get the number of generations before the current generation.
@@ -85,7 +87,7 @@ namespace GeneticAlgorithm
                 return generation != null && terminator.Terminate(generation);
             }
         }
-
+        
         /// <summary>
         /// Initialise a new instance of the GeneticEngine class with the supplied plug-ins and populate the initial generation.
         /// </summary>
@@ -211,7 +213,9 @@ namespace GeneticAlgorithm
         /// <param name="n">The number of generations to process.</param>
         public void Repeat(int n)
         {
-            for (int i = 0; i < n; i++)
+            run = true;
+            int i = 0;
+            while (run && i++ < n)
             {
                 Step();
             }
@@ -222,10 +226,16 @@ namespace GeneticAlgorithm
         /// </summary>
         public void Run()
         {
-            while (!IsComplete)
+            run = true;
+            while (run && !IsComplete)
             {
                 Step();
             }
+        }
+
+        public void Stop()
+        {
+            run = false;
         }
     }
 }
