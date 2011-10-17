@@ -36,12 +36,12 @@ namespace RoadNetworkDisplay
                     network = value;
                     xWidth = Width / network.Map.Width;
                     yHeight = Height / network.Map.Height;
+                    
                     networkBeenGiven = true;
                 }
                 Invalidate();
             }
         }
-
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
             if (networkBeenGiven)
@@ -98,6 +98,11 @@ namespace RoadNetworkDisplay
                     e.Graphics.DrawLine(pen, (int) (coordinates0.X * xWidth), (int)(coordinates0.Y * yHeight), (int)(coordinates1.X * xWidth), (int)(coordinates1.Y * yHeight));
                 }
             }
+        }
+
+        private void RoadNetworkPanel_Load(object sender, EventArgs e)
+        {
+
         }
 
     }
