@@ -86,14 +86,52 @@ namespace RoadNetworkGUI
             if (LoadLibrary.ShowDialog() == DialogResult.OK)
             {
                 loader = new PluginLoader();
-                loader.LoadDll(LoadLibrary.FileName);
+                try
+                {
+                    loader.LoadDll(LoadLibrary.FileName);
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+
                 fullDLLPath = LoadLibrary.FileName;
                 libraryLabel.Text = Path.GetFileName(LoadLibrary.FileName);
                 initEngineButton.Enabled = true;
-                populators = loader.GetPluginNames(typeof(IPopulator));
-                evaluators = loader.GetPluginNames(typeof(IEvaluator));
-                geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
-                terminators = loader.GetPluginNames(typeof(ITerminator));
+                try
+                {
+                    populators = loader.GetPluginNames(typeof(IPopulator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+
+                try
+                {
+                    evaluators = loader.GetPluginNames(typeof(IEvaluator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                try
+                {
+                    geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                try
+                {
+                    terminators = loader.GetPluginNames(typeof(ITerminator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+          
                 outputters = loader.GetPluginNames(typeof(IOutputter));
                 outputters.Add(noOutputterString);
                 generationFactories = loader.GetPluginNames(typeof(IGenerationFactory));
@@ -139,26 +177,57 @@ namespace RoadNetworkGUI
                 else
                 {
                     string choice = getChoice(populators, cbPopulator);
-                    populator = (IPopulator)loader.GetInstance(choice, (object)tbMapFile.Text);
+                    try
+                    {
+                        populator = (IPopulator)loader.GetInstance(choice, (object)tbMapFile.Text);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbEvaluator.SelectedItem == null) errorMsg += "Evaluator must not be null\n";
                 else
                 {
                     string choice = getChoice(evaluators, cbEvaluator);
-                    evaluator = (IEvaluator)loader.GetInstance(choice, null);
+                    try
+                    {
+                        evaluator = (IEvaluator)loader.GetInstance(choice, null);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbGeneticOperator.SelectedItem == null) errorMsg += "Genetic Operator must not be null\n";
                 else
                 {
                     string choice = getChoice(geneticOperators, cbGeneticOperator);
-                    geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
+                    try
+                    {
+                        geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbTerminator.SelectedItem == null) errorMsg += "Terminator must not be null\n";
                 else
                 {
                     string choice = getChoice(terminators, cbTerminator);
                     if ((int)targetFitness.Value == 0) errorMsg += "Provide a target fitness value greater than 1 for the terminator plug-in\n";
-                    else terminator = (ITerminator)loader.GetInstance(choice, (object)(uint)targetFitness.Value);
+                    else
+                    {
+                        try
+                        {
+                            terminator = (ITerminator)loader.GetInstance(choice, (object)(uint)targetFitness.Value);
+                        }
+                        catch (GeneticEngineException exception)
+                        {
+                            MessageBox.Show(exception.Message);
+                        }
+                    }
                 }
                 if (cbOutputter.SelectedItem != null)
                 {
@@ -169,7 +238,10 @@ namespace RoadNetworkGUI
                         {
                             MessageBox.Show("Select an output file for the outputter\n");
                         }
-                        else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                        else
+                        {
+                            outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                        }
                     }
                 }
                 if (cbGenerationFactory.SelectedItem != null)
@@ -183,9 +255,16 @@ namespace RoadNetworkGUI
                 if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n");
                 else
                 {
-                    displayOutputter = new DisplayOutputter(this, outputter);
-                    engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
-                    hasInitialised = true;
+                    try
+                    {
+                        displayOutputter = new DisplayOutputter(this, outputter);
+                        engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
+                        hasInitialised = true;
+                    }
+                    catch (GeneticEngineException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
 
                 SetEngineRunning(false);
@@ -199,10 +278,17 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised && !engineRunning)
             {
-                SetEngineRunning(true);
-                engine.FinishOutput();
-                SetEngineRunning(false);
-                hasCompleted = true;
+                try
+                {
+                    SetEngineRunning(true);
+                    engine.FinishOutput();
+                    SetEngineRunning(false);
+                    hasCompleted = true;
+                }
+                catch (GeneticEngineException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
                 if (File.Exists(tbOutputFile.Text))
                 {
@@ -224,9 +310,17 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised && !engineRunning)
             {
-                SetEngineRunning(true);
-                engine.Step();
-                SetEngineRunning(false);
+                try
+                {
+                    SetEngineRunning(true);
+                    engine.Step();
+                    SetEngineRunning(false);
+                }
+                catch (GeneticEngineException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
             }
             else
             {
@@ -253,9 +347,16 @@ namespace RoadNetworkGUI
             {
                 if (!engineRunning)
                 {
-                    SetEngineRunning(true);
-                    Thread runThead = new Thread(new ThreadStart(RunEngine));
-                    runThead.Start();
+                    try
+                    {
+                        SetEngineRunning(true);
+                        Thread runThead = new Thread(new ThreadStart(RunEngine));
+                        runThead.Start();
+                    }
+                    catch (GeneticEngineException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
             else MessageBox.Show("Initialise Generation First\n");
@@ -287,9 +388,16 @@ namespace RoadNetworkGUI
                 {
                     if (!engineRunning)
                     {
-                        SetEngineRunning(true);
-                        Thread repeatThread = new Thread(RepeatEngine);
-                        repeatThread.Start((int)n.Value);
+                        try
+                        {
+                            SetEngineRunning(true);
+                            Thread repeatThread = new Thread(RepeatEngine);
+                            repeatThread.Start((int)n.Value);
+                        }
+                        catch(GeneticEngineException ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                     }
 
                     cleanupButton.Enabled = true;
@@ -394,6 +502,7 @@ namespace RoadNetworkGUI
             {
                 comboBox.SelectedIndex = 0;
             }
+
         }
 
         ///
