@@ -601,18 +601,21 @@ namespace RoadNetworkGUI
         /// <param name="generation">Generation to be displayed</param>
         public void DisplayGeneration(IGeneration generation)
         {
-            if (generation.Count > 0)
+            if (!this.IsDisposed)
             {
-                visualiser1.Network = (RoadNetwork)generation[0].Individual;                
-            }
+                if (generation.Count > 0)
+                {
+                    visualiser1.Network = (RoadNetwork)generation[0].Individual;
+                }
 
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new ShowStatsCallback(this.ShowStats), new object[] { generation.MaxFitness, generation.AverageFitness });
-            }
-            else
-            {
-                ShowStats(generation.MaxFitness, generation.AverageFitness);
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new ShowStatsCallback(this.ShowStats), new object[] { generation.MaxFitness, generation.AverageFitness });
+                }
+                else
+                {
+                    ShowStats(generation.MaxFitness, generation.AverageFitness);
+                }
             }
         }
 
@@ -632,54 +635,56 @@ namespace RoadNetworkGUI
         /// <param name="engineRunning">A flag to specify whether the engine is running</param>
         private void SetEngineRunning(bool engineRunning) {
 
-            if (this.InvokeRequired)
+            if (!this.IsDisposed)
             {
-                this.Invoke(new SetEngineRunningCallback(SetEngineRunning), new object[] { engineRunning });
-            }
-            else
-            {
-                this.engineRunning = engineRunning;
-
-                if (engineRunning)
+                if (this.InvokeRequired)
                 {
-                    initEngineButton.Enabled = false;
-                    stepButton.Enabled = false;
-                    runButton.Enabled = false;
-                    runGenerationButton.Enabled = false;
-                    cleanupButton.Enabled = false;
-                    libraryLoaderButton.Enabled = false;
-                    MapFileSelectButton.Enabled = false;
-                    outputFileButton.Enabled = false;
-                    stopProcessButton.Enabled = true;
+                    this.Invoke(new SetEngineRunningCallback(SetEngineRunning), new object[] { engineRunning });
                 }
                 else
                 {
-                    initEngineButton.Enabled = true;
-                    libraryLoaderButton.Enabled = true;
-                    MapFileSelectButton.Enabled = true;
-                    outputFileButton.Enabled = true;
-                    if (hasInitialised)
-                    {
-                        stepButton.Enabled = true;
-                        runButton.Enabled = true;
-                        runGenerationButton.Enabled = true;
-                        cleanupButton.Enabled = true;
-                    }
+                    this.engineRunning = engineRunning;
 
-                    stopProcessButton.Enabled = false;
+                    if (engineRunning)
+                    {
+                        initEngineButton.Enabled = false;
+                        stepButton.Enabled = false;
+                        runButton.Enabled = false;
+                        runGenerationButton.Enabled = false;
+                        cleanupButton.Enabled = false;
+                        libraryLoaderButton.Enabled = false;
+                        MapFileSelectButton.Enabled = false;
+                        outputFileButton.Enabled = false;
+                        stopProcessButton.Enabled = true;
+                    }
+                    else
+                    {
+                        initEngineButton.Enabled = true;
+                        libraryLoaderButton.Enabled = true;
+                        MapFileSelectButton.Enabled = true;
+                        outputFileButton.Enabled = true;
+                        if (hasInitialised)
+                        {
+                            stepButton.Enabled = true;
+                            runButton.Enabled = true;
+                            runGenerationButton.Enabled = true;
+                            cleanupButton.Enabled = true;
+                        }
+
+                        stopProcessButton.Enabled = false;
+                    }
                 }
             }
         }
-
+                
         /// <summary>
-        /// If the engine is still running, ask the user to stop the current process before closing the finder GUI
+        /// If the engine is still running tell it to stop.
         /// </summary>
         private void RoadNetworkFinder_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (engineRunning)
             {
-                MessageBox.Show("Stop the engine before closing this window.");
-                e.Cancel = true;
+                engine.Stop();
             }
         }
     }
