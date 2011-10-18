@@ -1,5 +1,8 @@
 ﻿namespace RoadNetworkGUI
 {
+    /// <summary>
+    /// Displays the results of running genetic algorithms in the RoadNetWorkFinder
+    /// </summary>
     partial class Road_Network_Visualiser
     {
         /// <summary>

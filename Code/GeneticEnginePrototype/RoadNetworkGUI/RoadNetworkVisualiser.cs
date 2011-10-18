@@ -20,6 +20,12 @@ namespace RoadNetworkGUI
         OpenFileDialog openDialog;
         int IndividualIndex = -1, GenerationIndex = -1;
         GenerationIndex results; 
+
+        /// <summary>
+        /// Initialise a new Road_Network_Visualiser
+        /// </summary>
+        /// <param name="isFileLoaded">Has a file been loaded</param>
+        /// <param name="filename">The name of the file to load</param>
         public Road_Network_Visualiser(bool isFileLoaded, string filename )
         {
             InitializeComponent();

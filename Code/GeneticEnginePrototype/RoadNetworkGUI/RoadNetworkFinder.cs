@@ -55,6 +55,9 @@ namespace RoadNetworkGUI
         /// </summary>
         private string defaultGenerationFactoryString = "[default]";
 
+        /// <summary>
+        /// Initialise a new RoadNetworkFinder
+        /// </summary>
         public RoadNetworkFinder()
         {
             InitializeComponent();
@@ -329,6 +332,10 @@ namespace RoadNetworkGUI
 
         }
 
+        /// <summary>
+        /// Thread entrypoint for running the genetic engine 
+        /// until the termination condition is met
+        /// </summary>
         public void RunEngine()
         {            
             engine.Run();
@@ -363,6 +370,11 @@ namespace RoadNetworkGUI
 
         }
 
+        /// <summary>
+        /// Thread entrypoint for running the genetic engine 
+        /// for n generations
+        /// </summary>
+        /// <param name="obj">An integer giving the number of generations to run.</param>
         public void RepeatEngine(object obj)
         {
             int n = (int)obj;
