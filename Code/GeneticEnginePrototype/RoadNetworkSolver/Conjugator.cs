@@ -8,14 +8,31 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// IGeneticOperator which uses two parent RoadNetworks to generate two child RoadNetworks.
+    /// Each of the parents is split into a start half partition and an end partition then the
+    /// end of each is matched to the start of the other to produce the children.
+    /// </summary>
     public class Conjugator : IGeneticOperator
     {
-        Random random = new Random();
+        /// <summary>
+        /// The random number generator used when splitting and rejoining RoadNetworks
+        /// </summary>
+        private static Random random = new Random();
 
+        /// <summary>
+        /// Initialise a new Conjugator
+        /// </summary>
+        /// <param name="config">Configuration object (ignored)</param>
         public Conjugator(object config)
         {
         }
 
+        /// <summary>
+        /// Process a generation to produce the individuals which will make up the next generation
+        /// </summary>
+        /// <param name="source">The current generation</param>
+        /// <param name="destination">An empty collection of individuals to be populated</param>
         public void Operate(IGeneration source, ArrayList destination)
         {
             int index1 = 1;
@@ -48,7 +65,14 @@ namespace RoadNetworkSolver
             }
         }
 
-        private void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
+        /// <summary>
+        /// Generate two child RoadNetworks by recombining halves of two parent RoadNetworks.
+        /// </summary>
+        /// <param name="parent1">The first parent RoadNetwork</param>
+        /// <param name="parent2">The second parent RoadNetwork</param>
+        /// <param name="child1">The first child RoadNetwork</param>
+        /// <param name="child2">The second child RoadNetwork</param>
+        public static void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
         {   
             Cut(parent1);
             Cut(parent2);
@@ -109,7 +133,19 @@ namespace RoadNetworkSolver
             }
         }
 
-        private void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
+        /// <summary>
+        /// Get the start and end vertices of the broken edges
+        /// (those which formerly joined the start and end partitions)
+        /// If there aren't enough broken edges then randomly choose vertices
+        /// from the corresponding partitions.
+        /// </summary>
+        /// <param name="brokenEdges">The edges formerly joining the two partitions</param>
+        /// <param name="index">The index of the broken edge to use</param>
+        /// <param name="visitedVertices">The vertices in the visited (end) partition</param>
+        /// <param name="unvisitedVertices">The vertices in the unvisited (start) partition</param>
+        /// <param name="start">The start vertex</param>
+        /// <param name="end">The end vertex</param>
+        private static void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
         {
             if (index < brokenEdges.Count)
             {
@@ -138,7 +174,11 @@ namespace RoadNetworkSolver
             }
         }
 
-        private void ShuffleEdges(List<Edge> edges)
+        /// <summary>
+        /// Randomise a list of edges.
+        /// </summary>
+        /// <param name="edges">The list of edges to randomise</param>
+        private static void ShuffleEdges(List<Edge> edges)
         {
             for (int i = edges.Count-1; i > 0 ; i--)
             {
@@ -148,8 +188,14 @@ namespace RoadNetworkSolver
                 edges[j] = temp;
             }
         }
-                
-        public void Cut(RoadNetwork network)
+
+        /// <summary>
+        /// Split a RoadNetwork into two paritions by repeatedly breaking one edge along
+        /// the shortest path between the start and end until the start and end are
+        /// no longer connected.
+        /// </summary>
+        /// <param name="network">The RoadNetwork to split</param>
+        public static void Cut(RoadNetwork network)
         {
             network.SetBroken(false);
 

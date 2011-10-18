@@ -8,10 +8,21 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// IGeneticOperator which generates new individuals by randomly making small changes to existing
+    /// individuals.
+    /// </summary>
     public class Mutator : IGeneticOperator
     {
-        private Random random = new Random();
+        /// <summary>
+        /// The random number generator used to determine how to change the RoadNetworks
+        /// </summary>
+        private static Random random = new Random();
 
+        /// <summary>
+        /// Initialise a new StepMutator
+        /// </summary>
+        /// <param name="config">Configuration object (ignored)</param>
         public Mutator(object config)
         {
         }
@@ -37,7 +48,12 @@ namespace RoadNetworkSolver
             }
         }
 
-        public RoadNetwork Mutate(RoadNetwork source)
+        /// <summary>
+        /// Randomly alter a RoadNetwork to Produce a slightly different RoadNetwork
+        /// </summary>
+        /// <param name="source">The RoadNetwork to mutate</param>
+        /// <returns>The mutated RoadNetwork</returns>
+        public static RoadNetwork Mutate(RoadNetwork source)
         {
             Map map = source.Map;
             int mapWidth = map.Width;
@@ -60,9 +76,7 @@ namespace RoadNetworkSolver
             while (vertexStack.Count > 0)
             {
                 Vertex vertex = vertexStack.First();
-
-                //Console.WriteLine(vertex.Coordinates.X + ", " + vertex.Coordinates.Y + ": " + (vertex==source.End));
-
+                                
                 vertexStack.RemoveFirst();
 
                 List<Vertex> nextVertices = new List<Vertex>();
@@ -161,10 +175,6 @@ namespace RoadNetworkSolver
             }
 
             return destination;
-
-            //StepMutator sm = new StepMutator();
-
-            //return sm.MakeSteps(destination);
         }        
     }
 }

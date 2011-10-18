@@ -8,13 +8,34 @@ using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// IPopulator which produces a set of RoadNetworks.
+    /// It first creates a RoadNetwork with a simple path from start to finish
+    /// made of edges connecting adjacent points.
+    /// Then it repeatedly randomly selects from the list of RoadNetworks already created,
+    /// mutates (using StepMutator) the individual selected and adds the reuslt to the list.
+    /// </summary>
     public class StepPopulator : IPopulator
     {
-        Random random = new Random();
+        /// <summary>
+        /// The random number generator used to choose which RoadNetwork to mutate.
+        /// </summary>
+        private Random random = new Random();
 
+        /// <summary>
+        /// The number of individuals to generate.
+        /// </summary>
         int populationSize = 200;
+
+        /// <summary>
+        /// The map in which the networks will exist
+        /// </summary>
         Map map;
-        
+
+        /// <summary>
+        /// Initialise a new StepPopulator
+        /// </summary>
+        /// <param name="config">A string with the path to the map file</param>
         public StepPopulator(object config)
         {
             map = Map.FromFile((string)config);
