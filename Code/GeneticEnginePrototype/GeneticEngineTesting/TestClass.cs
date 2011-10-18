@@ -291,7 +291,7 @@ namespace GeneticEngineTesting
         [TestMethod]
         public void TestD2()
         {
-            ConjugationOperator RNCO = new ConjugationOperator(null);
+            Conjugator RNCO = new Conjugator(null);
             AATreeGeneration generation = new AATreeGeneration();
             ArrayList individuals = new ArrayList();
             //Populate with identical entries.

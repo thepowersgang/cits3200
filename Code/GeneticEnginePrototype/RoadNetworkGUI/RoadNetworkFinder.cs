@@ -518,13 +518,9 @@ namespace RoadNetworkGUI
         {
             if (engineRunning)
             {
-                engine.Stop();
+                MessageBox.Show("Stop the engine before closing this window.");
+                e.Cancel = true;
             }
-
-            //while (engineRunning)
-            //{
-                
-            //}
         }
     }
  }

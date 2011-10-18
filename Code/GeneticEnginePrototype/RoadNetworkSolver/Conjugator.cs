@@ -8,11 +8,11 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
-    public class ConjugationOperator : IGeneticOperator
+    public class Conjugator : IGeneticOperator
     {
         Random random = new Random();
 
-        public ConjugationOperator(object config)
+        public Conjugator(object config)
         {
         }
 
