@@ -28,34 +28,45 @@ namespace GeneticAlgorithm.Util
         /// <param name="path">The path to the DLL file</param>
         public void LoadDll(string path)
         {
-            Assembly assembly;
-
             try
             {
-                assembly = Assembly.LoadFrom(path);
+                Assembly assembly = Assembly.LoadFrom(path);
+
+                Type[] types = assembly.GetTypes();
+
+                foreach (Type t in types)
+                {
+                    ConstructorInfo constructor = t.GetConstructor(ConstructorParamTypes);
+
+                    if (constructor != null)
+                    {
+                        if (!constructors.ContainsKey(t.FullName))
+                        {
+                            constructors.Add(t.FullName, constructor);
+                        }
+                    }
+                }
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new GeneticEngineException("path must not be null", ex);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new GeneticEngineException("Bad path", ex);
             }
             catch (FileNotFoundException ex)
             {
-                throw new Exception("Plugin file does not exist: " + path, ex);
+                throw new GeneticEngineException("Plugin file does not exist: " + path, ex);
             }
             catch (BadImageFormatException ex)
             {
-                throw new Exception("Plugin file is not a .Net DLL: " + path, ex);
+                throw new GeneticEngineException("Plugin file is not a .Net DLL: " + path, ex);
             }
-            
-            Type[] types = assembly.GetTypes();
-
-            foreach (Type t in types)
+            catch (Exception ex)
             {
-                ConstructorInfo constructor = t.GetConstructor(ConstructorParamTypes);
-
-                if (constructor != null)
-                {
-                    if (!constructors.ContainsKey(t.FullName))
-                    {
-                        constructors.Add(t.FullName, constructor);
-                    }
-                }
+                throw new GeneticEngineException("Error loading plug-in file: " + path, ex);
             }
         }
 
@@ -91,8 +102,23 @@ namespace GeneticAlgorithm.Util
         /// <returns>A new instance of the plug-in type.</returns>
         public object GetInstance(string pluginName, object config)
         {
-            ConstructorInfo constructor = constructors[pluginName];
-            return constructor.Invoke(new Object[] { config });
+            if (constructors.ContainsKey(pluginName))
+            {
+                ConstructorInfo constructor = constructors[pluginName];
+
+                try
+                {
+                    return constructor.Invoke(new Object[] { config });
+                }
+                catch (Exception ex)
+                {
+                    throw new GeneticEngineException("Error initialising plug-in: " + pluginName, ex);
+                }
+            }
+            else
+            {
+                throw new GeneticEngineException("Plug-in does not exist: " + pluginName);
+            }
         }          
     }
 }

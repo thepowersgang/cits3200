@@ -7,30 +7,50 @@ namespace GeneticAlgorithm
 {
     public class GeneticEngineException : Exception
     {
-        public enum Component
+        public enum Plugin
         {
-            Engine,
+            None,
             Populator,
-            Evaluator,
+            Evaluator,            
             GeneticOperator,
             Terminator,
-            GenerationFactory
+            Outputter,
+            GenerationFactory,
+            Generation
         }
 
-        private Component sourceComponent;
+        private Plugin sourcePlugin;
 
-        public Component SourceComponent
+        public Plugin SourcePlugin
         {
             get
             {
-                return sourceComponent;
+                return sourcePlugin;
             }
         }
-        
-        public GeneticEngineException(Component sourceComponent, string message, Exception innerException)
+
+        public GeneticEngineException(Plugin sourcePlugin, string message, Exception innerException)
             : base(message, innerException)
         {
-            this.sourceComponent = sourceComponent;
+            this.sourcePlugin = sourcePlugin;
+        }
+
+        public GeneticEngineException(Plugin sourcePlugin, string message)
+            : base(message)
+        {
+            this.sourcePlugin = sourcePlugin;
+        }
+
+        public GeneticEngineException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+            this.sourcePlugin = Plugin.None;
+        }
+
+        public GeneticEngineException(string message)
+            : base(message)
+        {
+            this.sourcePlugin = Plugin.None;
         }
     }
 }

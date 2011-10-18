@@ -8,14 +8,14 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
-    public class CyclePopulator : IPopulator
+    public class StepCyclePopulator : IPopulator
     {
         Random random = new Random();
 
         int populationSize = 200;
         Map map;
         
-        public CyclePopulator(object config)
+        public StepCyclePopulator(object config)
         {
             map = Map.FromFile((string)config);
         }
