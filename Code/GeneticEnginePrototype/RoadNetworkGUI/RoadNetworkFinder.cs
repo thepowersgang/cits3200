@@ -587,9 +587,10 @@ namespace RoadNetworkGUI
         {
             if (hasCompleted && File.Exists(tbOutputFile.Text))
             {
-                this.Dispose(false);
+                this.Hide();
                 Road_Network_Visualiser form = new Road_Network_Visualiser(true,tbOutputFile.Text);
-                form.Visible = true;
+                form.ShowDialog();
+                this.Show();
             }
         }
 
