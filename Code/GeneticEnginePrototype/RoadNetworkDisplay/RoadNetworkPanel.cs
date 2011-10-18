@@ -41,8 +41,8 @@ namespace RoadNetworkDisplay
                 if (value != null)
                 {
                     network = value;
-                    xWidth = Width / network.Map.Width;
-                    yHeight = Height / network.Map.Height;
+                    xWidth = (double)Width / (double)network.Map.Width;
+                    yHeight = (double)Height / (double)network.Map.Height;
                     
                     networkBeenGiven = true;
                 }

@@ -411,8 +411,6 @@ namespace RoadNetworkGUI
                             MessageBox.Show(ex.Message);
                         }
                     }
-
-                    cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
 
