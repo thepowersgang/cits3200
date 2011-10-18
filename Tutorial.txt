@@ -1,0 +1,16 @@
+Quick tutorial on using the Genetic Engine.
+
+\section{Plugins}
+\subsection{Populator}
+Populator classes must export a \textt{Populate} method, taking an \textt{ArrayList} to fill with an initial generation.
+Example:
+\being{code}
+class Populator: implements IPopulator
+{
+	void Populate(ArrayList Destination)
+	{
+		
+	}
+}
+\end{code}
+

@@ -16,12 +16,19 @@ namespace RoadNetworkDisplay
         bool networkBeenGiven = false;
         double xWidth = 0;
         double yHeight = 0;
+
+        /// <summary>
+        /// Initialise a new RoadNetworkPanel
+        /// </summary>
         public RoadNetworkPanel()
         {
             InitializeComponent();
 
         }
 
+        /// <summary>
+        /// Get or Set the currently displayed RoadNetwork
+        /// </summary>
         public RoadNetwork Network
         {
             get

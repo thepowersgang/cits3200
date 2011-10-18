@@ -116,7 +116,7 @@ namespace RoadNetworkSolver
 
             Mutator mutator = new Mutator(null);
 
-            RoadNetwork mutated = mutator.Mutate(network);
+            RoadNetwork mutated = Mutator.Mutate(network);
 
             XmlTextWriter writer = new XmlTextWriter("mutant.xml", Encoding.ASCII);
 

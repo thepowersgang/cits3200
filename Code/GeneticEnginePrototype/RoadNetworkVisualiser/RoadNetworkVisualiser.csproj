@@ -5,17 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3817792-2F45-4367-9276-C92BE60B07E2}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{80737F3C-FD55-446A-A0A0-B36087820E90}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RoadNetworkGUI</RootNamespace>
-    <AssemblyName>RoadNetworkGUI</AssemblyName>
+    <RootNamespace>RoadNetworkVisualiser</RootNamespace>
+    <AssemblyName>RoadNetworkVisualiser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -34,59 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DisplayOutputter.cs" />
-    <Compile Include="Finder.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoadNetworkFinder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RoadNetworkFinder.designer.cs">
-      <DependentUpon>RoadNetworkFinder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RoadNetworkVisualiser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RoadNetworkVisualiser.designer.cs">
-      <DependentUpon>RoadNetworkVisualiser.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="RoadNetworkFinder.resx">
-      <DependentUpon>RoadNetworkFinder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RoadNetworkVisualiser.resx">
-      <DependentUpon>RoadNetworkVisualiser.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
       <Project>{25B2A245-A242-4F2A-9E82-B73AA0FCC04D}</Project>
       <Name>GeneticEnginePlugin</Name>
@@ -99,10 +46,32 @@
       <Project>{43B8DC23-D614-4789-B165-F7A07D120FF8}</Project>
       <Name>RoadNetworkDisplay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RoadNetworkGUI\RoadNetworkGUI.csproj">
+      <Project>{E3817792-2F45-4367-9276-C92BE60B07E2}</Project>
+      <Name>RoadNetworkGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RoadNetworkSolver\RoadNetworkSolver.csproj">
+      <Project>{A84AB4C9-874D-42EF-8C44-BF6EA7DDF846}</Project>
+      <Name>RoadNetworkSolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RoadNetworkTesting\RoadNetworkTesting.csproj">
+      <Project>{A839B920-DD1F-46AC-AD58-9578F165004D}</Project>
+      <Name>RoadNetworkTesting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoadNetwork\RoadNetwork.csproj">
       <Project>{C4068805-3271-40DE-9707-8A83478F2D8C}</Project>
       <Name>RoadNetwork</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Activities.Core.Presentation" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

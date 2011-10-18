@@ -139,7 +139,7 @@ namespace GeneticEngineTesting
             //testEngine.Reset();
             testEngine.Run();
             int[] countNumber;
-            Boolean passed = true;
+            //Boolean passed = true;
             countNumber = new int[100];
             currentGeneration = testEngine.Generation;
             int temp = 0;
@@ -201,13 +201,14 @@ namespace GeneticEngineTesting
           */
         
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestC1()
         {
             ArrayList individuals = new ArrayList();
             //Argument for ery vertex can be reached from every other vertexRoadNetworkPopulator?
-            Populator thePopulator = new Populator("C:/map.xml");
+            Populator thePopulator = new Populator("map.xml");
             thePopulator.Populate(individuals);
-            Map theMap = Map.FromFile("C:/map.xml");
+            Map theMap = Map.FromFile("map.xml");
             //Assert.AreSame(theMap.Start, -1);
             //Assert.AreSame(theMap.End, -1);
 
@@ -231,14 +232,16 @@ namespace GeneticEngineTesting
             }
             Assert.IsTrue(passed);
         }
+
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestC2()
         {
             ArrayList individuals = new ArrayList();
             //Argument for ery vertex can be reached from every other vertexRoadNetworkPopulator?
-            StepPopulator thePopulator = new StepPopulator("C:/map.xml");
+            StepPopulator thePopulator = new StepPopulator("map.xml");
             thePopulator.Populate(individuals);
-            Map theMap = Map.FromFile("C:/map.xml");
+            Map theMap = Map.FromFile("map.xml");
             //Assert.AreSame(theMap.Start, -1);
             //Assert.AreSame(theMap.End, -1);
 
@@ -262,14 +265,16 @@ namespace GeneticEngineTesting
             }
             Assert.IsTrue(passed);
         }
+
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestC3()
         {
             ArrayList individuals = new ArrayList();
             //Argument for ery vertex can be reached from every other vertexRoadNetworkPopulator?
-            StepCyclePopulator thePopulator = new StepCyclePopulator("C:/map.xml");
+            StepCyclePopulator thePopulator = new StepCyclePopulator("map.xml");
             thePopulator.Populate(individuals);
-            Map theMap = Map.FromFile("C:/map.xml");
+            Map theMap = Map.FromFile("map.xml");
             //Assert.AreSame(theMap.Start, -1);
             //Assert.AreSame(theMap.End, -1);
 
@@ -295,6 +300,7 @@ namespace GeneticEngineTesting
         }
         
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestD1()
         {
             Mutator RNCO = new Mutator(null);
@@ -304,7 +310,7 @@ namespace GeneticEngineTesting
             Vertex[] theVertices = new Vertex[5];
             RoadNetwork theRoad;
             Map theMap;
-            theMap = Map.FromFile("C:/map.xml");
+            theMap = Map.FromFile("map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -354,6 +360,7 @@ namespace GeneticEngineTesting
         }
         
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestD2()
         {
             Conjugator RNCO = new Conjugator(null);
@@ -362,7 +369,7 @@ namespace GeneticEngineTesting
             //Populate with identical entries.
             RoadNetwork theRoad;
             Vertex[] theVertices = new Vertex[5];
-            Map theMap = null;
+            Map theMap = Map.FromFile("map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -411,6 +418,7 @@ namespace GeneticEngineTesting
         }
 
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestD3()
         {
             StepMutator SM = new StepMutator(null);
@@ -420,7 +428,7 @@ namespace GeneticEngineTesting
             Vertex[] theVertices = new Vertex[5];
             RoadNetwork theRoad;
             Map theMap;
-            theMap = Map.FromFile("C:/map.xml");
+            theMap = Map.FromFile("map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -470,6 +478,7 @@ namespace GeneticEngineTesting
         }
 
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestD4()
         {
             StepConjugator SC = new StepConjugator(null);
@@ -478,7 +487,7 @@ namespace GeneticEngineTesting
             //Populate with identical entries.
             RoadNetwork theRoad;
             Vertex[] theVertices = new Vertex[5];
-            Map theMap = null;
+            Map theMap = Map.FromFile("map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -527,6 +536,7 @@ namespace GeneticEngineTesting
         }
 
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestD5()
         {
             AllInOneOperator AIOO = new AllInOneOperator(null);
@@ -535,7 +545,7 @@ namespace GeneticEngineTesting
             //Populate with identical entries.
             RoadNetwork theRoad;
             Vertex[] theVertices = new Vertex[5];
-            Map theMap = null;
+            Map theMap = Map.FromFile("map.xml");
             ArrayList RN = new ArrayList();
             for (int i = 0; i < 10; i++)
             {
@@ -588,7 +598,7 @@ namespace GeneticEngineTesting
         public void TestE1()
         {
             Evaluator RoadEvaluator = new Evaluator(null);            
-            GenerationIndex results = GenerationIndex.Load("C:/index.xml");            
+            GenerationIndex results = GenerationIndex.Load("index.xml");            
             AATreeGeneration temp = new AATreeGeneration();
             for (int i = 0; i < results.Count; i++)
             {
@@ -600,10 +610,11 @@ namespace GeneticEngineTesting
         }
         
         [TestMethod]
+        [DeploymentItem("map.xml")]
         public void TestF1() {
-            RoadNetworkXmlOutputter RNO = new RoadNetworkXmlOutputter("C:/map.xml");
+            RoadNetworkXmlOutputter RNO = new RoadNetworkXmlOutputter("map.xml");
             Map theMap;
-            theMap = Map.FromFile("C:/map.xml");
+            theMap = Map.FromFile("map.xml");
             Vertex[] theVertices = new Vertex[4];
             RoadNetwork RN1 = new RoadNetwork(theMap);
                 theVertices[0] = ((RoadNetwork)RN1).AddVertex(0, 0);

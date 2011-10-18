@@ -1,5 +1,8 @@
 ﻿namespace RoadNetworkDisplay
 {
+    /// <summary>
+    /// Displays a RoadNetwork
+    /// </summary>
     partial class RoadNetworkPanel
     {
         /// <summary>

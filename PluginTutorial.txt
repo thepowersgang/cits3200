@@ -1,0 +1,21 @@
+----------------------------------------------PLUGIN TUTORIAL-------------------------------------------------------
+----------------------------------By Rohit Gopalan, John Hodge and Alwyn Kyi -------------------------------------------------
+This is a tutorial on how to create plugins which can be loaded by the RoadNetworkFinder
+User Interface. 
+1. Create a new C# class file in the preferred plugin directory
+2. Make sure you have added the library references in your plugin class
+3. There are 6 interface types which can be used to write plugins and they are defined in the GeneticAlgorithm.Plugin namespace 
+   They are the IPopulator, IEvaluator, IGeneticOperator, ITerminator, IOutputter, IGenerationFactory.
+   To implement any of these interface types the user has to follow the format 
+   class <classname> : <interface type> where ':' is shorthand notation for implement.
+   For example class Populator :  IPopulator
+4. Sometimes, the user will need to declare a constructor that implements the implemented interface class. 
+   Do the following, public <classname>(<attributes>) : base(<attributes>) which will implement the 
+   constructor of the interface class. Just make sure that the attributes in the plugin class constructo meet with 
+   the attributes of the interface constructor.
+5. Take note of the method signatures of the interface class. Make sure you meet the method names and its parameters
+   precisely otherwise there will be compliation errors
+6. Then make sure all of the methods from the interface class are included in the plugin. Otherwise, compilation 
+   errors will occur.  
+7. To guide you through the 6 steps, please go through all of the provided plugin classes in the RoadNetworkSolver 
+   project in the GeneticEngine.sln file. 
