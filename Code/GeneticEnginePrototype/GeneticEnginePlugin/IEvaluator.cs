@@ -12,7 +12,8 @@ namespace GeneticAlgorithm.Plugin
     public interface IEvaluator
     {
         /// <summary>
-        /// Prepare the evaluator to process a new genration of individuals
+        /// Prepare the evaluator to process a new generation of individuals.
+        /// The GeneticEngine calls this once for each generation before the individuals are evaluated.
         /// </summary>
         /// <param name="generationCount">The number of previous generations</param>
         /// <param name="individuals">The individuals which will be evaluated</param>
@@ -20,6 +21,7 @@ namespace GeneticAlgorithm.Plugin
 
         /// <summary>
         /// Evaluate an individual
+        /// The GeneticEngine calls this once for every individual in every generation
         /// </summary>
         /// <param name="individual">The individual to evaluate</param>
         /// <returns>The fitness value of the individual</returns>

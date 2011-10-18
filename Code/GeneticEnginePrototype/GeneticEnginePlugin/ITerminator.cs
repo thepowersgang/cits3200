@@ -12,6 +12,8 @@ namespace GeneticAlgorithm.Plugin
     {
         /// <summary>
         /// Determine if a generation satisfies the termination condition.
+        /// When run() has been called on the GeneticEngine this once every generation.
+        /// The GeneticEngine will terminate when this returns true.
         /// </summary>
         /// <param name="generation">The generation</param>
         /// <returns>True iff the generation satisfies the termination condition</returns>

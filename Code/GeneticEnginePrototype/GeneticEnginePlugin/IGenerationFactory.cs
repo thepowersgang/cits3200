@@ -13,6 +13,7 @@ namespace GeneticAlgorithm.Plugin
     {
         /// <summary>
         /// Get an empty instance of an implementation of the IGeneration interface
+        /// The GeneticEngine calls this once every generation.
         /// </summary>
         /// <param name="individuals">The individuals which will eventually populate the generation</param>
         /// <returns>An empty generation</returns>

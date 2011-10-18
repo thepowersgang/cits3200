@@ -12,7 +12,9 @@ namespace GeneticAlgorithm.Plugin
     public interface IGeneticOperator
     {
         /// <summary>
-        /// Process a generation to produce the individuals which will make up the next generation
+        /// Process a generation to produce the individuals which will make up the next generation.
+        /// The GeneticEngine calls this once every generation after the individuals have been evaluated
+        /// and the generation has been outputted.
         /// </summary>
         /// <param name="source">The current generation</param>
         /// <param name="destination">An empty collection of individuals to be populated</param>

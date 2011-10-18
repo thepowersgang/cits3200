@@ -20,13 +20,13 @@ namespace GeneticAlgorithm.Plugin
 
         /// <summary>
         /// Prepare to start outputting generations.
-        /// Called before writing whenever Status is Closed
+        /// The GeneticEngine calls this before outputting a generation whenever Status is Closed
         /// </summary>
         void OpenOutput();
         
         /// <summary>
         /// Output a generation.
-        /// Called by the GeneticEngine once every generation after all individuals have been evaluated.
+        /// The GeneticEngine calls this once every generation after all individuals have been evaluated.
         /// </summary>
         /// <param name="generation">The generation to output</param>
         /// <param name="generationNumber">The number of generations before this one</param>
