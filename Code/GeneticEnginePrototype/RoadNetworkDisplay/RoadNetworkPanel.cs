@@ -22,8 +22,8 @@ namespace RoadNetworkDisplay
         /// </summary>
         public RoadNetworkPanel()
         {
-            InitializeComponent();
-
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint|ControlStyles.UserPaint|ControlStyles.DoubleBuffer, true);
+            InitializeComponent();            
         }
 
         /// <summary>
