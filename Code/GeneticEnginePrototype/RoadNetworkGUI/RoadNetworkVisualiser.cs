@@ -85,6 +85,7 @@ namespace RoadNetworkGUI
                     throw new Exception("Results XML file must have <results> element as root.");
                 }
                 results = new GenerationIndex(filename,reader);
+                drawIndividual(0, 0);
                 maxGeneration.Text = "Max : " + (results.Count-1);
                 
             }
@@ -116,6 +117,7 @@ namespace RoadNetworkGUI
                 }
                 else
                 {
+                    drawIndividual(0, GenerationIndex);
                     maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count-1);
                     individual.Value = 0;
                 }
@@ -135,14 +137,19 @@ namespace RoadNetworkGUI
             }
             else
             {
-                IndividualIndex = (int)(individual.Value);
-                IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(), null);
-                IndividualWithFitness iwf = generation[IndividualIndex];
-                uint fitness = iwf.Fitness;
-                fitnessLabel.Text = fitness.ToString();
-                visualiser2.Network = (RoadNetwork)iwf.Individual;
+                drawIndividual((int)individual.Value, GenerationIndex);
             }
         }
 
+
+        private void drawIndividual(int IndividualIndex, int GenerationIndex)
+        {
+            this.IndividualIndex = IndividualIndex;
+            IGeneration generation = results[GenerationIndex].LoadGeneration(new RoadNetworkReader(), null);
+            IndividualWithFitness iwf = generation[IndividualIndex];
+            uint fitness = iwf.Fitness;
+            fitnessLabel.Text = fitness.ToString();
+            visualiser2.Network = (RoadNetwork)iwf.Individual;
+        }
     }
 }
