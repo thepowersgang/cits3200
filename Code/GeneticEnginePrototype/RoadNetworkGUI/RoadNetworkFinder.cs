@@ -435,7 +435,7 @@ namespace RoadNetworkGUI
         private void loadMapFile()
         {
             OpenMap.Title = "Select Map File";
-            OpenMap.Filter = "XML Files (*.xml)|*.xml";
+            OpenMap.Filter = "XML Files (*.XML)|*.xml";
             OpenMap.FilterIndex = 0;
             if (!String.IsNullOrWhiteSpace(tbMapFile.Text))
             {
@@ -470,7 +470,7 @@ namespace RoadNetworkGUI
         private void selectOutputFile()
         {
             SelectOutput.Title = "Select Output File";
-            SelectOutput.Filter = "XML Files (*.xml)|*.xml";
+            SelectOutput.Filter = "XML Files (*.XML)|*.xml";
             SelectOutput.FilterIndex = 0;
             SelectOutput.CheckFileExists = false;
             if (!String.IsNullOrWhiteSpace(tbOutputFile.Text))
