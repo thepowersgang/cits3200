@@ -163,6 +163,9 @@ namespace GeneticAlgorithm
             Setup();            
         }
 
+        /// <summary>
+        /// Call CloseOutput on the IOutputter its status is Open
+        /// </summary>
         public void FinishOutput()
         {
             if (outputter != null && outputter.Status == OutputterStatus.Open)
@@ -307,6 +310,9 @@ namespace GeneticAlgorithm
             }
         }
 
+        /// <summary>
+        /// Stop the GeneticEngine from starting the next generation when it is running multiple generations.
+        /// </summary>
         public void Stop()
         {
             run = false;

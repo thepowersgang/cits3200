@@ -91,6 +91,10 @@ namespace RoadNetworkDefinition
             }
         }
 
+        /// <summary>
+        /// Initialise a Map from XML
+        /// </summary>
+        /// <param name="reader">The XmlReader to load from.</param>
         public Map(XmlReader reader)
         {
             string widthString = reader.GetAttribute("width");
@@ -133,6 +137,10 @@ namespace RoadNetworkDefinition
             }
         }
         
+        /// <summary>
+        /// Write this Map to XML
+        /// </summary>
+        /// <param name="writer">The XmlWriter to write to.</param>
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("map");
@@ -168,6 +176,11 @@ namespace RoadNetworkDefinition
             return towns[index];
         }
 
+        /// <summary>
+        /// Load a Map from a file.
+        /// </summary>
+        /// <param name="filename">The file to load from.</param>
+        /// <returns>The Map loaded.</returns>
         public static Map FromFile(string filename)
         {
             XmlTextReader reader = new XmlTextReader(filename);

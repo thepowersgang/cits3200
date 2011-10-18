@@ -20,7 +20,7 @@ namespace GeneticAlgorithm.Plugin.Generic
         /// <summary>
         /// Initializes a new instance of the <see cref="FitnessThresholdTerminator"/> class and sets the fitness threshold.
         /// </summary>
-        /// <param name="config">An object which will will be cast as a uint to give the threshold.</param>
+        /// <param name="threshold">An object which will will be cast as a uint to give the threshold.</param>
         public FitnessThresholdTerminator(uint threshold)
         {
             this.threshold = threshold;

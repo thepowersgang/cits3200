@@ -10,6 +10,9 @@ namespace GeneticAlgorithm.Plugin
     /// </summary>
     public interface IOutputter
     {
+        /// <summary>
+        /// Gets the current status of the IOutputter
+        /// </summary>
         OutputterStatus Status
         {
             get;
@@ -17,18 +20,21 @@ namespace GeneticAlgorithm.Plugin
 
         /// <summary>
         /// Prepare to start outputting generations.
+        /// Called before writing whenever Status is Closed
         /// </summary>
         void OpenOutput();
         
         /// <summary>
-        /// Output a generation
+        /// Output a generation.
+        /// Called by the GeneticEngine once every generation after all individuals have been evaluated.
         /// </summary>
         /// <param name="generation">The generation to output</param>
-        /// <param name="genrationCount">The number of generations before this one</param>
+        /// <param name="generationNumber">The number of generations before this one</param>
         void OutputGeneration(IGeneration generation, int generationNumber);
 
         /// <summary>
-        /// Clean up after outputting generations.
+        /// Finish outputting generations.
+        /// Called when FinishOutput() or Reset() is called on the GeneticEngine.
         /// </summary>
         void CloseOutput();
     }
