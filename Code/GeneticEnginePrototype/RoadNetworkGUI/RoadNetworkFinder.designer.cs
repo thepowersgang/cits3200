@@ -2,6 +2,9 @@
 using System.Windows.Forms;
 namespace RoadNetworkGUI
 {
+    /// <summary>
+    /// Provides a GUI to the GeneticEngine for running genetic algorithms with RoadNetwork plugins
+    /// </summary>
     partial class RoadNetworkFinder
     {
         /// <summary>
