@@ -139,7 +139,7 @@ namespace GeneticEngineTesting
             //testEngine.Reset();
             testEngine.Run();
             int[] countNumber;
-            Boolean passed = true;
+            //Boolean passed = true;
             countNumber = new int[100];
             currentGeneration = testEngine.Generation;
             int temp = 0;
