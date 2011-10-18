@@ -36,12 +36,12 @@ namespace RoadNetworkDisplay
                     network = value;
                     xWidth = Width / network.Map.Width;
                     yHeight = Height / network.Map.Height;
+                    
                     networkBeenGiven = true;
                 }
                 Invalidate();
             }
         }
-
         private void RoadNetworkPanel_Paint(object sender, PaintEventArgs e)
         {
             if (networkBeenGiven)
@@ -57,8 +57,8 @@ namespace RoadNetworkDisplay
             {
                 Coordinates start = network.Map.Start;
                 Coordinates end = network.Map.End;
-                e.Graphics.FillEllipse(Brushes.Green, (int) (start.X * xWidth),(int) (start.Y * yHeight), 10, 10);
-                e.Graphics.FillEllipse(Brushes.Green, (int) (end.X * xWidth), (int)(end.Y * yHeight), 10, 10);
+                e.Graphics.FillEllipse(Brushes.Green, (int) (start.X * xWidth)-5,(int) (start.Y * yHeight)-5, 10, 10);
+                e.Graphics.FillEllipse(Brushes.Green, (int) (end.X * xWidth)-5, (int)(end.Y * yHeight)-5, 10, 10);
             }
         }
         private void drawTowns(PaintEventArgs e)
@@ -70,7 +70,7 @@ namespace RoadNetworkDisplay
                     Coordinates town = network.Map.GetTown(i);
                     int X = (int)(town.X * xWidth);
                     int Y = (int) (town.Y * yHeight);
-                    e.Graphics.FillEllipse(Brushes.Red, X, Y, 10, 10);
+                    e.Graphics.FillEllipse(Brushes.Red, X-5, Y-5, 10, 10);
                 }
             }
         }
@@ -81,12 +81,12 @@ namespace RoadNetworkDisplay
                 Coordinates startCoordinates = network.Map.Start;
                 int startX = (int)(xWidth * startCoordinates.X);
                 int startY = (int)(yHeight * startCoordinates.Y);
-                e.Graphics.FillEllipse(Brushes.Green, startX, startY, 10, 10);
+                e.Graphics.FillEllipse(Brushes.Green, startX-5, startY-5, 10, 10);
 
                 Coordinates endCoordinates = network.Map.End;
                 int endX = (int)(xWidth * endCoordinates.X);
                 int endY = (int)(yHeight * endCoordinates.Y);
-                e.Graphics.FillEllipse(Brushes.Green, endX, endY, 10, 10);
+                e.Graphics.FillEllipse(Brushes.Green, endX-5, endY-5, 10, 10);
 
                 for (int i = 0; i < network.EdgeCount; i++)
                 {
@@ -99,5 +99,16 @@ namespace RoadNetworkDisplay
                 }
             }
         }
+
+        private void RoadNetworkPanel_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RoadNetworkPanel_Resize(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

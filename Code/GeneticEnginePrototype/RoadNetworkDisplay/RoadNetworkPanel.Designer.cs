@@ -39,6 +39,7 @@
             this.Name = "RoadNetworkPanel";
             this.Size = new System.Drawing.Size(148, 148);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.RoadNetworkPanel_Paint);
+            this.Resize += new System.EventHandler(this.RoadNetworkPanel_Resize);
             this.ResumeLayout(false);
 
         }

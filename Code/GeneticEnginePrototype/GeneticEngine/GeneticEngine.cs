@@ -16,42 +16,44 @@ namespace GeneticAlgorithm
         /// <summary>
         /// The populator plugin
         /// </summary>
-        IPopulator populator;
+        private IPopulator populator;
         
         /// <summary>
         /// The evaluator plugin
         /// </summary>
-        IEvaluator evaluator;
+        private IEvaluator evaluator;
 
         /// <summary>
         /// The gentic operator plugin
         /// </summary>
-        IGeneticOperator geneticOperator;
+        private IGeneticOperator geneticOperator;
 
         /// <summary>
         /// The termination condition plugin
         /// </summary>
-        ITerminator terminator;
+        private ITerminator terminator;
 
         /// <summary>
         /// The output plugin
         /// </summary>
-        IOutputter outputter;
+        private IOutputter outputter;
 
         /// <summary>
         /// The generation factory plugin
         /// </summary>
-        IGenerationFactory generationFactory;
+        private IGenerationFactory generationFactory;
 
         /// <summary>
         /// The number of generations which have been processed
         /// </summary>
-        int generationNumber;
+        private int generationNumber;
 
         /// <summary>
         /// The most recent generation
         /// </summary>
-        IGeneration generation = null;
+        private IGeneration generation = null;
+
+        private bool run;
 
         /// <summary>
         /// Get the number of generations before the current generation.
@@ -82,10 +84,17 @@ namespace GeneticAlgorithm
         {
             get
             {
-                return generation != null && terminator.Terminate(generation);
+                try
+                {
+                    return generation != null && terminator.Terminate(generation);
+                }
+                catch (Exception ex)
+                {
+                    throw new GeneticEngineException(GeneticEngineException.Plugin.Terminator, "Error testing termination condition.", ex);
+                }
             }
         }
-
+        
         /// <summary>
         /// Initialise a new instance of the GeneticEngine class with the supplied plug-ins and populate the initial generation.
         /// </summary>
@@ -99,22 +108,22 @@ namespace GeneticAlgorithm
         {
             if (populator == null)
             {
-                throw new ArgumentException("Populator must not be null.", "populator");
+                throw new GeneticEngineException("populator must not be null");
             }
 
             if (evaluator == null)
             {
-                throw new ArgumentException("Evaluator must not be null.", "evaluator");
+                throw new GeneticEngineException("pvaluator must not be null");
             }
 
             if (geneticOperator == null)
             {
-                throw new ArgumentException("Genetic operator must not be null.", "geneticOperator");
+                throw new GeneticEngineException("geneticOperator must not be null");
             }
 
             if (terminator == null)
             {
-                throw new ArgumentException("Terminator must not be null.", "terminator");
+                throw new GeneticEngineException("terminator must not be null");
             }
 
             this.populator = populator;            
@@ -131,7 +140,16 @@ namespace GeneticAlgorithm
         {
             generationNumber = -1;
             ArrayList individuals = new ArrayList();
-            populator.Populate(individuals);
+
+            try
+            {
+                populator.Populate(individuals);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneticEngineException(GeneticEngineException.Plugin.Populator, "Error generating initial population.", ex);
+            }
+
             processIndividuals(individuals);                  
         }
 
@@ -149,7 +167,14 @@ namespace GeneticAlgorithm
         {
             if (outputter != null && outputter.Status == OutputterStatus.Open)
             {
-                outputter.CloseOutput();
+                try
+                {
+                    outputter.CloseOutput();
+                }
+                catch (Exception ex)
+                {
+                    throw new GeneticEngineException(GeneticEngineException.Plugin.Outputter, "Error closing outputter.", ex);
+                }
             }
         }
 
@@ -159,8 +184,17 @@ namespace GeneticAlgorithm
         public void Step()
         {
             ArrayList individuals = new ArrayList();
-            geneticOperator.Operate(generation, individuals);
-            processIndividuals(individuals);
+
+            try
+            {
+                geneticOperator.Operate(generation, individuals);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneticEngineException(GeneticEngineException.Plugin.GeneticOperator, "Error operating on generation.", ex);
+            }
+
+            processIndividuals(individuals);            
         }
 
         /// <summary>
@@ -173,19 +207,47 @@ namespace GeneticAlgorithm
         private void processIndividuals(ArrayList individuals)
         {
             //Get a new instance of the generation container.
-            generation = generationFactory.CreateGeneration(individuals);
+            try
+            {
+                generation = generationFactory.CreateGeneration(individuals);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneticEngineException(GeneticEngineException.Plugin.GenerationFactory, "Error getting empty generation.", ex);
+            }
 
             //Inform the evaluator that an new generation has been started.
-            evaluator.Initialise(generationNumber, individuals);
-
+            try
+            {
+                evaluator.Initialise(generationNumber, individuals);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneticEngineException(GeneticEngineException.Plugin.Evaluator, "Error initialising evaluator.", ex);
+            }
+            
             //Evaluate each individual and add it to the generation.
             foreach (object individual in individuals)
             {
-                generation.Insert(individual, evaluator.Evaluate(individual));
+                try
+                {
+                    generation.Insert(individual, evaluator.Evaluate(individual));
+                }
+                catch (Exception ex)
+                {
+                    throw new GeneticEngineException(GeneticEngineException.Plugin.Generation, "Error adding individual to generation.", ex);
+                }
             }
 
             //Perform any preparation the generation needs before being given to the outputter or genetic operator plug-ins.
-            generation.Prepare();
+            try
+            {
+                generation.Prepare();
+            }
+            catch (Exception ex)
+            {
+                throw new GeneticEngineException(GeneticEngineException.Plugin.Generation, "Error preparing generation.", ex);
+            }
 
             //Increment the generation counter.
             generationNumber++;
@@ -195,12 +257,26 @@ namespace GeneticAlgorithm
             {
                 if (outputter.Status == OutputterStatus.Closed)
                 {
-                    outputter.OpenOutput();
+                    try
+                    {
+                        outputter.OpenOutput();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new GeneticEngineException(GeneticEngineException.Plugin.Outputter, "Error opening outputter.", ex);
+                    }
                 }
 
                 if (outputter.Status == OutputterStatus.Open)
                 {
-                    outputter.OutputGeneration(generation, generationNumber);
+                    try
+                    {
+                        outputter.OutputGeneration(generation, generationNumber);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new GeneticEngineException(GeneticEngineException.Plugin.Outputter, "Error outputting generation.", ex);
+                    }
                 }
             }
         }
@@ -211,7 +287,9 @@ namespace GeneticAlgorithm
         /// <param name="n">The number of generations to process.</param>
         public void Repeat(int n)
         {
-            for (int i = 0; i < n; i++)
+            run = true;
+            int i = 0;
+            while (run && i++ < n)
             {
                 Step();
             }
@@ -222,10 +300,16 @@ namespace GeneticAlgorithm
         /// </summary>
         public void Run()
         {
-            while (!IsComplete)
+            run = true;
+            while (run && !IsComplete)
             {
                 Step();
             }
+        }
+
+        public void Stop()
+        {
+            run = false;
         }
     }
 }

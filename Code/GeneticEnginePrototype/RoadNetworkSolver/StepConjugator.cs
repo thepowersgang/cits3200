@@ -8,11 +8,11 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
-    public class ConjugationOperator : IGeneticOperator
+    public class StepConjugator : IGeneticOperator
     {
-        Random random = new Random();
+        private static Random random = new Random();
 
-        public ConjugationOperator(object config)
+        public StepConjugator(object config)
         {
         }
 
@@ -48,7 +48,7 @@ namespace RoadNetworkSolver
             }
         }
 
-        private void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
+        public static void Conjugate(RoadNetwork parent1, RoadNetwork parent2, out RoadNetwork child1, out RoadNetwork child2)
         {   
             Cut(parent1);
             Cut(parent2);
@@ -74,16 +74,16 @@ namespace RoadNetworkSolver
             child1 = new RoadNetwork(parent1.Map);
             child2 = new RoadNetwork(parent2.Map);
 
-            child1.CopyVertices(startVertexPartition1);
+            child1.CopyVerticesUnique(startVertexPartition1);
             child1.CopyEdges(startEdgePartition1);
             
-            child1.CopyVertices(endVertexPartition2);
+            int endIndex1 = child1.CopyVerticesUnique(endVertexPartition2);
             child1.CopyEdges(endEdgePartition2);
                         
-            child2.CopyVertices(startVertexPartition2);
+            child2.CopyVerticesUnique(startVertexPartition2);
             child2.CopyEdges(startEdgePartition2);
-            
-            child2.CopyVertices(endVertexPartition1);
+
+            int endIndex2 = child2.CopyVerticesUnique(endVertexPartition1);
             child2.CopyEdges(endEdgePartition1);
             
             ShuffleEdges(brokenEdgePartition1);
@@ -102,14 +102,17 @@ namespace RoadNetworkSolver
                 GetStartAndEnd(brokenEdgePartition2, i, endVertexPartition2, startVertexPartition2, out start2, out end2);
 
                 if (start1 != null && start2 != null)
-                {
-                    child2.AddEdge(start1.Copy, end2.Copy);
-                    child1.AddEdge(start2.Copy, end1.Copy);
+                {                    
+                    StepMutator.StepPath(child1, start2.Copy, end1.Copy);
+                    StepMutator.StepPath(child2, start1.Copy, end2.Copy);
                 }
             }
+
+            child1.SetEnd(endIndex1);
+            child2.SetEnd(endIndex2);
         }
 
-        private void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
+        private static void GetStartAndEnd(List<Edge> brokenEdges, int index, List<Vertex> visitedVertices, List<Vertex> unvisitedVertices, out Vertex start, out Vertex end)
         {
             if (index < brokenEdges.Count)
             {
@@ -138,7 +141,7 @@ namespace RoadNetworkSolver
             }
         }
 
-        private void ShuffleEdges(List<Edge> edges)
+        private static void ShuffleEdges(List<Edge> edges)
         {
             for (int i = edges.Count-1; i > 0 ; i--)
             {
@@ -149,7 +152,7 @@ namespace RoadNetworkSolver
             }
         }
                 
-        public void Cut(RoadNetwork network)
+        public static void Cut(RoadNetwork network)
         {
             network.SetBroken(false);
 
@@ -159,6 +162,5 @@ namespace RoadNetworkSolver
                 edges[random.Next(edges.Count)].Broken = true;
             }
         }
-        
     }
 }

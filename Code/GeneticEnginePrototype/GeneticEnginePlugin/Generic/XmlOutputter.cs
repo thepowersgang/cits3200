@@ -26,6 +26,11 @@ namespace GeneticAlgorithm.Plugin.Generic
  
         public XmlOutputter(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException("path must not be null");
+            }
+
             this.path = path;
             index = new GenerationIndex(path);
             directory = Path.GetDirectoryName(path);

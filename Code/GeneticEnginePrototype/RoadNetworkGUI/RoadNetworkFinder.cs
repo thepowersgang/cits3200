@@ -20,21 +20,23 @@ namespace RoadNetworkGUI
 {
     public partial class RoadNetworkFinder : Form
     {
-        bool hasInitialised, hasCompleted;
-        string fullDLLPath = "";
-        IPopulator populator;
-        IEvaluator evaluator;
-        IGeneticOperator geneticOperator;
-        ITerminator terminator;
-        IGenerationFactory generationFactory;
-        PluginLoader loader;
-        GeneticEngine engine;
-        List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
-        List<Coordinates> towns = new List<Coordinates>();
-        Map map;
-        DisplayOutputter displayOutputter;
-        IOutputter outputter;
-        XmlOutputter xmlOutputter;
+        private bool hasInitialised, hasCompleted;
+        private bool engineRunning;
+        private string fullDLLPath = "";
+        private IPopulator populator;
+        private IEvaluator evaluator;
+        private IGeneticOperator geneticOperator;
+        private ITerminator terminator;
+        private IGenerationFactory generationFactory;
+        private PluginLoader loader;
+        private GeneticEngine engine;
+        private List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
+        private List<Coordinates> towns = new List<Coordinates>();
+        private Map map;
+        private DisplayOutputter displayOutputter;
+        private IOutputter outputter;
+        private string noOutputterString = "[none]";
+        private string defaultGenerationFactoryString = "[default]";
 
         public RoadNetworkFinder()
         {
@@ -57,7 +59,15 @@ namespace RoadNetworkGUI
          */ 
         private void libraryLoaderButton_Click(object sender, EventArgs e)
         {
-            if (isOK(LoadLibrary,"library"))
+            LoadLibrary.Title = "Select A Plug-in Library";
+            LoadLibrary.Filter = "Libraries (*.DLL)|*.dll";
+            LoadLibrary.FilterIndex = 0;
+            if (!String.IsNullOrWhiteSpace(fullDLLPath))
+            {
+                LoadLibrary.InitialDirectory = Path.GetDirectoryName(fullDLLPath);
+            }
+
+            if (LoadLibrary.ShowDialog() == DialogResult.OK)
             {
                 loader = new PluginLoader();
                 loader.LoadDll(LoadLibrary.FileName);
@@ -69,7 +79,9 @@ namespace RoadNetworkGUI
                 geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
                 terminators = loader.GetPluginNames(typeof(ITerminator));
                 outputters = loader.GetPluginNames(typeof(IOutputter));
+                outputters.Add(noOutputterString);
                 generationFactories = loader.GetPluginNames(typeof(IGenerationFactory));
+                generationFactories.Add(defaultGenerationFactoryString);
                 initPluginDropDowns();
             }
         }
@@ -81,7 +93,7 @@ namespace RoadNetworkGUI
 
         private void outputFileSelectButton_Click(object sender, EventArgs e)
         {
-            loadOutputFile();
+            selectOutputFile();
         }
 
         /*
@@ -95,72 +107,93 @@ namespace RoadNetworkGUI
          */ 
         private void initEngineButton_Click(object sender, EventArgs e)
         {
-            string errorMsg = "";
-            if (cbPopulator.SelectedItem == null) errorMsg += "Populator must not be null\n";
-            else
+            if (!engineRunning)
             {
-                string choice = getChoice(populators, cbPopulator);
-                populator = (IPopulator) loader.GetInstance(choice, (object)tbMapFile.Text);
-            }
-            if (cbEvaluator.SelectedItem == null) errorMsg += "Evaluator must not be null\n";
-            else
-            {
-                string choice = getChoice(evaluators, cbEvaluator);
-                evaluator = (IEvaluator)loader.GetInstance(choice, null);
-            }
-            if (cbGeneticOperator.SelectedItem == null) errorMsg += "Genetic Operator must not be null\n";
-            else
-            {
-                string choice = getChoice(geneticOperators, cbGeneticOperator);
-                geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
-            }
-            if (cbTerminator.SelectedItem == null) errorMsg += "Terminator must not be null\n";
-            else
-            {
-                string choice = getChoice(terminators, cbTerminator);
-                if((int) targetFitness.Value == 0) errorMsg += "Provide a target fitness value greater than 1 for the terminator plug-in\n";
-                else terminator = (ITerminator) loader.GetInstance(choice, (object) (uint)targetFitness.Value);
-            }
-            if (cbOutputter.SelectedItem != null)
-            {                
-                string choice = getChoice(outputters, cbOutputter);
-                if (tbOutputFile.Text == "")
+                SetEngineRunning(true);
+
+                populator = null;
+                evaluator = null;
+                geneticOperator = null;
+                terminator = null;
+                outputter = null;
+                generationFactory = null;
+
+                string errorMsg = "";
+                if (cbPopulator.SelectedItem == null) errorMsg += "Populator must not be null\n";
+                else
                 {
-                    MessageBox.Show("Select an output file for the outputter\n");
+                    string choice = getChoice(populators, cbPopulator);
+                    populator = (IPopulator)loader.GetInstance(choice, (object)tbMapFile.Text);
                 }
-                else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);                
-            }
-            if (cbGenerationFactory.SelectedItem != null)
-            {
-                string choice = getChoice(generationFactories, cbGenerationFactory);
-                generationFactory = (IGenerationFactory)loader.GetInstance(choice, null);
-            }
-            if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n" );
-            else
-            {
-                displayOutputter = new DisplayOutputter(this, outputter);
-                engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
-                stepButton.Enabled = true;
-                runButton.Enabled = true;
-                runGenerationButton.Enabled = true;
-                hasInitialised = true;
-                //setFitnessValues();
+                if (cbEvaluator.SelectedItem == null) errorMsg += "Evaluator must not be null\n";
+                else
+                {
+                    string choice = getChoice(evaluators, cbEvaluator);
+                    evaluator = (IEvaluator)loader.GetInstance(choice, null);
+                }
+                if (cbGeneticOperator.SelectedItem == null) errorMsg += "Genetic Operator must not be null\n";
+                else
+                {
+                    string choice = getChoice(geneticOperators, cbGeneticOperator);
+                    geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
+                }
+                if (cbTerminator.SelectedItem == null) errorMsg += "Terminator must not be null\n";
+                else
+                {
+                    string choice = getChoice(terminators, cbTerminator);
+                    if ((int)targetFitness.Value == 0) errorMsg += "Provide a target fitness value greater than 1 for the terminator plug-in\n";
+                    else terminator = (ITerminator)loader.GetInstance(choice, (object)(uint)targetFitness.Value);
+                }
+                if (cbOutputter.SelectedItem != null)
+                {
+                    string choice = getChoice(outputters, cbOutputter);
+                    if (choice != noOutputterString)
+                    {
+                        if (tbOutputFile.Text == "")
+                        {
+                            MessageBox.Show("Select an output file for the outputter\n");
+                        }
+                        else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                    }
+                }
+                if (cbGenerationFactory.SelectedItem != null)
+                {
+                    string choice = getChoice(generationFactories, cbGenerationFactory);
+                    if (choice != defaultGenerationFactoryString)
+                    {
+                        generationFactory = (IGenerationFactory)loader.GetInstance(choice, null);
+                    }
+                }
+                if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n");
+                else
+                {
+                    displayOutputter = new DisplayOutputter(this, outputter);
+                    engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
+                    hasInitialised = true;
+                }
+
+                SetEngineRunning(false);
             }
         }
 
         private void cleanupButton_Click(object sender, EventArgs e)
         {
-            if (hasInitialised)
+            if (hasInitialised && !engineRunning)
             {
-                //displayOutputter.CloseOutput();
+                SetEngineRunning(true);
                 engine.FinishOutput();
-                cleanupButton.Enabled = false;
-            }
-        }
+                SetEngineRunning(false);
+                hasCompleted = true;
 
-        public void StepEngine()
-        {
-            engine.Step();
+                if (File.Exists(tbOutputFile.Text))
+                {
+                    viewOutputFileButton.Enabled = true;
+                }
+                else
+                {
+                    viewOutputFileButton.Enabled = false;
+                }
+            }
         }
 
         /*
@@ -170,32 +203,23 @@ namespace RoadNetworkGUI
          */ 
         private void stepButton_Click(object sender, EventArgs e)
         {
-            if (hasInitialised)
+            if (hasInitialised && !engineRunning)
             {
-                //displayOutputter.OpenOutput();
-
-                Thread stepThead = new Thread(new ThreadStart(StepEngine));
-                stepThead.Start();
-
-                //setFitnessValues();
-                //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
-                cleanupButton.Enabled = true;
+                SetEngineRunning(true);
+                engine.Step();
+                SetEngineRunning(false);
             }
             else
             {
                 MessageBox.Show("Initialise Generation First\n");
             }
-            if (engine.IsComplete)
-            {
-                hasCompleted = true;
-                viewOutputFileButton.Enabled = true;
-                //writeToXmlFile();
-            }
+
         }
 
         public void RunEngine()
         {            
             engine.Run();
+            SetEngineRunning(false);
         }
 
         /**
@@ -208,28 +232,22 @@ namespace RoadNetworkGUI
         {
             if (hasInitialised)
             {
-                //displayOutputter.OpenOutput();
-
-                Thread runThead = new Thread(new ThreadStart(RunEngine));
-                runThead.Start();
-
-                //setFitnessValues();
-                //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
-                cleanupButton.Enabled = true;
+                if (!engineRunning)
+                {
+                    SetEngineRunning(true);
+                    Thread runThead = new Thread(new ThreadStart(RunEngine));
+                    runThead.Start();
+                }
             }
             else MessageBox.Show("Initialise Generation First\n");
-            if (engine.IsComplete)
-            {
-                hasCompleted = true;
-                viewOutputFileButton.Enabled = true;
-                //writeToXmlFile();
-            }
+
         }
 
         public void RepeatEngine(object obj)
         {
             int n = (int)obj;
             engine.Repeat(n);
+            SetEngineRunning(false);
         }
 
         /**
@@ -248,87 +266,56 @@ namespace RoadNetworkGUI
             {
                 if (hasInitialised)
                 {
-                    //displayOutputter.OpenOutput();
-                    //engine.Repeat((int) n.Value);
-                    Thread repeatThread = new Thread(RepeatEngine);
-                    repeatThread.Start((int)n.Value);
+                    if (!engineRunning)
+                    {
+                        SetEngineRunning(true);
+                        Thread repeatThread = new Thread(RepeatEngine);
+                        repeatThread.Start((int)n.Value);
+                    }
 
-                    //setFitnessValues();
-                    //displayOutputter.OutputGeneration(engine.Generation, engine.GenerationCount);
                     cleanupButton.Enabled = true;
                 }
                 else MessageBox.Show("Initialise Generation First\n");
-                if (engine.IsComplete)
-                {
-                    hasCompleted = true;
-                    viewOutputFileButton.Enabled = true;
-                    //writeToXmlFile();
-                }
+
             }
         }
-
-        /**
-         * these values are obtained from the generation of the engine and are displayed on the interface. 
-          
-        private void setFitnessValues()
-        {
-            maxFitnessValue.Text = engine.Generation.MaxFitness.ToString();
-            averageFitnessValue.Text = engine.Generation.AverageFitness.ToString();
-        }
-         */
+                
         #endregion
         #region File Loading
 
 
-        OpenFileDialog OpenOutput = new OpenFileDialog();
+        OpenFileDialog SelectOutput = new OpenFileDialog();
         OpenFileDialog LoadLibrary = new OpenFileDialog();
         OpenFileDialog OpenMap = new OpenFileDialog();
-        /**
-         * Check if the file is successfully chosen and opened. 
-         */ 
-        private bool isOK(OpenFileDialog openDialog, string type)
-        {
-            switch (type)
-            {
-                case "map":
-                    if (!String.IsNullOrEmpty(tbMapFile.Text))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(tbMapFile.Text);
-                    break;
-                case "library":
-                    if (!String.IsNullOrEmpty(fullDLLPath))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(fullDLLPath);
-                    break;
-                case "output":
-                    if (!String.IsNullOrEmpty(tbOutputFile.Text))
-                        openDialog.InitialDirectory = Path.GetDirectoryName(tbOutputFile.Text);
-                    break;
-            }
-            return (openDialog.ShowDialog() == DialogResult.OK);
-        }
 
         /**
          * Load map file, if the file was successfully loaded by the OpenFileDialog Object 
          */
         private void loadMapFile()
         {
-            if (isOK(OpenMap,"map"))
+            OpenMap.Title = "Select Map File";
+            OpenMap.Filter = "XML Files (*.xml)|*.xml";
+            OpenMap.FilterIndex = 0;
+            if (!String.IsNullOrWhiteSpace(tbMapFile.Text))
+            {
+                OpenMap.InitialDirectory = Path.GetDirectoryName(tbMapFile.Text);
+            }
+
+            if (OpenMap.ShowDialog() == DialogResult.OK)
             {
                 tbMapFile.Text = OpenMap.FileName;
                 string e = Path.GetExtension(tbMapFile.Text);
                 if (String.Equals(e, ".xml"))
                 {
-                    //XmlTextReader reader = new XmlTextReader(tbMapFile.Text);
-                    //map = new Map(reader);
                     map = Map.FromFile(tbMapFile.Text);
-                    visualiser1.Network = new RoadNetwork(map);
-                    //displayOutputter = new DisplayOutputter(visualiser1, outputter);                    
+                    visualiser1.Network = new RoadNetwork(map);                   
                 }
                 else
                 {
-                    MessageBox.Show("Map file should be in xml form. Please reload another file.\n");
+                    MessageBox.Show("Map file should be in xml form. Please select another file.\n");
                 }
             }
-            else if (!isOK(OpenMap,"map") && String.IsNullOrEmpty(tbMapFile.Text))
+            else if (OpenMap.ShowDialog() != DialogResult.OK && String.IsNullOrEmpty(tbMapFile.Text))
             {
                 MessageBox.Show("Select a file so a map can be created on the visualiser\n");
             }
@@ -338,16 +325,46 @@ namespace RoadNetworkGUI
          * Load output file, if the file was successfully loaded by the OpenFileDialog object 
          * otherwise select a new directory to create an output file
          */
-        private void loadOutputFile()
+        private void selectOutputFile()
         {
-            if (isOK(OpenOutput,"output"))
+            SelectOutput.Title = "Select Output File";
+            SelectOutput.Filter = "XML Files (*.xml)|*.xml";
+            SelectOutput.FilterIndex = 0;
+            SelectOutput.CheckFileExists = false;
+            if (!String.IsNullOrWhiteSpace(tbOutputFile.Text))
             {
-                    tbOutputFile.Text = OpenOutput.FileName;
+                SelectOutput.InitialDirectory = Path.GetDirectoryName(tbOutputFile.Text);
+            }
+
+            if (SelectOutput.ShowDialog() == DialogResult.OK)
+            {
+                    tbOutputFile.Text = SelectOutput.FileName;
                     string e = Path.GetExtension(tbOutputFile.Text);
                     if (!String.Equals(e, ".xml"))
                     {
-                        MessageBox.Show("Output file should be in xml form. Please reload another file\n");
+                        MessageBox.Show("Output file should be an xml file.\n");
                     }
+            }
+        }
+
+        private void PopulateComboBox(ComboBox comboBox, List<string> items)
+        {
+            object selectedItem = comboBox.SelectedItem;
+            
+            comboBox.Items.Clear();
+            for (int i = 0; i < items.Count(); i++)
+            {
+                comboBox.Items.Add(items[i]);
+            }
+
+            if (selectedItem != null)
+            {
+                comboBox.SelectedItem = selectedItem;
+            }
+
+            if (comboBox.SelectedItem == null)
+            {
+                comboBox.SelectedIndex = 0;
             }
         }
 
@@ -362,49 +379,31 @@ namespace RoadNetworkGUI
             String errorMsg = "";
             if (populators.Count > 0)
             {
-                for (int i = 0; i < populators.Count; i++)
-                {
-                    cbPopulator.Items.Add(populators[i]);
-                }
+                PopulateComboBox(cbPopulator, populators);
             }
-            else errorMsg += ("No known populators can be loaded. Load another dll file\n");
+            else errorMsg += ("No populators found in library. Please load another dll file.\n");
             if (evaluators.Count > 0)
             {
-                for (int i = 0; i < evaluators.Count; i++)
-                {
-                    cbEvaluator.Items.Add(evaluators[i]);
-                }
+                PopulateComboBox(cbEvaluator, evaluators);
             }
             else errorMsg += ("No known evaluators can be loaded. Load another dll file\n");
             if (geneticOperators.Count > 0)
             {
-                for (int i = 0; i < geneticOperators.Count; i++)
-                {
-                    cbGeneticOperator.Items.Add(geneticOperators[i]);
-                }
+                PopulateComboBox(cbGeneticOperator, geneticOperators);
             }
             else errorMsg += ("No known genetic operators can be loaded. Load another dll file\n");
             if (terminators.Count > 0)
             {
-                for (int i = 0; i < terminators.Count; i++)
-                {
-                    cbTerminator.Items.Add(terminators[i]);
-                }
+                PopulateComboBox(cbTerminator, terminators);
             }
             else errorMsg += ("No known terminators can be loaded. \n");
             if (outputters.Count > 0)
             {
-                for (int i = 0; i < outputters.Count; i++)
-                {
-                    cbOutputter.Items.Add(outputters[i]);
-                }
+                PopulateComboBox(cbOutputter, outputters);
             }
             if (generationFactories.Count > 0)
             {
-                for (int i = 0; i < generationFactories.Count; i++)
-                {
-                    cbGenerationFactory.Items.Add(generationFactories[i]);
-                }
+                PopulateComboBox(cbGenerationFactory, generationFactories);
             }
             if (errorMsg != "") MessageBox.Show(errorMsg);
         }
@@ -437,7 +436,7 @@ namespace RoadNetworkGUI
          */ 
         private void viewOutputFileButton_Click(object sender, EventArgs e)
         {
-            if (hasCompleted)
+            if (hasCompleted && File.Exists(tbOutputFile.Text))
             {
                 this.Dispose(false);
                 Road_Network_Visualiser form = new Road_Network_Visualiser(true,tbOutputFile.Text);
@@ -446,39 +445,6 @@ namespace RoadNetworkGUI
         }
 
         
-        /**
-        * Check if a file has been opened
-        * If not, display an error message
-        * otherwise check if the file is an xml one.
-        * If not, display a different error message
-        * otherwise, create instance of an XmlWriter and write xml stuff to it.  
-        
-        private void writeToXmlFile()
-        {
-            RoadNetwork network = new RoadNetwork(visualiser1.Network);
-            if (tbOutputFile.Text == "")
-            {
-                MessageBox.Show("Should have opened up an XML file by now\n");
-            }
-            string e = Path.GetExtension(tbOutputFile.Text);
-            if (e != ".xml")
-            {
-                MessageBox.Show("File is not a XML File\n");
-            }
-            else
-            {
-                XmlTextWriter writer = new XmlTextWriter(tbOutputFile.Text, Encoding.ASCII);
-                network.WriteXml(writer);
-            }
-        }
-
-        */
-
-        private void tbOutputFile_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private delegate void ShowStatsCallback(uint maxFitness, float averageFitness);
 
         private void ShowStats(uint maxFitness, float averageFitness)
@@ -494,8 +460,67 @@ namespace RoadNetworkGUI
                 visualiser1.Network = (RoadNetwork)generation[0].Individual;                
             }
 
-            this.Invoke(new ShowStatsCallback(this.ShowStats),new object[]{generation.MaxFitness,generation.AverageFitness});
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new ShowStatsCallback(this.ShowStats), new object[] { generation.MaxFitness, generation.AverageFitness });
+            }
+            else
+            {
+                ShowStats(generation.MaxFitness, generation.AverageFitness);
+            }
         }
 
+        private void stopProcessButton_Click(object sender, EventArgs e)
+        {
+            engine.Stop();
+        }
+
+        private delegate void SetEngineRunningCallback(bool engineRunning);
+
+        private void SetEngineRunning(bool engineRunning) {
+
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new SetEngineRunningCallback(SetEngineRunning), new object[] { engineRunning });
+            }
+            else
+            {
+                this.engineRunning = engineRunning;
+
+                if (engineRunning)
+                {
+                    initEngineButton.Enabled = false;
+                    stepButton.Enabled = false;
+                    runButton.Enabled = false;
+                    runGenerationButton.Enabled = false;
+                    cleanupButton.Enabled = false;
+
+                    stopProcessButton.Enabled = true;
+                }
+                else
+                {
+                    initEngineButton.Enabled = true;
+
+                    if (hasInitialised)
+                    {
+                        stepButton.Enabled = true;
+                        runButton.Enabled = true;
+                        runGenerationButton.Enabled = true;
+                        cleanupButton.Enabled = true;
+                    }
+
+                    stopProcessButton.Enabled = false;
+                }
+            }
+        }
+
+        private void RoadNetworkFinder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (engineRunning)
+            {
+                MessageBox.Show("Stop the engine before closing this window.");
+                e.Cancel = true;
+            }
+        }
     }
  }

@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GeneticAlgorithm.Plugin;
 using RoadNetworkDefinition;
+using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    public class Populator : IPopulator
+    class StepPopulator : IPopulator
     {
+        Random random = new Random();
+
         int populationSize = 200;
         Map map;
         
-        public Populator(object config)
+        public StepPopulator(object config)
         {
             map = Map.FromFile((string)config);
         }
@@ -23,18 +25,23 @@ namespace RoadNetworkSolver
         /// </summary>
         /// <param name="individuals">An empty list to populate with the individuals</param>
         public void Populate(ArrayList individuals)
-        {
-            Random random = new Random();
-
-            Mutator mutator = new Mutator(null);
-
+        {            
             RoadNetwork original = new RoadNetwork(map);
-            original.AddEdge(original.AddVertex(map.Start), original.AddVertex(map.End));
+
+            int startIndex = original.AddVertexUnique(map.Start);
+            int endIndex = original.AddVertexUnique(map.End);
+            Vertex start = original.GetVertex(startIndex);
+            Vertex end = original.GetVertex(endIndex);
+
+            StepMutator.StepPath(original, start, end);
+
+            original.SetEnd(endIndex);
+
             individuals.Add(original);
 
             while (individuals.Count < populationSize)
             {
-                individuals.Add(mutator.Mutate((RoadNetwork)individuals[random.Next(individuals.Count)]));
+                individuals.Add(StepMutator.Mutate((RoadNetwork)individuals[random.Next(individuals.Count)]));
             }
         }
     }

@@ -235,7 +235,7 @@ namespace GeneticEngineTesting
         [TestMethod]
         public void TestD1()
         {
-            MutationOperator RNCO = new MutationOperator(null);
+            Mutator RNCO = new Mutator(null);
             AATreeGeneration generation = new AATreeGeneration();
             ArrayList individuals = new ArrayList();
             //Populate with identical entries.
@@ -294,7 +294,7 @@ namespace GeneticEngineTesting
         [TestMethod]
         public void TestD2()
         {
-            ConjugationOperator RNCO = new ConjugationOperator(null);
+            Conjugator RNCO = new Conjugator(null);
             AATreeGeneration generation = new AATreeGeneration();
             ArrayList individuals = new ArrayList();
             //Populate with identical entries.
