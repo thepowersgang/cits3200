@@ -45,7 +45,7 @@ public class TestAOutputter : IOutputter
             }
             //numberGenerations = i + 1;
         }
-        fitnesses[generationNumber-1] = best;
+        fitnesses[generationNumber] = best;
         numberGenerations = generationNumber;
     }
 

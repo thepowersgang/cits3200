@@ -95,9 +95,12 @@ namespace RoadNetworkDefinition
         }
 
         /// <summary>
-        /// Initialise an RoadNetwork with edges and vertices identical to another RoadNetwork
+        /// Initialise an RoadNetwork with map, edges and vertices identical to another RoadNetwork
         /// </summary>
-        /// <param name="map">The RoadNetwork to copy</param>
+        /// <param name="network">The network to copy from</param>
+        /// <param name="keepEdges">Copy the edges from the network</param>
+        /// <param name="keepVertices">Copy the vertices from the network</param>
+        
         public RoadNetwork(RoadNetwork network, bool keepEdges = true, bool keepVertices = true)
         {
             map = network.map;
@@ -113,6 +116,10 @@ namespace RoadNetworkDefinition
             }
         }
 
+        /// <summary>
+        /// Swap a vertex with the first vertex to make it the start.
+        /// </summary>
+        /// <param name="index">The current index of the new start vertex</param>
         public void SetStart(int index)
         {
             Vertex temp = vertices[0];
@@ -120,6 +127,10 @@ namespace RoadNetworkDefinition
             vertices[index] = temp;
         }
 
+        /// <summary>
+        /// Swap a vertex with the last vertex to make it the new end.
+        /// </summary>
+        /// <param name="index">The current index of the new end vertex.</param>
         public void SetEnd(int index)
         {
             int endIndex = vertices.Count - 1;
@@ -172,6 +183,15 @@ namespace RoadNetworkDefinition
             return AddVertex(new Coordinates(x, y));
         }
 
+        /// <summary>
+        /// Add a vertex to the network.
+        /// 
+        /// When this method is used, the network remembers the coordinates of the vertex and when anther
+        /// vertex is added (through AddVerexUnique() method or CopyVerticesUnique()) with the same coordinates
+        /// the duplicate is not added, instead the index of the original is returned.
+        /// </summary>
+        /// <param name="coordinates">The coordinates of the new Vertex</param>
+        /// <returns>The index of the Vertex added.</returns>
         public int AddVertexUnique(Coordinates coordinates)
         {
             if (vertexIndices.ContainsKey(coordinates))
@@ -187,6 +207,16 @@ namespace RoadNetworkDefinition
             }
         }
 
+        /// <summary>
+        /// Add a vertex to the network.
+        /// 
+        /// When this method is used, the network remembers the coordinates of the vertex and when anther
+        /// vertex is added (through AddVerexUnique() method or CopyVerticesUnique()) with the same coordinates
+        /// the duplicate is not added, instead the index of the original is returned.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the new Vertex</param>
+        /// <param name="y">The y-coordinate of the new Vertex</param>
+        /// <returns>The index of the Vertex added.</returns>
         public int AddVertexUnique(int x, int y)
         {
             return AddVertexUnique(new Coordinates(x, y));
@@ -337,7 +367,7 @@ namespace RoadNetworkDefinition
         /// If no path exists then all vertices reachable from End are marked "visited".
 		/// </summary>
 		/// <returns>
-		/// A <see cref="List<Edge>"/> containing the edges (in order) linking Start to End or null if no path exists.
+		/// A list containing the edges (in order) linking Start to End or null if no path exists.
 		/// </returns>
         public List<Edge> FindPath()
         {
@@ -393,6 +423,11 @@ namespace RoadNetworkDefinition
             vertex.Copy = AddVertex(vertex.Coordinates);
         }
 
+        /// <summary>
+        /// Add a copy of a vertex to the network through the AddVertexUnique method.
+        /// </summary>
+        /// <param name="vertex">The vertex to copy</param>
+        /// <returns>The index of the new vertex.</returns>
         public int CopyVertexUnique(Vertex vertex)
         {
             int index = AddVertexUnique(vertex.Coordinates);
@@ -414,6 +449,13 @@ namespace RoadNetworkDefinition
             }
         }
 
+        /// <summary>
+        /// Add a copy of each vertex in a list to the network through the AddVertexUnique method.
+        /// </summary>
+        /// <param name="sourceVertices">
+        /// Source list of verticies
+        /// </param>
+        /// <returns>The index of the new vertex corresponding to the last vertex in the list.</returns>
         public int CopyVerticesUnique(List<Vertex> sourceVertices)
         {
             int lastIndex = -1;
