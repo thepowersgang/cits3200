@@ -647,13 +647,17 @@ namespace RoadNetworkGUI
                     runButton.Enabled = false;
                     runGenerationButton.Enabled = false;
                     cleanupButton.Enabled = false;
-
+                    libraryLoaderButton.Enabled = false;
+                    MapFileSelectButton.Enabled = false;
+                    outputFileButton.Enabled = false;
                     stopProcessButton.Enabled = true;
                 }
                 else
                 {
                     initEngineButton.Enabled = true;
-
+                    libraryLoaderButton.Enabled = true;
+                    MapFileSelectButton.Enabled = true;
+                    outputFileButton.Enabled = true;
                     if (hasInitialised)
                     {
                         stepButton.Enabled = true;
