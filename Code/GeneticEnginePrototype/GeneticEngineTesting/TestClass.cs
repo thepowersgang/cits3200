@@ -232,7 +232,7 @@ namespace GeneticEngineTesting
         [TestMethod]
         public void TestD1()
         {
-            MutationOperator RNCO = new MutationOperator(null);
+            Mutator RNCO = new Mutator(null);
             AATreeGeneration generation = new AATreeGeneration();
             ArrayList individuals = new ArrayList();
             //Populate with identical entries.

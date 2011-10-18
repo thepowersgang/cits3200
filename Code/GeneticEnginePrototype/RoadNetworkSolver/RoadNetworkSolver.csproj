@@ -53,13 +53,12 @@
     <Compile Include="Populator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Conjugator.cs" />
-    <Compile Include="CyclePopulator.cs" />
+    <Compile Include="StepCyclePopulator.cs" />
     <Compile Include="RoadNetworkXmlOutputter.cs" />
     <Compile Include="StepConjugator.cs" />
     <Compile Include="StepMutator.cs" />
     <Compile Include="StepPopulator.cs" />
     <Compile Include="Terminator.cs" />
-    <Compile Include="MutationOperator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneticEnginePlugin\GeneticEnginePlugin.csproj">
