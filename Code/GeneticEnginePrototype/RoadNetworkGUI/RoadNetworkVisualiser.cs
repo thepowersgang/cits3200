@@ -27,15 +27,15 @@ namespace RoadNetworkGUI
             getFile(isFileLoaded, filename);
         }
 
-        /**
-         * Prompt user to select a file.
-         * If a file is selected, check if the file is an xml file.
-         * If not, display error message to alert the user that they cannot open the file and terminate the program.
-         * If it is, then read from file and create new network and use it to draw up the network. 
-         * If the file is selected, display an error message and terminate the program.
-         * isFileLoaded is a boolean that specifies whether a file has been loaded
-         * Filename is the file path that the loaded file exists in
-         */ 
+        ///<summary>
+        /// Prompt user to select a file.
+        /// If a file is selected, check if the file is an xml file.
+        /// If not, display error message to alert the user that they cannot open the file and terminate the program.
+        /// If it is, then read from file and create new network and use it to draw up the network. 
+        /// If the file is selected, display an error message and terminate the program.
+        /// <param name="isFileLoaded">isFileLoaded is a boolean that specifies whether a file has been loaded</param>
+        /// <param name="Filename">Filename is the file path that the loaded file exists in</param>
+        /// </summary>
         private void getFile(bool isFileLoaded, string Filename)
         {
             if (!isFileLoaded && String.IsNullOrEmpty(Filename))
@@ -56,6 +56,12 @@ namespace RoadNetworkGUI
                 loadFile(Filename);
             }
         }
+
+        /// <summary>
+        /// Load output file and check if the file is an XML one.  If not, terminate program
+        /// Otherwise show the maximum generation value. 
+        /// </summary>
+        /// <param name="filename"></param>
         private void loadFile(string filename)
         {
             string extension = Path.GetExtension(filename);
@@ -81,12 +87,12 @@ namespace RoadNetworkGUI
         {
         }
 
-        /**
-         * The index selected is the index of the generation
-         * If the index is 0 or the generation is not selected, display an error message to select a proper generation index.
-         * For a specific generation, if the individual count is at least 1, dynamically fill up the 'individual' scroll bar from 1 up to the number of individuals. 
-         * Otherwise, request user to select another generation through an displayed error message.
-         */
+        ////
+        /// The index selected is the index of the generation
+        /// If the generation value is the number of generations, reset the generation value to 0.
+        /// If the individual count is 0, an error message is displayed to alert the user to select a new generation.
+        /// Otherwise, display the maximum individual value on the user interface.
+        ///
         private void generation_ValueChanged(object sender, EventArgs e)
         {
             if ((int)generation.Value == results.Count)
@@ -110,11 +116,11 @@ namespace RoadNetworkGUI
             }
         }
 
-        /**
-          * If an individual index is selected by the user, then check if the individual is valid,
-          * if so, redraw the individual on the visualiser. 
-          * If not, display an error message to select a proper individual index. 
-          */ 
+        ///
+        /// If an individual index is selected by the user, then check if the individual is valid,
+        /// if so, redraw the individual on the visualiser. 
+        /// If the individual value is passed the maximum value, reset the index to 0. 
+        /// 
         private void individual_ValueChanged(object sender, EventArgs e)
         {
             if ((int)individual.Value == results[GenerationIndex].Count)

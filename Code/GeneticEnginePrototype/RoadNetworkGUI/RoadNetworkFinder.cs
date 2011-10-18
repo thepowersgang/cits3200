@@ -20,8 +20,17 @@ namespace RoadNetworkGUI
 {
     public partial class RoadNetworkFinder : Form
     {
+        /// <summary>
+        /// Flags to denote whether is engine has been initialised or completed
+        /// </summary>
         private bool hasInitialised, hasCompleted;
+        /// <summary>
+        /// A flag to denote whether the engine is running or not
+        /// </summary>
         private bool engineRunning;
+        /// <summary>
+        /// A string to specify the path of the currently loaded .dll file
+        /// </summary>
         private string fullDLLPath = "";
         private IPopulator populator;
         private IEvaluator evaluator;
@@ -30,12 +39,20 @@ namespace RoadNetworkGUI
         private IGenerationFactory generationFactory;
         private PluginLoader loader;
         private GeneticEngine engine;
+        /// <summary>
+        /// Various lists of strings used to populate checkboxes. 
+        /// </summary>
         private List<string> populators, evaluators, geneticOperators, terminators, generationFactories, outputters;
-        private List<Coordinates> towns = new List<Coordinates>();
         private Map map;
         private DisplayOutputter displayOutputter;
         private IOutputter outputter;
+        /// <summary>
+        /// If no outputter method is provided by the .dll file, specify a default output option
+        /// </summary>
         private string noOutputterString = "[none]";
+        /// <summary>
+        /// If no generation factory is provided by the .dll file, specify a default option
+        /// </summary>
         private string defaultGenerationFactoryString = "[default]";
 
         public RoadNetworkFinder()
@@ -52,11 +69,10 @@ namespace RoadNetworkGUI
 
 
         #region Action Events
-        /*
-         * Event where the load Library button is clicked
-         * if the file has been successfully loaded, load plugins for each of the types
-         * and populate these plugin names in the drop down lists
-         */ 
+        /// <summary>
+        /// Load a .dll file and get all the various 'options' of each plugin type if the loading of the plugin was successful. 
+        /// Then load the dropdownlists.
+        /// </summary>
         private void libraryLoaderButton_Click(object sender, EventArgs e)
         {
             LoadLibrary.Title = "Select A Plug-in Library";
@@ -70,14 +86,52 @@ namespace RoadNetworkGUI
             if (LoadLibrary.ShowDialog() == DialogResult.OK)
             {
                 loader = new PluginLoader();
-                loader.LoadDll(LoadLibrary.FileName);
+                try
+                {
+                    loader.LoadDll(LoadLibrary.FileName);
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+
                 fullDLLPath = LoadLibrary.FileName;
                 libraryLabel.Text = Path.GetFileName(LoadLibrary.FileName);
                 initEngineButton.Enabled = true;
-                populators = loader.GetPluginNames(typeof(IPopulator));
-                evaluators = loader.GetPluginNames(typeof(IEvaluator));
-                geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
-                terminators = loader.GetPluginNames(typeof(ITerminator));
+                try
+                {
+                    populators = loader.GetPluginNames(typeof(IPopulator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+
+                try
+                {
+                    evaluators = loader.GetPluginNames(typeof(IEvaluator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                try
+                {
+                    geneticOperators = loader.GetPluginNames(typeof(IGeneticOperator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                try
+                {
+                    terminators = loader.GetPluginNames(typeof(ITerminator));
+                }
+                catch (GeneticEngineException exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+          
                 outputters = loader.GetPluginNames(typeof(IOutputter));
                 outputters.Add(noOutputterString);
                 generationFactories = loader.GetPluginNames(typeof(IGenerationFactory));
@@ -95,16 +149,16 @@ namespace RoadNetworkGUI
         {
             selectOutputFile();
         }
-
-        /*
-         * Check if the plugins have been selected by the user, if not the revelant exceptions are thrown 
-         * asking the user to make a choice.
-         * So, if the populator,evaluators, geneticOperator and terminator choices are not chosen, then 
-         * error messages are displayed to alert the user, that the choices for these four plugins cannot be null.
-         * If the plugins are chosen, the engine object is created according to the user choices and it is initialised.
-         * Once the engine is initialised, the rest of the buttons on the interface are activated and the fitness values
-         * are displayed. 
-         */ 
+        
+        /// <summary>
+        ///Check if the plugins have been selected by the user, if not the revelant exceptions are thrown 
+        ///asking the user to make a choice.
+        ///So, if the populator,evaluators, geneticOperator and terminator choices are not chosen, then 
+        ///error messages are displayed to alert the user, that the choices for these four plugins cannot be null.
+        ///If the plugins are chosen, the engine object is created according to the user choices and it is initialised.
+        ///Once the engine is initialised, the rest of the buttons on the interface are activated and the fitness values
+        ///are displayed. 
+        /// </summary>
         private void initEngineButton_Click(object sender, EventArgs e)
         {
             if (!engineRunning)
@@ -123,26 +177,57 @@ namespace RoadNetworkGUI
                 else
                 {
                     string choice = getChoice(populators, cbPopulator);
-                    populator = (IPopulator)loader.GetInstance(choice, (object)tbMapFile.Text);
+                    try
+                    {
+                        populator = (IPopulator)loader.GetInstance(choice, (object)tbMapFile.Text);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbEvaluator.SelectedItem == null) errorMsg += "Evaluator must not be null\n";
                 else
                 {
                     string choice = getChoice(evaluators, cbEvaluator);
-                    evaluator = (IEvaluator)loader.GetInstance(choice, null);
+                    try
+                    {
+                        evaluator = (IEvaluator)loader.GetInstance(choice, null);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbGeneticOperator.SelectedItem == null) errorMsg += "Genetic Operator must not be null\n";
                 else
                 {
                     string choice = getChoice(geneticOperators, cbGeneticOperator);
-                    geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
+                    try
+                    {
+                        geneticOperator = (IGeneticOperator)loader.GetInstance(choice, null);
+                    }
+                    catch (GeneticEngineException exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
                 if (cbTerminator.SelectedItem == null) errorMsg += "Terminator must not be null\n";
                 else
                 {
                     string choice = getChoice(terminators, cbTerminator);
                     if ((int)targetFitness.Value == 0) errorMsg += "Provide a target fitness value greater than 1 for the terminator plug-in\n";
-                    else terminator = (ITerminator)loader.GetInstance(choice, (object)(uint)targetFitness.Value);
+                    else
+                    {
+                        try
+                        {
+                            terminator = (ITerminator)loader.GetInstance(choice, (object)(uint)targetFitness.Value);
+                        }
+                        catch (GeneticEngineException exception)
+                        {
+                            MessageBox.Show(exception.Message);
+                        }
+                    }
                 }
                 if (cbOutputter.SelectedItem != null)
                 {
@@ -153,7 +238,10 @@ namespace RoadNetworkGUI
                         {
                             MessageBox.Show("Select an output file for the outputter\n");
                         }
-                        else outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                        else
+                        {
+                            outputter = (IOutputter)loader.GetInstance(choice, (object)tbOutputFile.Text);
+                        }
                     }
                 }
                 if (cbGenerationFactory.SelectedItem != null)
@@ -167,23 +255,40 @@ namespace RoadNetworkGUI
                 if (errorMsg != "") MessageBox.Show(errorMsg + "Please make sure you have selected a populator, evaluator, genetic operator and terminator and then try pressing the button again\n");
                 else
                 {
-                    displayOutputter = new DisplayOutputter(this, outputter);
-                    engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
-                    hasInitialised = true;
+                    try
+                    {
+                        displayOutputter = new DisplayOutputter(this, outputter);
+                        engine = new GeneticEngine(populator, evaluator, geneticOperator, terminator, displayOutputter, generationFactory);
+                        hasInitialised = true;
+                    }
+                    catch (GeneticEngineException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
 
                 SetEngineRunning(false);
             }
         }
-
+         /// <summary>
+         /// if the Engine is initialised and it is not running, deactivate buttons, and finish outputting generations to a file.
+         /// Then activate the buttons. Only activate the View Output File button if the output file exists. 
+         /// </summary>
         private void cleanupButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised && !engineRunning)
             {
-                SetEngineRunning(true);
-                engine.FinishOutput();
-                SetEngineRunning(false);
-                hasCompleted = true;
+                try
+                {
+                    SetEngineRunning(true);
+                    engine.FinishOutput();
+                    SetEngineRunning(false);
+                    hasCompleted = true;
+                }
+                catch (GeneticEngineException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
                 if (File.Exists(tbOutputFile.Text))
                 {
@@ -196,18 +301,26 @@ namespace RoadNetworkGUI
             }
         }
 
-        /*
-         * calls Step() of the engine only if it initialised. After the step method, the fitness values are updated
-         * if the engine is not initialised, a message is displayed to initialise the engine.
-         * If the engine is complete, convert network to xml form. 
-         */ 
+        ///<summary>
+        ///calls Step() of the engine only if it initialised. After the step method, the fitness values are updated
+        ///if the engine is not initialised, a message is displayed to initialise the engine.
+        /// If the engine is complete, convert network to xml form. 
+        ///</summary> 
         private void stepButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised && !engineRunning)
             {
-                SetEngineRunning(true);
-                engine.Step();
-                SetEngineRunning(false);
+                try
+                {
+                    SetEngineRunning(true);
+                    engine.Step();
+                    SetEngineRunning(false);
+                }
+                catch (GeneticEngineException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
             }
             else
             {
@@ -222,21 +335,28 @@ namespace RoadNetworkGUI
             SetEngineRunning(false);
         }
 
-        /**
-         * By clicking on the run button, Run() is executed from the engine if it was initialised. Afterwards, the fitness values
-         * are updated on the interface. If the engine wasn't initialised, then a message is shown to the user to initialise the engine
-         * first
-         * If the engine's generation is terminated, the output file viewer button is activated for the user and convert network to xml form. 
-         */ 
+        ///<summary>
+        ///By clicking on the run button, Run() is executed from the engine if it was initialised. Afterwards, the fitness values
+        ///are updated on the interface. If the engine wasn't initialised, then a message is shown to the user to initialise the engine
+        ///first
+        ///If the engine's generation is terminated, the output file viewer button is activated for the user and convert network to xml form. 
+        ///</summary> 
         private void runButton_Click(object sender, EventArgs e)
         {
             if (hasInitialised)
             {
                 if (!engineRunning)
                 {
-                    SetEngineRunning(true);
-                    Thread runThead = new Thread(new ThreadStart(RunEngine));
-                    runThead.Start();
+                    try
+                    {
+                        SetEngineRunning(true);
+                        Thread runThead = new Thread(new ThreadStart(RunEngine));
+                        runThead.Start();
+                    }
+                    catch (GeneticEngineException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
             else MessageBox.Show("Initialise Generation First\n");
@@ -250,15 +370,15 @@ namespace RoadNetworkGUI
             SetEngineRunning(false);
         }
 
-        /**
-         *  If the engine is initialised, the engine will call Repeat with the given n value provided by the scroller.
-         *  If the value of the scroller item is null or 0 then a exception message is thrown to request the user to 
-         *  choose a legitimiate value.
-         *  Once repeat is called, the fitness values are recalculated and display on the interface.
-         *  If the engine's generation has terminated after Repeat, then the view Output file button is activated.
-         *  If the engine wasn't initialised, then the message is shown to initialise the engine before pressing the repeat button.
-         *  If the engine is completed, convert network to its Xml form.
-         */
+        ///<summary>
+        ///  If the engine is initialised, the engine will call Repeat with the given n value provided by the scroller.
+        /// If the value of the scroller item is null or 0 then a exception message is thrown to request the user to 
+        /// choose a legitimiate value.
+        /// Once repeat is called, the fitness values are recalculated and display on the interface.
+        /// If the engine's generation has terminated after Repeat, then the view Output file button is activated.
+        /// If the engine wasn't initialised, then the message is shown to initialise the engine before pressing the repeat button.
+        ///  If the engine is completed, convert network to its Xml form.
+        ///</summary>
         private void runGenerationButton_Click(object sender, EventArgs e)
         {
             if ((int) n.Value == 0) MessageBox.Show("Select a n value which is at least 1\n");
@@ -268,9 +388,16 @@ namespace RoadNetworkGUI
                 {
                     if (!engineRunning)
                     {
-                        SetEngineRunning(true);
-                        Thread repeatThread = new Thread(RepeatEngine);
-                        repeatThread.Start((int)n.Value);
+                        try
+                        {
+                            SetEngineRunning(true);
+                            Thread repeatThread = new Thread(RepeatEngine);
+                            repeatThread.Start((int)n.Value);
+                        }
+                        catch(GeneticEngineException ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                     }
 
                     cleanupButton.Enabled = true;
@@ -288,9 +415,11 @@ namespace RoadNetworkGUI
         OpenFileDialog LoadLibrary = new OpenFileDialog();
         OpenFileDialog OpenMap = new OpenFileDialog();
 
-        /**
-         * Load map file, if the file was successfully loaded by the OpenFileDialog Object 
-         */
+        /// <summary>
+        /// Load map file, if the file was successfully loaded by the OpenFileDialog Object.
+        /// Check if it is an XML file. If not, ask user to select another file.  
+        /// If a file is not selected, then the user is notified to select a map file. 
+        /// </summary>
         private void loadMapFile()
         {
             OpenMap.Title = "Select Map File";
@@ -321,10 +450,11 @@ namespace RoadNetworkGUI
             }
         }
 
-        /**
-         * Load output file, if the file was successfully loaded by the OpenFileDialog object 
-         * otherwise select a new directory to create an output file
-         */
+        ///<summary>
+        ///Load output file, if the file was successfully loaded by the OpenFileDialog object 
+        /// otherwise select a new directory to create an output file.
+        /// Check the file is an XML file. If not, report an error message to the user. 
+        ///</summary>
         private void selectOutputFile()
         {
             SelectOutput.Title = "Select Output File";
@@ -347,6 +477,12 @@ namespace RoadNetworkGUI
             }
         }
 
+        /// <summary>
+        /// Use the list of strings to populate a comboBox. 
+        /// Automtatically show the first option from the combobox to the user. 
+        /// </summary>
+        /// <param name="comboBox"></param>
+        /// <param name="items"></param>
         private void PopulateComboBox(ComboBox comboBox, List<string> items)
         {
             object selectedItem = comboBox.SelectedItem;
@@ -366,14 +502,15 @@ namespace RoadNetworkGUI
             {
                 comboBox.SelectedIndex = 0;
             }
+
         }
 
-        /**
-         * Populate the drop down list if each string list has at least one member. 
-         * Display an error msg, if the populator, evaluator, geneticOperator and Terminator, string lists are empty. 
-         * The reason here is, that no populator, evaluator, geneticOperator or Terminator should be null when we 
-         * create the engine object
-         */
+        ///
+        /// Populate the drop down list if each string list has at least one member. 
+        /// Display an error msg, if the populator, evaluator, geneticOperator and Terminator, string lists are empty. 
+        /// The reason here is, that no populator, evaluator, geneticOperator or Terminator should be null when we 
+        /// create the engine object
+        ///
         private void initPluginDropDowns()
         {
             String errorMsg = "";
@@ -407,10 +544,10 @@ namespace RoadNetworkGUI
             }
             if (errorMsg != "") MessageBox.Show(errorMsg);
         }
-        /**
-         * Populate the 'n'scroller and the target fitness scroller with values from 1 up to the maximum values
-         * Furthermore deactivate all of the buttons from the user
-         */ 
+    
+        /// <summary>
+        /// Deactivate all the buttons from the user until the dll plugins are properly loaded. 
+        /// </summary>
         private void initComponents()
         {
             initEngineButton.Enabled = false;
@@ -420,20 +557,20 @@ namespace RoadNetworkGUI
             viewOutputFileButton.Enabled = false;
             cleanupButton.Enabled = false;
         }
-        /**
-         * Based on the selected index from a particular combo box, obtain the string from the index of the specified list.
-         * This is used for getInstance() of the engine. 
-         */ 
+        ///
+        ///Based on the selected index from a particular combo box, obtain the string from the index of the specified list.
+        /// This is used for getInstance() of the engine. 
+        /// 
         private string getChoice(List<string> list, ComboBox cb)
         {
             return list[cb.SelectedIndex];
         }
         #endregion
 
-        /**
-         * If the generation has been completed and once the view Output file Button is clicked,
-         * Close the current interface and open up the Visualiser interface with the current file. 
-         */ 
+        ///
+        /// If the generation has been completed and once the view Output file Button is clicked,
+        /// Close the current interface and open up the Visualiser interface with the current file. 
+        /// 
         private void viewOutputFileButton_Click(object sender, EventArgs e)
         {
             if (hasCompleted && File.Exists(tbOutputFile.Text))
@@ -447,12 +584,21 @@ namespace RoadNetworkGUI
         
         private delegate void ShowStatsCallback(uint maxFitness, float averageFitness);
 
+        /// <summary>
+        /// Display the statistics on the visualiser. 
+        /// </summary>
+        /// <param name="maxFitness">Max fitness value to display</param>
+        /// <param name="averageFitness">Average Fitness value to display</param>
         private void ShowStats(uint maxFitness, float averageFitness)
         {
             maxFitnessValue.Text = maxFitness.ToString();
             averageFitnessValue.Text = averageFitness.ToString();
         }
 
+        /// <summary>
+        /// Show the best individual from the current generation visually and their statistics. 
+        /// </summary>
+        /// <param name="generation">Generation to be displayed</param>
         public void DisplayGeneration(IGeneration generation)
         {
             if (generation.Count > 0)
@@ -470,6 +616,9 @@ namespace RoadNetworkGUI
             }
         }
 
+        /// <summary>
+        /// Stop the engine once the button is clicked 
+        /// </summary>
         private void stopProcessButton_Click(object sender, EventArgs e)
         {
             engine.Stop();
@@ -477,6 +626,10 @@ namespace RoadNetworkGUI
 
         private delegate void SetEngineRunningCallback(bool engineRunning);
 
+        /// <summary>
+        /// Activate or deactivate the buttons depending if the engine is running on the GUI
+        /// </summary>
+        /// <param name="engineRunning">A flag to specify whether the engine is running</param>
         private void SetEngineRunning(bool engineRunning) {
 
             if (this.InvokeRequired)
@@ -494,13 +647,17 @@ namespace RoadNetworkGUI
                     runButton.Enabled = false;
                     runGenerationButton.Enabled = false;
                     cleanupButton.Enabled = false;
-
+                    libraryLoaderButton.Enabled = false;
+                    MapFileSelectButton.Enabled = false;
+                    outputFileButton.Enabled = false;
                     stopProcessButton.Enabled = true;
                 }
                 else
                 {
                     initEngineButton.Enabled = true;
-
+                    libraryLoaderButton.Enabled = true;
+                    MapFileSelectButton.Enabled = true;
+                    outputFileButton.Enabled = true;
                     if (hasInitialised)
                     {
                         stepButton.Enabled = true;
@@ -514,6 +671,9 @@ namespace RoadNetworkGUI
             }
         }
 
+        /// <summary>
+        /// If the engine is still running, ask the user to stop the current process before closing the finder GUI
+        /// </summary>
         private void RoadNetworkFinder_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (engineRunning)

@@ -12,7 +12,9 @@ namespace RoadNetworkGUI
     {
         IOutputter wrappedOutputter;
         RoadNetworkFinder mainWindow;
-
+        /// <summary>
+        /// Get the current status fo the Display outputter
+        /// </summary>
         public OutputterStatus Status
         {
             get
@@ -26,7 +28,9 @@ namespace RoadNetworkGUI
             this.mainWindow = mainWindow;
             this.wrappedOutputter = wrappedOutputter; //Set wrappedOutputter
         }
-
+        /// <summary>
+        /// If a proper outputter is specified and it is closed, open the outputter.
+        /// </summary>
         public void OpenOutput()
         {
             if (wrappedOutputter!=null && wrappedOutputter.Status == OutputterStatus.Closed)
@@ -35,6 +39,12 @@ namespace RoadNetworkGUI
             }
         }
 
+        /// <summary>
+        /// Output the generation to the output file if the outputter is currently open
+        /// Otherwise open the outputter first. 
+        /// </summary>
+        /// <param name="generation">The current generation to send to the outputter</param>
+        /// <param name="generationCount">The number of generations before the current one</param>
         public void OutputGeneration(IGeneration generation, int generationCount)//Renamed from output
         {
             mainWindow.DisplayGeneration(generation);
@@ -53,6 +63,9 @@ namespace RoadNetworkGUI
             }
         }
 
+        /// <summary>
+        /// If the outputter is specified and it is currently open, close it. 
+        /// </summary>
         public void CloseOutput()
         {
             if (wrappedOutputter != null && wrappedOutputter.Status == OutputterStatus.Open)
