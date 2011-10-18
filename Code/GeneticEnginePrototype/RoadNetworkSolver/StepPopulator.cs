@@ -8,7 +8,7 @@ using GeneticAlgorithm.Plugin;
 
 namespace RoadNetworkSolver
 {
-    class StepPopulator : IPopulator
+    public class StepPopulator : IPopulator
     {
         Random random = new Random();
 
