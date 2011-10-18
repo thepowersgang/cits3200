@@ -8,13 +8,33 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// IPopulator which produces a set of RoadNetworks.
+    /// For each it:
+    /// 1) Generates a number of random paths from start to end, broken up into small steps (Edges connect adjacent points). 
+    /// 2) Randomly chooses a number of vertex pairs and generates stepped paths between them.
+    /// </summary>
     public class StepCyclePopulator : IPopulator
     {
-        Random random = new Random();
+        /// <summary>
+        /// Random number generator used when generating paths.
+        /// </summary>
+        private static Random random = new Random();
 
+        /// <summary>
+        /// The number of individuals to generate
+        /// </summary>
         int populationSize = 200;
+
+        /// <summary>
+        /// The map in which the networks will exist
+        /// </summary>
         Map map;
         
+        /// <summary>
+        /// Initialise a new StepCyclePopulator
+        /// </summary>
+        /// <param name="config">A string with the path to the map file</param>
         public StepCyclePopulator(object config)
         {
             map = Map.FromFile((string)config);

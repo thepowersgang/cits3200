@@ -9,8 +9,16 @@ using RoadNetworkDefinition;
 
 namespace RoadNetworkSolver
 {
+    /// <summary>
+    /// IEvaluator which evaluates RoadNetworks based on the total lenght of road and the
+    /// total distance of each town from its closest vertex in the network.
+    /// </summary>
     public class Evaluator : IEvaluator
     {
+        /// <summary>
+        /// Initialise a new Evaluator
+        /// </summary>
+        /// <param name="config">Configuration object (ignored)</param>
         public Evaluator(object config)
         {
         }

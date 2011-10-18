@@ -11,6 +11,10 @@ namespace RoadNetworkSolver
     /// </summary>
     public class Terminator : FitnessThresholdTerminator
     {
+        /// <summary>
+        /// Initialise a new Terminator
+        /// </summary>
+        /// <param name="config">Configuration object (ignored)</param>
         public Terminator(object config)
             : base((uint)config)
         {
