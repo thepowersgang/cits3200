@@ -18,7 +18,7 @@ namespace RoadNetworkGUI
     public partial class Road_Network_Visualiser : Form
     {
         OpenFileDialog openDialog;
-        int IndividualIndex = -1, GenerationIndex = -1;
+        int IndividualIndex = 0, GenerationIndex = 0;
         GenerationIndex results; 
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace RoadNetworkGUI
                 results = new GenerationIndex(filename,reader);
                 drawIndividual(0, 0);
                 maxGeneration.Text = "Max : " + (results.Count-1);
-                
+                generation.Maximum = results.Count - 1;
             }
         }
         private void Road_Network_Visualiser_Load(object sender, EventArgs e)
@@ -102,25 +102,29 @@ namespace RoadNetworkGUI
         ///
         private void generation_ValueChanged(object sender, EventArgs e)
         {
-            if ((int)generation.Value == results.Count)
+            try
+            {
+                if ((int)generation.Value < generation.Maximum)
+                {
+                    GenerationIndex = (int)generation.Value;
+                    if (results[GenerationIndex].Count == 0)
+                    {
+                        string errorMsg = "There are no individuals for this Generation\n";
+                        errorMsg += "Therefore please select another generation with at least one individual\n";
+                        MessageBox.Show(errorMsg);
+                    }
+                    else
+                    {
+                        drawIndividual(0, GenerationIndex);
+                        individual.Maximum = results[GenerationIndex].Count - 1;
+                        maxIndividuals.Text = "Max : " + (individual.Maximum);
+                        individual.Value = 0;
+                    }
+                }
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 generation.Value = 0;
-            }
-            else
-            {
-                GenerationIndex = (int)generation.Value;
-                if (results[GenerationIndex].Count == 0)
-                {
-                    string errorMsg = "There are no individuals for this Generation\n";
-                    errorMsg += "Therefore please select another generation with at least one individual\n";
-                    MessageBox.Show(errorMsg);
-                }
-                else
-                {
-                    drawIndividual(0, GenerationIndex);
-                    maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count-1);
-                    individual.Value = 0;
-                }
             }
         }
 
@@ -131,14 +135,19 @@ namespace RoadNetworkGUI
         /// 
         private void individual_ValueChanged(object sender, EventArgs e)
         {
-            if ((int)individual.Value == results[GenerationIndex].Count)
+            try
+            {
+                if ((int)individual.Value < individual.Maximum)
+                {
+                    drawIndividual((int)individual.Value, GenerationIndex);
+
+                }
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 individual.Value = 0;
             }
-            else
-            {
-                drawIndividual((int)individual.Value, GenerationIndex);
-            }
+
         }
 
 
@@ -150,6 +159,7 @@ namespace RoadNetworkGUI
             uint fitness = iwf.Fitness;
             fitnessLabel.Text = fitness.ToString();
             visualiser2.Network = (RoadNetwork)iwf.Individual;
+            maxIndividuals.Text = "Max : " + results[GenerationIndex].Count;
         }
     }
 }

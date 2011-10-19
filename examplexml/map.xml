@@ -1,7 +1,8 @@
-<map width="128" height="128">
-<start x="32" y="32"/>
-<end x="96" y="96"/>
-<town x="16" y="112"/>
-<town x="112" y="16"/>
-<town x="64" y="64"/>
+<map width="50" height="50">
+<start x="25" y="1"/>
+<end x="25" y="49"/>
+<town x="10" y="10"/>
+<town x="10" y="30"/>
+<town x="40" y="20"/>
+<town x="40" y="40"/>
 </map>
