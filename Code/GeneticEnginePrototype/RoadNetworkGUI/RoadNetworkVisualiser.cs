@@ -150,6 +150,7 @@ namespace RoadNetworkGUI
             uint fitness = iwf.Fitness;
             fitnessLabel.Text = fitness.ToString();
             visualiser2.Network = (RoadNetwork)iwf.Individual;
+            maxIndividuals.Text = "Max : " + results[GenerationIndex].Count;
         }
     }
 }
