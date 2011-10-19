@@ -18,7 +18,7 @@ namespace RoadNetworkGUI
     public partial class Road_Network_Visualiser : Form
     {
         OpenFileDialog openDialog;
-        int IndividualIndex = -1, GenerationIndex = -1;
+        int IndividualIndex = 0, GenerationIndex = 0;
         GenerationIndex results; 
 
         /// <summary>
