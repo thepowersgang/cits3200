@@ -6,25 +6,46 @@ John Hodge - API Developer
 Alwyn Kyi - Tester
 Antriksh Srivastava - Tester
 
-Project Overview
-The project is all about creating an Application Programming Interface (which is termed a Genetic Engine) 
-for implementing Genetic Algorithms. This Engine, will have access to all of the interface classes that represent 
-the populator, evaluator, terminator, genetic operator, outputter and the generation factory. This engine also 
-includes classes that read from and write to XML files. The project also has files which creates the visual 
-interpretation of the main functions as well as the test classes which test all of the functions in this Engine.
-More about this later. 
 
-Project Source Directory Layout
-All of the Code is going to be in the GeneticEnginePrototype Folder. There is another folder which is the examplexml
-folder which stores all of the XML files that are used for loading by the Interface programs in the code directory. 
-These are the main directories within DelC_GroupJ.zip folder.
-In the GeneticEnginePrototype folder, the 6 sub-folders are
-	i. GeneticEngineCore
-	ii. GeneticEnginePlugin
-	iii. RoadNetworkDisplay
-	iv. RoadNetworkGUI
-	v. RoadNetworkSolver
-	vi. GeneticEngineTesting
+Project Overview
+
+The core of the project is a .Net API (Application Programming Interface) which provides a framework for programming
+genetic algorithms. This is build around the GeneticEngine class which accepts plug-in classes defining the various
+parts of the algorithm:
+  - Populating the initial set of individuals
+  - Evaluating each individual (fitness function)
+  - Determining if the algorithm is finished (termination condition)
+  - Using the individuals of the current generation (and their fitness values) to produce the next set of individuals.
+  - Outputting the individuals, fitness values and generation statistics.
+
+The PluginLoader allows plug-in classes to be loaded from user selected class libraries (.dll files) at runtime.
+
+There are also a number of support classes to facilitate the rapid development of plug-ins.
+
+The primary goal of the project is flexibility. To this end the GeneticEngine allows any class to be used to represent
+individuals. The GeneticEngine only deals with individuals as instances of "object". It is up to the plug-ins how these
+are to be interpreted or manipulated. A default generation class is supplied which will hold the individuals sorted by
+their fitness values. This should be flexible enough for most purposes but it is also possible to override this by
+supplying an alternative generation class.
+
+In addition to the core API there is a set of example plug-ins. When used with the GeneticEngine these attempt to
+optimize a network of roads based on a number of constraints.
+
+Finally, there is a GUI for loading the example plugins, running the GeneticEngine, and displaying the results.
+
+
+Source Directory Layout
+
+The overall project is divided into 7 C# "projects" Each resides in its own project directory. They are all managed
+within one Visual Studio "solution" (GeneticEngine.sln).
+  - GeneticEngineCore: Contains the GeneticEngine and PluginLoader classes.
+  - GeneticEnginePlugin: Contains the Plug-in interfaces which plug-in classes must implement along with the support
+                         classes.
+  - RoadNetwork: Contains the RoadNetwork class which is used as the individuals in the sample plug-ins.
+  - RoadNetworkSolver: Contains the sample plug-ins.
+  - RoadNetworkDisplay: Contains a custom control which can be used in GUI projects to display RoadNetworks
+  - RoadNetworkGUI: Contains the GUI tools 
+  - GeneticEngineTesting: Contains the unit tests for the entire solution.
 
 How to run the program 
 Installation : refer to INSTALL.txt
