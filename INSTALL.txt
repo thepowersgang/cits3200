@@ -3,11 +3,16 @@
 
 1. The contents are contained in a zip file called DelC_GroupJ.zip
 2. Use 7-zip or WinRAR or the Windows Explorer or any other Zip program to unzip the above file.
-   The user will need the two directories within the zip file. They are GeneticEnginePrototype and examplexml which 
-   contains a group of xml files that are used for the acceptance tests. 
+   This file contains four of directories.
+	Source - The project source code.
+	Binaries - The compiled binaries.
+	Documentation - Usage instructions and API documentation.
+	Maps - Example map files for the RoadNetworkFinder GUI and plug-ins.
 3. The user will need Visual Studio 2010 or Visual Studio 2010 C# Express to view the Libraries and 
    the User Interfaces as the code has been written with these IDEs
-4. Under the 'GeneticEnginePrototype' directory, open the Microsoft Visual Studio Solution file, GeneticEngine.sln
-There is not much installation required for this software
+4. Under the 'Source' directory, open the Microsoft Visual Studio Solution file, GeneticEngine.sln
+5. To use the precompiled binaries simply execute RoadNetworkGUI,exe in the 'Binaries' directory.
+   The plug-in classes are defined in RoadNetworkSolver.dll. This is the library which should be
+   loaded with the "Load Library" function.
 
 -----------------------------------------------------------------------------------------------------------------------------------------
