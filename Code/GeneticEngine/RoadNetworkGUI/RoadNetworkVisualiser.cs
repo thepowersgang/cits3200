@@ -18,7 +18,7 @@ namespace RoadNetworkGUI
     public partial class Road_Network_Visualiser : Form
     {
         OpenFileDialog openDialog;
-        int IndividualIndex = -1, GenerationIndex = -1;
+        int IndividualIndex = 0, GenerationIndex = 0;
         GenerationIndex results; 
 
         /// <summary>
@@ -86,6 +86,7 @@ namespace RoadNetworkGUI
                 }
                 results = new GenerationIndex(filename,reader);
                 drawIndividual(0, 0);
+                generation.Maximum = results.Count - 1;
                 maxGeneration.Text = "Max : " + (results.Count-1);
                 
             }
@@ -102,7 +103,7 @@ namespace RoadNetworkGUI
         ///
         private void generation_ValueChanged(object sender, EventArgs e)
         {
-            if ((int)generation.Value == results.Count)
+            if ((int)generation.Value >= results.Count)
             {
                 generation.Value = 0;
             }
@@ -118,7 +119,7 @@ namespace RoadNetworkGUI
                 else
                 {
                     drawIndividual(0, GenerationIndex);
-                    maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count-1);
+                    individual.Maximum = results[GenerationIndex].Count - 1;
                     individual.Value = 0;
                 }
             }
@@ -131,7 +132,7 @@ namespace RoadNetworkGUI
         /// 
         private void individual_ValueChanged(object sender, EventArgs e)
         {
-            if ((int)individual.Value == results[GenerationIndex].Count)
+            if ((int)individual.Value >= results[GenerationIndex].Count)
             {
                 individual.Value = 0;
             }
@@ -150,6 +151,7 @@ namespace RoadNetworkGUI
             uint fitness = iwf.Fitness;
             fitnessLabel.Text = fitness.ToString();
             visualiser2.Network = (RoadNetwork)iwf.Individual;
+            maxIndividuals.Text = "Max : " + (results[GenerationIndex].Count - 1);
         }
     }
 }
