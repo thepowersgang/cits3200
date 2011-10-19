@@ -70,7 +70,7 @@ namespace RoadNetworkSolver
                 totalDistance += Math.Sqrt(minDistanceSquared);
             }
 
-            double totalCost = totalLength + 3.0 * totalDistance;
+            double totalCost = totalLength + totalDistance * totalDistance;
 
             // This check was causing performance problems so I've removed it.
             // What's the worst that could happen?
